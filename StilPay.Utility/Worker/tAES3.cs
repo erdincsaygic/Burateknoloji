@@ -40,6 +40,11 @@ namespace StilPay.Utility.Worker
 
                 }
 
+                DecryptText = DecryptText.Replace("vg-.2022.-se", "sp21322-aplsxl_?.");
+                DecryptText = DecryptText.Replace("89.252.138.233", "192.168.25.5");
+                DecryptText = DecryptText.Replace("DEV", "DEV_TEST2");
+                DecryptText = DecryptText.Replace("STILPAY", "MSSQLSERVER2019");
+
                 string[] InfoConfig = DecryptText.Split('\n');
                 return "Data Source=" + InfoConfig[0] + "; Initial Catalog=" + InfoConfig[1] + "; User Id=" + InfoConfig[2] + "; Password=" + InfoConfig[3] + "; Min Pool Size=0; Max Pool Size=100; Pooling=true; MultipleActiveResultSets=true;";
             }
