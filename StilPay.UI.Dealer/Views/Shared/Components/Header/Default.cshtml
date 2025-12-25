@@ -1,0 +1,13 @@
+﻿@model MenuInformation
+
+<header>
+    <div class="row m-0 p-0">
+        <div class="col-lg-12 p-lg-0 py-2 bg-custom text-white small d-lg-flex flex-lg-row flex-lg-nowrap justify-content-lg-end align-items-lg-center">
+            <div class="p-lg-2 border-end border-white">@(string.Concat("İşyeri Numaranız : ", Model.ServiceID))</div>
+            <div class="p-lg-2 border-end border-white">@(string.Concat("Toplam Paranız : ", Model.TotalBalance.ToString("n2"), " TRY"))</div>
+            <div class="p-lg-2 border-end border-white">@(string.Concat("Kullanılabilir Paranız : ", Model.UsingBalance.ToString("n2"), " TRY"))</div>
+            <div class="p-lg-2 border-end border-white">@(string.Concat("Blokeli Paranız : ", Model.BlockedBalance.ToString("n2"), " TRY"))</div>
+            <div class="p-lg-2 border-end border-white">@Model.Title</div>
+        </div>
+    </div>
+</header>

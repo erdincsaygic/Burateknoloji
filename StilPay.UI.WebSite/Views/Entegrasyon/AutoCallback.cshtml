@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "Auto Callback";
+}
+
+
+<div id="iframe-kullanimi">
+    <h2 class="text-center">Auto Callback Bildirim </h2>
+    <p>Bayi panelinde 'Api' menüsünde yer alan 'Entegrasyon Bilgilerim Sayfasından' response bilgilerinin hangi url adresinlerine post edileceğini görebilirsiniz.</p>
+    <p>Her 5 dakikada bir StilPay üzerinden yapılan son 1 gün içerisindeki işlemlerin sonuçları belirtilen url adresine post edilir. Bu işlem callback olarak gönderilen işlemin sonucuna json formatında "status: "OK" mesajı dönene kadar devam eder. </p>
+
+    <pre><code>
+    <b>Callback'e Dönülmesi Gereken Response:</b>
+        {
+           "status":"OK"       
+        }
+    </code></pre>
+</div>

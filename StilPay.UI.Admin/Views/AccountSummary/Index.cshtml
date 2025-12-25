@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Hesap Özeti";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-11">
+        <div class="d-grid">         
+            <form asp-controller="AccountSummary" asp-action="CreateNewReport" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <button type="submit" class="btn btn-dark btn-block">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Yeni
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Rapor Listesi</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1">Rapor No</th>
+                            <th class="col-1">Oluşturan</th>
+                            <th class="col-1">Net</th>
+                            <th class="col-1">Kar</th>
+                            <th class="col-1">Fark</th>
+                            <th class="col-1">Detay</th>
+                            <th class="col-1">Sil</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js {
+
+
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/accountsummary/index.js"></script>
+    <script src="~/js/views/core.js"></script>
+    }

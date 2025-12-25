@@ -1,0 +1,137 @@
+﻿@model MemberWithdrawalRequest
+
+@{
+    ViewData["Title"] = "Nakit Çekim Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Nakit Çekim Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Banka :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Bank" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">IBAN :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="IBAN" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Hesap Sahibi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Title" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Talep Edilen Tutar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Ücreti :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="CostTotal" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Net Toplam :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" value="@(Model.Amount+Model.CostTotal)" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tipi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="IsEFT" value="@(Model.IsEFT ? "HAVALE/EFT" : "FAST")" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Durumu :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        @if (Model.Status == 2)
+                        {
+                            <input type="text" class="form-control fw-bold text-success" asp-for="Status" value="ONAYLANDI" readonly="readonly" />
+                        }
+                        else if (Model.Status == 3)
+                        {
+                            <input type="text" class="form-control fw-bold text-danger" asp-for="Status" value="İPTAL EDİLDİ" readonly="readonly" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control fw-bold text-info" asp-for="Status" value="BEKLİYOR" readonly="readonly" />
+                        }
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Açıklama :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" asp-for="Description" rows="3" readonly="readonly"></textarea>
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Yetkili :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Modifier" readonly="readonly" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

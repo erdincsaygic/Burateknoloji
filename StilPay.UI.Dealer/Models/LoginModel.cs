@@ -1,0 +1,9 @@
+﻿namespace StilPay.UI.Dealer.Models
+{
+    public class LoginModel
+    {
+        public string Phone { get; set; }
+        public string Password { get; set; }
+        public string CaptchaCode { get; set; }
+    }
+}

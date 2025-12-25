@@ -1,0 +1,297 @@
+﻿@model EditViewModel<CompanyApplication>
+
+@{
+    ViewData["Title"] = "Üye İşyeri Başvuru Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Application" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Başvuru Detayı</div>
+            <div class="card-body">
+
+                <input type="hidden" id="Application_ID" value="@Model.entity.ID" />
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Başvuru Tarihi :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.CDate" asp-format="{0:dd.MM.yyyy HH:mm}" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Adı Soyadı :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Name" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Telefon No :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Şirket Ünvanı :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Title" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Vergi No :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.TaxNr" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Vergi Dairesi :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.TaxOffice" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Şirket Adresi :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Address" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Email :</label></div>
+
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Email" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Kullanıcı Şifresi :</label></div>
+                    <div class="col-lg-9"><input type="password" class="form-control" value="**********" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Ortalama Aylık Ciro :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.MonthlyGiro" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3"><label class="form-label">Website :</label></div>
+                    <div class="col-lg-9"><input type="text" class="form-control" asp-for="entity.Website" readonly="readonly" /></div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-12"><label class="form-label">Yüklenen Evraklar :</label></div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.IdentityFrontSideColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="IdentityFrontSide" target="_blank">
+                                Kimlik Ön Yüzü
+                            </a>
+                        </div>
+                        @if (Model.entity.IdentityFrontSide != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="IdentityFrontSide"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="IdentityFrontSide"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.IdentityBackSideColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="IdentityBackSide" target="_blank">
+                                Kimlik Arka Yüzü
+                            </a>
+                        </div>
+                        @if (Model.entity.IdentityBackSide != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="IdentityBackSide"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="IdentityBackSide"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.TaxPlateColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="TaxPlate" target="_blank">
+                                Vergi Levhası
+                            </a>
+                        </div>
+                        @if (Model.entity.TaxPlate != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="TaxPlate"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="TaxPlate"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.SignatureCircularsColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="SignatureCirculars" target="_blank">
+                                İmza Sirküleri
+                            </a>
+                        </div>
+                        @if (Model.entity.SignatureCirculars != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="SignatureCirculars"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="SignatureCirculars"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.TradeRegistryGazetteColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="TradeRegistryGazette" target="_blank">
+                                Ticari Sicil Gazetesi
+                            </a>
+                        </div>
+                        @if (Model.entity.TradeRegistryGazette != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="TradeRegistryGazette"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="TradeRegistryGazette"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <a class="btn btn-block btn-secondary @Model.entity.AgreementColor" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="Agreement" target="_blank">
+                                Kullanıcı Sözleşmesi
+                            </a>
+                        </div>
+                        @if (Model.entity.Agreement != null)
+                        {
+                            <div class="btn-group btn-group-sm w-100">
+                                <button type="button" class="btn btn-success btn-document" data-file-status="1" data-file-title="Agreement"><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-danger btn-document" data-file-status="2" data-file-title="Agreement"> <i class="fa fa-close"></i></button>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-4">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#mdlCancel">İptal Et</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#mdlSms">Sms Gönder</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mdlConfirm">Onayla</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Onaylamak İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+
+                <form method="post" asp-antiforgery="true" asp-controller="Application" asp-action="SetApplicationStatus"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" name="id" value="@Model.entity.ID" />
+                    <input type="hidden" name="status" value="true" />
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sms-->
+<div class="modal fade" id="mdlSms" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Sms Göndermek İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+            <form method="post" asp-antiforgery="true" asp-controller="Application" asp-action="SendSmsWithBody" id="sendSmsFrm"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <textarea class="form-control" rows="5" id="messageBodyTextarea" name="messageBody" placeholder="Gönderilecek SMS bilgisi giriniz"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                        <input type="hidden" name="id" value="@Model.entity.ID" />
+                        <input type="hidden" name="messageBody" />
+                        <button type="submit" class="btn btn-success" >Evet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal İptal-->
+<div class="modal fade" id="mdlCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">İptal Etmek İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <select class="form-select">
+                                <option value="not1">Hazır Not-1</option>
+                                <option value="not2">Hazır Not-2</option>
+                                <option value="not3">Hazır Not-3</option>
+                            </select>
+                            <span class="input-group-text bg-light text-dark">
+                                <i class="fa fa-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-2">
+                        <textarea class="form-control" rows="5" placeholder="Not Giriniz-Zorunlu"></textarea>
+                    </div>
+                    <div class="col-lg-12 mt-2">
+                        <button type="button" class="btn btn-sm btn-dark" data-bs-dismiss="modal">Notu Kaydet</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="mdlRedId" value="@Model.entity.ID" />
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                <form method="post" asp-antiforgery="true" asp-controller="Application" asp-action="SetApplicationStatusCancel"
+                        data-ajax="true" data-ajax-method="POST"
+                        data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" name="id" value="@Model.entity.ID" />
+                    <input type="hidden" name="status" value="false" />
+                    <button type="submit" class="btn btn-danger">Evet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/application/edit.js"></script>
+    }

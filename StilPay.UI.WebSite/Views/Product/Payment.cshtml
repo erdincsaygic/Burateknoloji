@@ -1,0 +1,304 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>StilPay | Ödeme Bildirimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css?v.2.1" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify-default.css" />
+</head>
+
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Giriş Yap</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Mağaza</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ürün Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ödeme Yönetimi Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Ödeme</div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="slidercont" id="step1">
+                    <div class="arrive">
+                        <p class="bold">@ViewBag.Amount ₺ Tutarındaki Ödemenizi Yapabilirsiniz </p>
+                    </div>
+
+                    <div class="form elementsa">
+                        <form id="creditCardFormTest" method="post" asp-controller="Product" asp-action="PaymentAccept" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess">
+                            <div class="formmain lopas">
+                                <div class="">
+                                    <div class="formright">
+                                        <div class="form-container" style="grid-template-rows: 110px 110px 110px;">
+                                            <div class="field-container">
+                                                <label for="name">Kart Üzerindeki İsim</label>
+                                                <input id="name" name="name" maxlength="50" type="text">
+                                            </div>
+                                            <div class="field-container">
+                                                <label for="cardnumber">Kart Numarası</label>
+                                                <input id="cardnumber" name="cardnumber" type="text" inputmode="text" />
+                                                <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                </svg>
+                                            </div>
+                                            <div class="field-container">
+                                                <label for="expirationdate">Son Kullanma Tarihi</label>
+                                                <input id="expirationdate" name="expirationdate" type="text" inputmode="text" />
+                                            </div>
+                                            <div class="field-container">
+                                                <label for="securitycode">CVV</label>
+                                                <input id="securitycode" name="securitycode" type="number" inputmode="numeric" />
+                                            </div>
+                                            <div class="field-container">
+                                                <label for="phone">Telefon Numarası:</label>
+                                                <input id="phone" name="phone" type="number" pattern="[0-9]*" inputmode="numeric" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mybanners">
+                                    <div class="hol">
+                                        <img src="~/areas/panel/img/paymentnotification/Stilpay1.png" alt="">
+                                    </div>
+                                    <div class="hol">
+                                        <img src="~/areas/panel/img/paymentnotification/366-3669285_secure-ssl-encryption-logo-png-transparent-png.png" alt="">
+                                    </div>
+
+                                    <div class="hol none">
+                                        <img src="~/areas/panel/img/paymentnotification/3D.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="formend">
+                                <div class="confirm">
+                                    <input id="box3" type="checkbox" />
+                                    <label for="box3">Onaylıyorum <a href="https://stilpay.com/sozlesmeler" target="_blank" class="disg">(Ön Bilgilendirme</a> & <a href="https://stilpay.com/sozlesmeler" target="_blank" class="disg">Mesafeli Satış Sözleşmesini)</a></label>
+                                </div>
+                                <div class="confirm" style="margin-bottom:30px">
+                                    <button type="submit" id="btnSubmit" disabled="disabled">
+                                        <i class="fa-solid fa-paper-plane"></i> HEMEN ÖDE
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxfooter">
+                <div class="boxlast">
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/4.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/13.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/8.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/10.png" alt="">
+                    </div>
+
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/9.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/7.png" alt="">
+                    </div>
+
+
+                    
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/14.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js?v.2.1"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js"></script>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-timepicker.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/sweetalert/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/alertifyjs/alertify.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#creditCardFormTest").validate({
+                errorElement: 'span',
+                errorClass: 'text-danger',
+                rules: {
+                    "name": {
+                        required: true,
+                    },
+                    "cardnumber": {
+                        required: true,
+                        minlength: 16
+                    },
+                    "expirationdate": {
+                        required: true,
+                    },
+                    "securitycode": {
+                        required: true,
+                        minlength: 3
+                    },
+                    "phone": {
+                        required: true,
+                        digits: true,
+                        minlength: 10
+                    },
+                },
+                messages: {
+                    "name": {
+                        required: "Ad-Soyad giriniz"
+                    },
+                    "cardnumber": {
+                        required: "Kredi kartı numarası giriniz.",
+                        minlength: "Kredi Kartı 16 haneli olmalıdır."
+                    },
+                    "expirationdate": {
+                        required: "Son kullanma tarihi giriniz",
+                    },
+                    "securitycode": {
+                        required: "CVV giriniz",
+                        minlength: "CVV 3 rakamdan oluşmaktadır"
+                    },
+                    "phone": {
+                        required: "Telefon numarası başında '0' olmadan giriniz",
+                        digits: "Rakamlardan oluşmalıdır",
+                        minlength: "10 haneli olmalıdır",
+                        maxlength: "En fazla 10 hane girebilirsiniz"
+                    },
+                }
+            })
+
+            var onlyLettersRule = document.getElementById('name');
+            onlyLettersRule.addEventListener("keyup", function () {
+                if (onlyLettersRule.value.match(/[^a-zA-Z' 'wığüşöçĞÜŞÖÇİ]/g)) {
+                    onlyLettersRule.value = this.value.replace(/[^a-zA-Z' 'wığüşöçĞÜŞÖÇİ]/g, '');
+                }
+            })
+
+            $("#phone").attr('maxlength', 10);
+            $('#phone').val("");
+            $('#phone').keyup(function (e) {
+                if (this.value[0] == 0)
+                    this.value = "";
+                if (this.value.length > this.maxLength)
+                    this.value = this.value.slice(0, this.maxLength);
+            });
+
+
+            $("#box3").prop('checked', true);
+            $("#btnSubmit").addClass("hovers");
+            $("#btnSubmit").removeAttr("disabled");
+
+            $("#box3").click(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#btnSubmit").addClass("hovers");
+                    $("#btnSubmit").removeAttr("disabled");
+
+                }
+                else if ($(this).prop("checked") == false) {
+                    alertify.notify('Lütfen Mesafeli Satış Sözleşmesini Onaylayınız', 'error', 5, function () { }).dismissOthers();
+                    $("#btnSubmit").removeClass("hovers");
+                    $("#btnSubmit").attr("disabled", "disabled");
+                }
+            })
+        });
+
+        function showLoading() {
+            Swal.fire({
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
+
+        function hideLoading() {
+            setTimeout(function () {
+                Swal.close();
+            }, 500);
+        }
+
+
+        function onBegin() {
+            $("#btnSubmit").removeClass("hovers");
+            $("#btnSubmit").attr("disabled", "disabled");
+        }
+
+        function onFailure() {
+            setTimeout(function () {
+                Swal.fire({
+                    title: '<p class="fs-4 text-danger">Opps!</p>',
+                    showConfirmButton: true,
+                    confirmButtonText: "Tamam",
+                    confirmButtonColor: "#dc3545",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                })
+            }, 1000)
+
+            $("#btnSubmit").addClass("hovers");
+            $("#btnSubmit").removeAttr("disabled");
+        }
+
+        function onSuccess(response) {
+            setTimeout(function () {
+                if (response.status === "ERROR") {
+                    alertify.notify(response.message, 'error', 5, function () { }).dismissOthers();
+                    setTimeout(function () {
+                        history.back();
+                    }, 5000)
+                }
+                else
+                    window.location.href = 'PaymentAccept'
+            }, 1000)
+        }
+    </script>
+</body>
+
+</html>

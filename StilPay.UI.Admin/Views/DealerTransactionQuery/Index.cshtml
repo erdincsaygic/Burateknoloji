@@ -1,0 +1,48 @@
+﻿@model DealerTransactionQueryEditViewModel
+
+@{
+    ViewData["Title"] = "İşlem Sorgulama";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body fs-5">
+                <form asp-controller="DealerTransactionQuery" asp-action="Search" asp-antiforgery="true" id="frmDef2"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccessRedirectUrl" data-ajax-complete="onComplete">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span class="text-danger">*</span> ID, İşlem Numarası veya İşlem ID :</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input name="queryParameter" id="queryParameterTxt" class="form-control" />
+                        </div>
+                        <div class="col-lg-2 mt-lg-0 mt-1">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;İşlemi Bul</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/dealertransactionquery/index.js"></script>
+    }

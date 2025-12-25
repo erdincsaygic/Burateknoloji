@@ -1,0 +1,171 @@
+﻿@{
+    ViewData["Title"] = "Fatura Listesi";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+
+                <div class="row">
+                   <div class="col-lg-4 offset-lg-2">
+                        <div class="input-group">
+                            <select class="form-select select2" id="slcCompanies"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Faturalar</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Fatura No</th>
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1 text-center">Fatura Başlangıç Tarihi</th>
+                            <th class="col-1 text-center">Fatura Bitiş Tarihi</th>
+                            <th class="col-3 text-center">Üye İşyeri</th>
+                            <th class="col-1 text-center">Net Tutar</th>
+                            <th class="col-1 text-center">KDV Tutarı</th>
+                            <th class="col-1 text-center">Toplam Tutar</th>
+                            <th class="col-1 text-center">Para Birimi</th>
+                            <th class="col-1 text-center">Döviz Kur</th>
+                            <th class="col-1 text-center">Oluşturan</th>
+                            <th class="col-1 text-center">Entegratör'e Gönder</th>
+                            <th class="col-1 text-center">İşlemler</th>
+                        </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="mdlEditInvoice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100" id="modalTitle">Fatura Düzenle</h5>
+            </div>
+            <form asp-controller="Invoice" asp-action="UpdateIncoive" asp-antiforgery="true" id="frm"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccessUpdate">
+
+                <input type="hidden" id="idInvoice" name="idInvoice" />
+
+                <div class="modal-body">
+                    <div class="row border-bottom mt-4">
+                        <div class="col-lg-4">
+                            <label class="form-label">Eski Net Tutar :</label>
+                            <span id="netAmountOld" class="form-control text-end" readonly></span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Eski KDV Tutar :</label>
+                            <span id="taxAmountOld" class="form-control text-end" readonly></span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Eski Toplam Tutar :</label>
+                            <span id="totalAmountOld" class="form-control text-end" readonly></span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Eski Döviz Kuru:</label>
+                            <span id="exchangeRateOld" class="form-control text-end" readonly></span>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-4">
+                        <div class="col-lg-4">
+                            <label class="form-label">Yeni Net Tutar :</label>
+                            <input class="form-control text-end" type="text" name="netAmount" id="netAmount" readonly />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" >Yeni KDV Tutar :</label>
+                            <input class="form-control text-end" type="text" name="taxAmount" id="taxAmount" readonly />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" ><span style="color:red">* </span>Yeni Toplam Tutar :</label>
+                            <input class="form-control text-end" type="text" name="totalAmount" id="totalAmount" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-4" id="divExchangeRate">
+                        <div class="col-lg-4">
+                            <label class="form-label">Döviz Kuru :</label>
+                            <input class="form-control text-end" type="text" name="exchangeRate" id="exchangeRate" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-custom" id="createWithdrawalRequestSubmitBtn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section js{
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/invoice/index.js"></script>
+    <script src="~/js/custom/numeric-format.js"></script>
+}

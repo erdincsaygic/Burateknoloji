@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Üye İşyeri Ödeme Havuzu";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Üye İşyeri Ödeme Havuzu Eşleşmeyen Bildirimler</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Banka</th>
+                            <th class="col-1 text-center">Gönderici Adı</th>
+                            <th class="col-1 text-center">Gönderici Iban</th>
+                            <th class="col-1 text-end">Gönderim Tutarı</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Dönüş Açıklama</th>
+                            <th class="col-2 text-center">İşlem Numarası</th>
+                            <th class="col-1 text-center">Durum</th>
+                            <th class="text-center">Detay</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Eşleştirmek İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerTransferPayPool" asp-action="Pairing" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" id="tpID" name="tpID" />
+                <input type="hidden" name="pyID" value="@ViewBag.PyID" />
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/dealertransferpaypool/pairingprocess.js"></script>
+}

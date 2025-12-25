@@ -1,0 +1,106 @@
+﻿@model EditViewModel<Support>
+
+@{
+    ViewData["Title"] = "Destek Talepleriniz";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Yeni Destek Talebi
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="text-center">Destek ekibimize ulaşmak için lütfen aşağıdaki formda bulunan "Mesajınız" bölümünü doldurarak "Gönder" butonuna tıklayınız.</p>
+                    </div>
+                    <form asp-controller="Support" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                          data-ajax="true" data-ajax-method="POST"
+                          data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                          data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                        <div class="row border-bottom mt-2">
+                            <div class="col-lg-1">
+                                <label class="form-label" asp-for="entity.Name"><span style="color:red">* </span>İşyeri :</label>
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" asp-for="entity.Name" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-1">
+                                <label class="form-label" asp-for="entity.Phone"><span style="color:red">* </span>Telefon :</label>
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-1">
+                                <label class="form-label" asp-for="entity.Email"><span style="color:red">* </span>Email :</label>
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" asp-for="entity.Email" readonly="readonly" />
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom mt-2">
+                            <div class="col-lg-1">
+                                <label for="text" class="form-label" asp-for="entity.Question"><span style="color:red">* </span>Mesajınız :</label>
+                            </div>
+                            <div class="col-lg-11">
+                                <div class="input-group">
+                                    <textarea type="text" class="form-control" asp-for="entity.Question" rows="3" maxlength="250"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-lg-2 offset-lg-10">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;Gönder</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Destek Talepleriniz</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Tarih</th>
+                            <th class="col-1 text-center">Soru | Cevap</th>
+                            <th class="col-10 text-center">İçerik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js {
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/select2/select2.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-jquery.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script type="text/javascript" src="~/js/views/support/index.js"></script>
+}

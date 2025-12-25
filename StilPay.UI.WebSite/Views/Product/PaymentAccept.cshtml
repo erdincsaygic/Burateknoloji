@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , user-scalable=no">
+    <title>StilPay | Ödeme Bildirimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css?v.2.1" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Giriş Yap</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Mağaza</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ürün Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ödeme Yönetimi Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Ödeme</div>
+                </div>
+            </div>
+
+            <div class="deneme">
+                <div class="slidercont" id="stepfinal">
+                    <div class="arrive">
+                        <p class="bold">Ödeme Sonucu </p>
+                    </div>
+
+                    <div class="boxbank" style="margin-top:30px">
+                        <div>
+                            <h3 class="" style="text-align:center !important;">İŞLEM BİLGİSİ</h3>
+                        </div>
+                    </div>
+                    <div class="arrive2" id="transactionStatusHeaderDiv">
+                        <p class="bold" id="transactionStatusHeader">İŞLEM BAŞARILI</p>
+                    </div>
+
+                    <div class="form">
+                        <div class="info">
+                            <div class="row">
+                                <div class="infobox">
+                                    <p class="text1">ÖDEME TARİHİ:</p>
+                                    <p class="text2">@DateTime.Today.ToString("dd MMMM yyyy")</p>
+                                </div>
+                                <div class="infobox">
+                                    <p class="text1">ÖDEME SAHİBİ:</p>
+                                    <p class="text2">STILPAY</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="infobox">
+                                    <p class="text1">ÖDEME TİPİ:</p>
+                                    <p class="text2 onay">KREDİ KARTI</p>
+                                </div>
+
+                                <div class="infobox">
+                                    <p class="text1">ÖDEME DURUMU:</p>
+                                    <p class="text2 onay" style="color:darkorange">Kontrol Ediliyor</p>
+                                </div>
+
+
+                            </div>
+                            <div class="row" style="margin-bottom:50px">
+                                <div class="infobox">
+                                    <p class="text1">ÖDEME SONUCU:</p>
+                                    <p class="text2 onay" style="color:darkorange" id="responseText">Kontrol Ediliyor</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxfooter">
+                <div class="boxlast">
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/4.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/13.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/8.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/10.png" alt="">
+                    </div>
+
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/9.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/7.png" alt="">
+                    </div>
+
+
+                    
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/14.webp" alt="">
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js?v.2.1"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js"></script>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-timepicker.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+</body>
+
+</html>

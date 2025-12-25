@@ -1,0 +1,364 @@
+@model AccountingSummaryEditViewModel
+
+
+@section css{
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/select2/select2-bootstrap-5-theme.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="card-header bg-white text-custom text-center fw-bold"> <u> @Model.AccountSummary.Creator </u> Tarafından <u> @Model.AccountSummary.CDate </u> Tarihinde Oluşturulan Rapor </div>
+<div class="row justify-content-center">
+    <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">
+        <div class="card-header bg-white text-custom text-center fw-bold">Banka Bakiyeleri (+) </div>
+        <div class="card-body">
+            <div class="row">
+
+                @{
+                    decimal totalAmount = Model.BankTransferAccountSummaryReportDetails.Sum(item => item.Balance);
+                }
+
+                <div class="card col-lg-12 border-1 border-custom me-2 ms-2 mt-2"> 
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Gelen Hesaplar </div>
+                    <div class="row card-body">
+                        @foreach (var item in Model.BankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).OrderBy(x => x.IDBank))
+                        {
+                            <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                                <div class="card-header bg-white text-custom text-center fw-bold"> @item.BankName </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="fw-bold text-center">
+                                            <span class="text-custom">@item.Balance ₺</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="card col-lg-12 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Giden Hesaplar </div>
+                    <div class="row card-body">
+                        @foreach (var item in Model.BankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).OrderBy(x => x.IDBank))
+                        {
+                            <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                                <div class="card-header bg-white text-custom text-center fw-bold"> @item.BankName </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="fw-bold text-center">
+                                            <span class="text-custom">@item.Balance ₺</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Toplam </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@totalAmount ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2 mt-2">
+        <div class="card-header bg-white text-custom text-center fw-bold"> Ödeme Kuruluşu Bakiyeleri (+) </div>
+        <div class="card-body">
+            <div class="row">
+
+                @{
+                    decimal totalccAmount = Model.CreditCardAccountSummaryReportDetails.Sum(item => item.Balance);
+                }
+
+                @foreach (var item in Model.CreditCardAccountSummaryReportDetails.OrderBy(x => int.Parse(x.PaymentInstitutionID)))
+                {
+                    <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                        <div class="card-header bg-white text-custom text-center fw-bold"> @item.PaymentInstitutionName </div>
+                        <div class="card-body">
+                            <div class="col-lg-12">
+                                <div class="fw-bold text-center">
+                                    <span class="text-custom">@item.Balance ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="card col-lg-2 mt-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Toplam </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@totalccAmount ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2 mt-2">
+        <div class="card-header bg-white text-custom text-center fw-bold"> Havale / EFT - Kredi Kartı - Çekim Talepleri Komisyon Kazançları (+) </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Havale </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.PaymentNotificationProfit ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Kredi Kartı </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.CreditCardPaymentNotificationProfit ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Yurt Dışı Kredi Kartı </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.ForeignCreditCardPaymentNotificationProfit ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Çekim Talebi </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.WithdrawalRequestProfit ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Gelir </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.IncomeAmount.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Toplam </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            @{
+                                decimal totalAmount2 = Model.AccountSummary.WithdrawalRequestProfit + Model.AccountSummary.PaymentNotificationProfit
+                                + Model.AccountSummary.CreditCardPaymentNotificationProfit + @Model.AccountSummary.IncomeAmount + Model.AccountSummary.ForeignCreditCardPaymentNotificationProfit;
+                            }
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@totalAmount2.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2 mt-2">
+        <div class="card-header bg-white text-custom text-center fw-bold"> Üye İşyerleri, Eşleşmeyen Bildirim ve Havuz Bakiyeleri (-) </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Üye İşyeri Bakiye </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.DealerTotalBalance ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Ödeme Havuzu Eşleşmeyen Tutar </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.UnmatchedPaymentNotificationBalance ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Kredi Kartı Manuel Havuzu Tutar </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.CreditCardPoolBalance ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Fraud Havuzu Tutar </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.FraudPoolBalance ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Toplam </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            @{
+                                decimal totalAmount3 = Model.AccountSummary.UnmatchedPaymentNotificationBalance + Model.AccountSummary.DealerTotalBalance + Model.AccountSummary.CreditCardPoolBalance + Model.AccountSummary.FraudPoolBalance;
+                            }
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@totalAmount3 ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2 mt-2">
+        <div class="card-header bg-white text-custom text-center fw-bold"> Toplam Net Kâr / Zarar Bilgileri </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Toplam Net </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.NetAmount ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Toplam Gider </div> 
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.ExpenseAmount.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Toplam İade Gideri </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.RebateExpenseProfitAmount.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Toplam Fraud Gideri </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.FraudExpenseProfitAmount.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Gider Olmasa </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                @{
+                                    decimal totalAmount4 = @Model.AccountSummary.NetAmount + @Model.AccountSummary.ExpenseAmount + @Model.AccountSummary.RebateExpenseProfitAmount + @Model.AccountSummary.FraudExpenseProfitAmount;
+                                }
+                                <span class="text-custom">@totalAmount4.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Önceki Rapordaki Toplam Net </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.PreviousReportNetAmount ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Kâr Dahil </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                @{
+                                    decimal totalAmount5 = @Model.AccountSummary.PreviousReportNetAmount + @Model.AccountSummary.Profit;
+                                }
+                                <span class="text-custom">@totalAmount5.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-lg-2 border-1 border-custom me-2 ms-2 mt-2 mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold"> Çıkan Fark </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="fw-bold text-center">
+                                <span class="text-custom">@Model.AccountSummary.Difference.ToString("0.00") ₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/bankaccount/index.js"></script>
+}

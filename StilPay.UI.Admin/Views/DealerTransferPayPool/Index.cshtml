@@ -1,0 +1,431 @@
+@{
+    ViewData["Title"] = "Üye İşyeri Ödeme Havuzu";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcBank">
+                            <option value="">Tümü / Banka Seç</option>
+                            @foreach (var companyBanks in ViewBag.CompanyBankAccounts)
+                            {
+                                <option value="@companyBanks.IDBank">@companyBanks.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcStatus">
+                            <option value="">Tümü / Eşleşme Durumu</option>
+                            <option value="2">Eşleşti</option>
+                            <option value="1">Eşleşmedi</option>
+                            <option value="3">İade Edildi</option>
+                            <option value="10">Riskli</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 mt-lg-0 mt-2">
+                        <button class="btn btn-custom" id="btnList" data-bs-toggle="modal" data-bs-target="#mdlSearchInBank"><i class="fa fa-bars"></i>&nbsp;&nbsp;Garanti Bankası İşlem Sorgula</button>
+                    </div>
+                </div>  
+
+
+                <div class="row mb-4 mt-2">
+                    <div class="col-lg-2 mt-2 me-2" >
+                        <button type="button" onclick="HideShow()" class="btn btn-sm btn-outline-dark">Detaylı Arama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i> </button>
+                    </div>
+                </div>
+
+                <div id="idFilter" style="display:none;">
+                    <div class="row mt-2">
+
+                        <div class="col-lg-2">
+                            <select class="form-select" id="slcFraudControl">
+                                <option value="">Fraud Kontrolüne Takıldı Mı ?</option>
+                                <option value="1">Evet</option>
+                                <option value="0    ">Hayır</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="form-select" id="slcResponseStatus">
+                                <option value="">Tümü / Cevap Durumu</option>
+                                <option value="0">Cevap Alınamadı</option>
+                                <option value="1">Bakiye Eklendi</option>
+                                <option value="2">Bakiye Eklenmedi / Red</option>
+                                <option value="3">Bakiye Eklenmedi / Hata</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="form-select" id="slcIsHaveReferenceNr">
+                                <option value="">Tümü / Referans Durumu</option>
+                                <option value="1">Referans No Var</option>
+                                <option value="0">Referans No Yok</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="form-label">
+                                        Başlangıç Saati
+                                    </label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" id="dtStartDateTime" value="00:00:00" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="form-label">
+                                        Bitiş Saati
+                                    </label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" id="dtEndDateTime" value="00:00:00" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="w-100 bg-custom border border-custom d-lg-flex flex-lg-row flex-lg-nowrap justify-content-lg-between align-items-lg-center">
+            <div class="col text-center">
+                <div class="w-100 py-1 text-white">Tarih Aralığı</div>
+                <div class="w-100 py-1 bg-white" id="divDate"></div>
+            </div>
+            <div class="col text-center">
+                <div class="w-100 py-1 text-white">Toplam Eşleşen</div>
+                <div class="w-100 py-1 bg-white" id="divMatches"></div>
+            </div>
+            <div class="col text-center">
+                <div class="w-100 py-1 text-white">Toplam Eşleşmeyen</div>
+                <div class="w-100 py-1 bg-white" id="divNotMatches"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Üye İşyeri Ödeme Havuzu</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Banka</th>
+                            <th class="col-1 text-center">Gönderici Adı</th>
+                            <th class="col-1 text-center">Gönderici Iban</th>
+                            <th class="col-1 text-end">Gönderim Tutarı</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Fraud Kontrol</th>
+                            <th class="col-2 text-center">Üye İşyeri</th>
+                            <th class="col-1 text-center">İşlem Numarası</th>
+                            <th class="col-1 text-center">Referans Numarası Var Mı ?</th>
+                            <th class="col-1 text-center">Callback Sonucu</th>
+                            <th class="col-2 text-center">Durum</th>
+                            <th class="col-2 text-center">İşlemler</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Rebate -->
+<div class="modal fade" id="mdlRebate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Ödemeyi İade Etmek İstiyor Musunuz ?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerTransferPayPool" asp-action="RebateUnmatched" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" name="tpId" id="tpId" value="" />
+                @*
+                <div class="row border-bottom mt-2">
+                <div class="modal-body">
+                <div class="row mt-2">
+                <div class="col-lg-12">
+                <select class="form-select" name="bankId" id="bankId" value="" >
+                <option value="">Banka Seçiniz..</option>
+                @foreach (var item in ViewBag.CompanyBankAccount as List<StilPay.Entities.Concrete.CompanyBankAccount>)
+                {
+                <option value=@item.IDBank>@item.Name</option>
+                }
+                </select>
+                </div>
+                </div>
+                </div>
+                </div> *@
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal SetStatus NotPairing -->
+<div class="modal fade" id="mdlSetStatusNotPairing" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Ödemeyi Eşleşmedi Durumuna Geri Almak İstiyor Musunuz ?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerTransferPayPool" asp-action="SetStatusNotPairing" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" name="tpId" id="tpId" value="" />
+                @*
+                <div class="row border-bottom mt-2">
+                <div class="modal-body">
+                <div class="row mt-2">
+                <div class="col-lg-12">
+                <select class="form-select" name="bankId" id="bankId" value="" >
+                <option value="">Banka Seçiniz..</option>
+                @foreach (var item in ViewBag.CompanyBankAccount as List<StilPay.Entities.Concrete.CompanyBankAccount>)
+                {
+                <option value=@item.IDBank>@item.Name</option>
+                }
+                </select>
+                </div>
+                </div>
+                </div>
+                </div> *@
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal PairingWithDealer -->
+<div class="modal fade" id="mdlPairingWithDealer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Ödemeyi Eşleştirmek Etmek İstiyor Musunuz ?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerTransferPayPool" asp-action="PairingWithDealer" asp-antiforgery="true" id="frmPairingWithDealer"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" name="tpId" id="tpId" value="" />
+
+                <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <select class="form-select" name="dealerId" id="dealerId" value="">
+                                    <option value="">Üye İşyeri Seçiniz..</option>
+                                    @foreach (var item in ViewBag.Companies as List<StilPay.Entities.Concrete.Company>)
+                                    {
+                                        <option value=@item.ID>@item.Title</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Search Bank -->
+<div class="modal fade" id="mdlSearchInBank" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header d-flex bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Garanti Bankasından İşlem Sorgula</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5 mt-lg-0 mt-2">
+                                <div class="input-group">
+                                    <span style="margin-right:10px; margin-top:5px;">
+                                        Başlangıç Tarihi
+                                    </span>
+                                    <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDateSearchInBank" />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-light d-block">
+                                            <i class="fa fa-calendar-days"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-5">
+                                <div class="input-group">
+                                    <span style="margin-right:10px; margin-top:5px">
+                                        Başlangıç Saati
+                                    </span>
+                                    <input type="text" id="dtStartDateTimeSearchInBank" class="form-control" />
+  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5 mt-lg-0 mt-2">
+                                <div class="input-group">
+                                    <span style="margin-right:45px; margin-top:5px">
+                                        Bitiş Tarihi
+                                    </span>
+                                    <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDateSearchInBank" />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-light d-block">
+                                            <i class="fa fa-calendar-days"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 ">
+                                <div class="input-group">
+                                    <span style="margin-right:45px; margin-top:5px">
+                                        Bitiş Saati
+                                    </span>
+                                    <input type="text" id="dtEndDateTimeSearchInBank" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end">
+                        <button class="btn btn-custom col-lg-2 mt-2" id="btnSearchInBank"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Sorgula</button>
+                        </div>
+
+
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <div class="card border-1 border-custom">
+                                    <div class="card-header bg-custom text-white">Bankada Olup Havuzda Olmayan İşlemler</div>
+                                    <div class="card-body table-responsive">
+                                    <table id="TableNotInThePool" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr class="bg-custom text-white">
+                                                    <th class="col-1 text-center">İşlem Tarihi</th>
+                                                    <th class="col-1 text-center">Banka</th>
+                                                    <th class="col-1 text-center">Gönderici Adı</th>
+                                                    <th class="col-1 text-end">Gönderim Tutarı</th>
+                                                    <th class="col-2 text-center">Açıklama</th>
+                                                    <th class="col-2 text-center">İşlemler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/dealertransferpaypool/index.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+}

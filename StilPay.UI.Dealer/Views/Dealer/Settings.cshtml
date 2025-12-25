@@ -1,0 +1,475 @@
+﻿@model CompanyEditViewModel
+
+@{
+    ViewData["Title"] = "Ayarlar";
+}
+
+@section css{
+    <link href="~/css/bootstrap/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Havale-EFT için iFrame Entegrasyonu ve Geri Bildirim Api Ayarları
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="Dealer" asp-action="SaveIntegration" asp-antiforgery="true"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="Integration.ID" />
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-1">
+                            <label class="form-label">iFrame Url :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" value="https://stilpay.com/panel/paymentnotification" readonly="readonly" />
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="form-label">Servis Id :</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control" asp-for="Integration.ServiceID" readonly="readonly" />
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="form-label">Gizli Anahtar :</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control" asp-for="Integration.SecretKey" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-1">
+                            <label class="form-label">Site Adresi :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" asp-for="Integration.SiteUrl" maxlength="100" />
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="form-label">Callback Url :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" asp-for="Integration.CallbackUrl" maxlength="100" />
+                        </div>
+                    </div>
+                    <div class="row border-bottom">
+                        <div class="col-lg-1">
+                            <label class="form-label">Çekim Talebi Callback Url :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" asp-for="Integration.WithdrawalRequestCallback" maxlength="100" />
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="form-label">Yönlendirilecek Url :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" asp-for="Integration.RedirectUrl" maxlength="100" />
+                        </div>
+                    </div>
+@*                     <div class="row border-bottom">
+                        <div class="col-lg-1">
+                            <label class="form-label">IP Adresleri :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" asp-for="Integration.IPAddress" maxlength="50" />
+                        </div>
+                    </div> *@
+                    <div class="row mt-3">
+                        <div class="col-lg-2 offset-lg-5">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Kredi Kartı Ödeme Servisi Ayarı
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var item in Model.CompanyPaymentInstitutions)
+                    {
+                        <div class="col-lg-2 mb-2">
+                            <div class="card border border-light border-4 bg-white">
+                                <div class="card-body">
+                                    <label class="w-100 text-center">@item.PaymentInstitutionName</label>
+
+                                    <form asp-controller="Dealer" asp-action="UpdateCompanyPaymentInstitution" asp-antiforgery="true" id="@("frmPaymentInstitutionsActive"+item.PaymentInstitutionID)"
+                                          data-ajax="true" data-ajax-method="POST"
+                                          data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                                        <input type="hidden" asp-for="@item.PaymentInstitutionID" name="paymentInstitutionId" />
+                                        <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@item.IsActive" name="value" onchange="$('@("#frmPaymentInstitutionsActive"+item.PaymentInstitutionID)').submit()">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Havale-EFT için iFrame Banka Durumları
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var bank in Model.CompanyBanks)
+                    {
+                        <div class="col-lg-2 mb-2">
+                            <div class="card border border-2 bg-white border-success">
+                                <div class="card-body">
+                                    <label class="w-100 text-center">@bank.Bank</label>
+                                    <label class="w-100 text-center fw-bold fs-5 text-success">@(Html.Raw("<i class='fa-solid fa-check'></i>"))</label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Ödeme Transfer Ayarları
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="small">
+                            Hesabınızda bulunan bakiyenin banka hesabınıza transferini bekletebilir veya transfer alt limiti belirleyebilirsiniz. Alt limit belirlerseniz, bakiyeniz belirlediğiniz tutarı aştığında hesabınıza aktarılır. Bakiyenizi beklemeye alabilirsiniz, böylece müşterilerinize iade yaparken bakiye yetersiz sorunu yaşamazsınız.
+                        </span>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+
+                        <div class="card border border-light border-4">
+
+                            <div class="card-header text-center border-2">
+                                TL Transfer Ayarları
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Bakiyem:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Alt Bakiyem:</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-center" />
+                                        <span class="input-group-append">
+                                            <span class="input-group-text bg-light d-block">
+                                                TL
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+
+                        <div class="card border border-light border-4">
+
+                            <div class="card-header text-center border-2">
+                                USD Transfer Ayarları
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Bakiyem:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Alt Bakiyem:</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-center" />
+                                        <span class="input-group-append">
+                                            <span class="input-group-text bg-light d-block">
+                                                USD
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+
+                        <div class="card border border-light border-4">
+
+                            <div class="card-header text-center border-2">
+                                EURO Transfer Ayarları
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Bakiyem:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Alt Bakiyem:</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-center" />
+                                        <span class="input-group-append">
+                                            <span class="input-group-text bg-light d-block">
+                                                EURO
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+
+                        <div class="card border border-light border-4">
+
+                            <div class="card-header text-center border-2">
+                                GBP Transfer Ayarları
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Bakiyem:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-height="25" data-width="100%" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary">
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Alt Bakiyem:</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-center" />
+                                        <span class="input-group-append">
+                                            <span class="input-group-text bg-light d-block">
+                                                GBP
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row mt-3">
+                    <div class="col-lg-2 offset-lg-5">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-custom">Transfer Ayarlarını Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Mağaza Durum Kontrolü
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-9">
+                        <span class="small">
+                            Mağazanızı ihtiyaç duyduğunuz zaman test moduna alabilirsiniz. Canlı Mod seçimini Test Modu konumuna getirin ve ardından Değişiklikleri Kaydet butonuna tıklayın.
+                            <br />
+                            Önemli Bilgi: Mağazanız Test Modu durumundayken gerçek ödeme alamazsınız ve yapılan ödemeler muhasebeleşmez.
+                        </span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="form-label float-lg-end">Mağaza Durumu :</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="checkbox" data-toggle="toggle" data-on="Canlı Mod" data-off="Kapalı Mod" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Mağaza Logo Yükleme
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="file" class="form-control form-control-sm" />
+                        <span class="small">Logo boyutu en fazla 300px X 100px ölçülerinde, PNG formatında olmalıdır.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Bildirim Ayarları
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-6 offset-lg-3">
+
+                        <div class="card border border-light border-4">
+
+                            <div class="card-header text-center border-2">
+                                Mağaza E-mail Bildirimi
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <input type="checkbox" data-toggle="toggle" data-on="Gönderilsin" data-off="Gönderilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Müşteri Hizmetleri E-mail Adresi
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="small">Müşterilerinizden gelebilecek şikayet ve itirazlar hakkında bildirimler aşağıdaki e-mail adresine gönderilecektir.</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    Kaydet
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mt-lg-0 mt-2">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Muhasabe E-mail Adresi
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="small">Ödeme hizmeti komisyonu için oluşturulan aylık e-faturanız aşağıdaki e-mail adresine gönderilecektir.</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    Kaydet
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/dealer/settings.js"></script>
+    <script src="~/js/bootstrap/bootstrap-toggle.js"></script>
+}

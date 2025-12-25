@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "iFrame Kredi Kartı";
+}
+
+
+<div id="iframe-kullanimi">
+    <h2 class="text-center">iFrame - Kredi Kartı Ödeme Bildirimi</h2>
+    <p>StilPay Nakit Ödeme ve Banka Transfer hizmeti ile StilPay platformuna kabul edilen ödemelerin üye işyerine bildirimini sağlayan temel web hizmetleridir . Üye işyeri kendisine ait ödemeler ile ilgili tüm bilgilendirmeleri bu hizmetler üzerinden alır. Hizmetlerin bildirim yapacağı söz konusu URL entegrasyon sürecinde üye iş yeri tarafından StilPay'e bildirilir. </p>
+    <p>Üye İşyeri ayarlar menüsünden kendisine özel Servis-ID ve Gizli-Anahtar ile işlemleri gerçekleştirir. iFrame çağrımına gerekmekte olan <strong>frame_id</strong> değerini, Api-Url'e Servis-ID, MD5 ile şifrelenmiş Gizli Anahtarı ve Data <small>(İşlem-ID, Ödeme-Tutarı)</small> değerlerini parametre geçerek post eder ve response olarak alır. Mevcut transaction değeri ile 50sn içinde frame çağrımını yapılmalıdır.</p>
+    <div class="alert alert-secondary">
+
+        <h5>Canlı Ortam URL Bilgileri</h5>
+        <div class="url-content">
+            <h6>&gt; iFrame Kredi Kartı (GET)</h6>
+            &nbsp;&nbsp;&nbsp;&nbsp;https://stilpay.com/panel/paymentnotification/creditCard?service_id=?&frame_id=?
+        </div>
+
+        <br />
+
+        <h5>Test Ortam URL Bilgileri</h5>
+        <div class="url-content">
+            <h6>&gt; iFrame Sadece Kredi Kartı (GET)</h6>
+            &nbsp;&nbsp;&nbsp;&nbsp;http://stilpay.stilpay.com/panel/paymentnotification/creditCard?service_id=?&frame_id=?
+        </div>
+
+    </div>
+    <div class="alert alert-secondary">
+        <h6>&gt; iFrame Kredi Kartı (GET)</h6>
+        <br />
+
+        <img src="/integration/img/postman-iframe-creditCard.png" />
+    </div>
+    <pre><code>
+    <b>REQUEST:</b>
+        http://stilpay.stilpay.com/panel/paymentnotification/creditCard?service_id=?&frame_id=?
+    </code></pre>
+
+    <div class="alert alert-secondary">
+        <h6>&gt; iFrame Kredi Kartı (GET) Response</h6>
+        <br />
+
+        <img src="/integration/img/iframe-creditCard.png" />
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-secondary text-white">
+                <th>Parametre</th>
+                <th>Tip</th>
+                <th>Açıklama</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>creditCard?</td>
+                <td>String - Zorunlu</td>
+                <td>Sadece Kredi Kartı iFrame'ini Açar</td>
+            </tr>
+            <tr>
+                <td>service_id</td>
+                <td>String - Zorunlu - Uzunluk(4)</td>
+                <td>Üye İşyeri Servis ID</td>
+            </tr>
+            <tr>
+                <td>frame_id</td>
+                <td>String - Zorunlu </td>
+                <td>Frame ID </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Müşteri Bilgileri İle Detaylı Sorgulama";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+@* <div class="row">
+    <div class="col-lg-12">
+        <div class="card border border-danger text-danger">
+            <div class="card-header bg-white text-center fw-bold">
+                Kredi Kartı İşlemleri Sorgulama Ekranı Önemli Bilgiler
+            </div>
+            <div class="card-body">
+                <i class="fa fa-circle-question fs-5"></i>
+                <span>
+                    Listeme Stilpay sisteminde kayıtlı <strong>tüm veriler üzerinden </strong> yapılacağı için parametre seçimini dikkatli yapınız.
+                </span><br />
+                <i class="fa fa-circle-question fs-5"></i>
+                <span>
+                    Sadece <strong>kredi kartı ve yabancı kredi kartı</strong> verilerini sorgulamada kullanılabilir.
+                </span><br />
+                <i class="fa fa-circle-question fs-5"></i>
+                <span> Gönderici ad soyad, gönderici cep telefonu bilgileri son kullanıcının <strong>iframe ekranında girdiği bilgilere göre</strong> verileri listeler. Kayıtlı üye bilgilerine göre listeleme için <strong>'Üye Bazlı Sorgulama'</strong> ekranını kullanınız.</span> <br />
+                <i class="fa fa-circle-question fs-5"></i>
+                <span>
+                    Kart numarası bilgisini <strong>'4543********0113'</strong> formatında yıldızlı olarak veya <strong>ilk 4 ve son 4 hanesini '0000-0000' </strong> formatında girebilirsiniz.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <label for="slcStatus" class="form-label">Üye İşyeri</label>
+                        <select class="form-select select2" id="slcCompanies"></select>
+                    </div>
+
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <label for="slcStatus" class="form-label">İşlem Durumu</label>
+                        <select class="form-select" id="slcStatus">
+                            <option value="">Tümü</option>
+                            <option value="1">Bekliyor</option>
+                            <option value="2">Onaylandı</option>
+                            <option value="3">İptal Edildi</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <label for="txtPhone" class="form-label">Müşteri Ad Soyad</label>
+                        <input type="text" class="form-control" id="txtCustomerName" placeholder="Müşteri Ad Soyad">
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <label for="txtPhone" class="form-label">Müşteri Cep Telefonu</label>
+                        <input type="text" class="form-control" id="txtCustomerPhone" placeholder="Müşteri Cep Telefonu">
+                    </div>
+
+                    
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <label for="txtPhone" class="form-label">Müşteri Email</label>
+                        <input type="text" class="form-control" id="txtCustomerEmail" placeholder="Müşteri Email">
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2 d-flex align-items-end">
+                        <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Kredi Kartı İşlemleri Sorgulama</div>
+            <div class="card-body table-responsive">
+                <table id="TableCard" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">İşlem Numarası</th>
+                            <th class="col-1 text-center">Üye İşyeri İşlem Numarası</th>
+                            <th class="col-1 text-center">Üye İşyeri</th>
+                            <th class="col-1 text-center">Müşteri Adı</th>
+                            <th class="col-1 text-center">Müşteri Telefon</th>
+                            <th class="col-1 text-center">Müşteri Email</th>
+                            <th class="col-1 text-center">Ödeme Tipi</th>
+                            <th class="col-1 text-end">İşlem Tutarı</th>
+                            <th class="col-1 text-center">Durum</th>
+                            <th class="col-1 text-center">İade Talebi Var Mı ?</th>
+                            <th class="col-1 text-center">İşlem Detayı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/dealertransactionquery/customerinfodetailedsearch.js"></script>
+}

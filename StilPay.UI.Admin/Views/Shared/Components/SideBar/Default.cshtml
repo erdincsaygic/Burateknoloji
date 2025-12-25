@@ -1,0 +1,620 @@
+﻿@model MenuInformation
+
+<nav id="sidebar">
+
+    <div class="sidebar-header text-center">
+ @*       <h3>StilPay</h3>*@
+        <img src="~/img/logo/logo.png" alt="">
+        <strong>StilPay</strong>
+        <h6>Merhaba</h6>
+        <h6>@Model.Name</h6>
+        <small>
+            Son Girişi Tarihiniz:<br />
+            30.06.2022 | 23.111.222.121
+        </small>
+    </div>
+
+
+    <ul class="list-unstyled components">
+
+        <li>
+            <a class="p-2" asp-controller="Main" asp-action="Index">
+                <i class="fa-solid fa-house"></i>
+                Anasayfa
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Process")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="process" asp-action="index">
+                    <i class="fa-solid fa-sliders"></i>
+                    İşlemler
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PendingProcess")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#pending-process-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-list-check"></i>
+                    Onay Bekleyen İşlemler <span class="badge bg-danger float-end d-none" id="badgetotalPending"></span>
+                </a>
+                <div class="collapse" id="pending-process-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="PaymentNotification" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Ödeme Bildirimleri <span class="badge bg-danger float-end d-none" id="badgepaymentNotifications"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="CreditCardPaymentNotification" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Kredi Kartı Ödeme Bildirimleri <span class="badge bg-danger float-end d-none" id="badgecreditCardPaymentNotifications"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="ForeignCreditCardPaymentNotification" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Yurt Dışı Kredi Kartı Ödeme Bildirimleri <span class="badge bg-danger float-end d-none" id="badgeforeignCreditCardPaymentNotifications"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerPaymentRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Ödeme Bildirimleri <span class="badge bg-danger float-end d-none" id="badgecompanyPaymentRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberPaymentRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Ödeme Bildirimleri <span class="badge bg-danger float-end d-none" id="badgememberPaymentRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerWithdrawalRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Çekim Talepleri <span class="badge bg-danger float-end d-none" id="badgecompanyWithdrawalRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberWithdrawalRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Çekim Talepleri <span class="badge bg-danger float-end d-none" id="badgememberWithdrawalRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerRebateRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri İade Talepleri <span class="badge bg-danger float-end d-none" id="badgecompanyRebateRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberMoneyTransferRequest" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Para Transfer Talepleri <span class="badge bg-danger float-end d-none" id="badgememberMoneyTransferRequests"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Application" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Başvuruları <span class="badge bg-danger float-end d-none" id="badgecompanyApplications"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Dealer")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#dealer-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-building-user"></i>
+                    Üye İşyerleri
+                </a>
+                <div class="collapse" id="dealer-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Dealer" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Listesi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerPaymentTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Ödeme Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerCreditCardTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Kredi Kartı Ödeme Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerForeignCreditCardTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Yurt Dışı Kredi Kartı Ödeme Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerWithdrawalTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Çekim Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerRebateTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri İade Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransferPayPool" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Ödeme Havuzu
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerWithdrawalPool" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Çekim Talebi ve İade Havuzu
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerCreditCardPayPool" asp-action="PayPool">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Kredi Kartı Ödeme Havuzu
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerFraudPool" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Fraud Havuzu
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerCreditCardPayPool" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Kredi Kartı Ödemesi Manuel Havuz
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerBlock" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Blokeler
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Dealer")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#query-service-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Sorgulama Servisleri
+                </a>
+                <div class="collapse" id="query-service-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">        
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransactionQuery" asp-action="Index">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Üye İşyeri İşlem No İle Sorgulama
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransactionQuery" asp-action="CreditCardDetailedSearch">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Kredi Kartı İşlemleri Sorgulama
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransactionQuery" asp-action="TransferDetailedSearch">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Havale ve Ödeme Havuzu İşlemleri Sorgulama
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransactionQuery" asp-action="CustomerInfoDetailedSearch">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Müşteri Bilgileri İle Sorgulama
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Member")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#member-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i>
+                    Bireysel Üyeler
+                </a>
+                <div class="collapse" id="member-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Member" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel  Üye Listesi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberPaymentTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Ödeme Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberWithdrawalTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Çekim Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Member" asp-action="RebateTransactions">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye İade Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberMoneyTransferTransaction" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Para Transfer Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="MemberType" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Bireysel Üye Tipleri
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Invoice")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#invoice-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Fatura Takibi
+                </a>
+
+                <div class="collapse" id="invoice-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+@*                      <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="DealerTransaction" asp-action="UnbilledTransactions">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                İşlemler
+                            </a>
+                        </li> *@
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Invoice" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Faturalar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Support")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#support-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-headset"></i>
+                    Destek Talepleri <span class="badge bg-danger float-end d-none" id="badgesupports"></span>
+                </a>
+                <div class="collapse" id="support-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Support" asp-action="Pending">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Açık Destek Talepleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Support" asp-action="Done">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Kapalı Destek Talepleri
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Accounting")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#accounting-report-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-file-contract"></i>
+                    Muhasebe Raporları
+                </a>
+                <div class="collapse" id="accounting-report-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountingReport" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Raporlar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountingReport" asp-action="BankTransactions">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Banka Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountingReport" asp-action="CreditCardTransactions">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Ödeme Kuruluşu Hareketleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountSummary" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                StilPay Hesap Özeti
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountSummary" asp-action="GetDataMonthlyAccountSummary">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                StilPay Aylık Hesap Özeti
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="AccountSummary" asp-action="DealerAccountSummary">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Bazlı Hesap Özeti
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="ProgressPaymentCalendar" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                StilPay Hakediş Takvimi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="CompanyProgressPaymentCalendar" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Üye İşyeri Hakediş Takvimi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Blog")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#blog-collapse" aria-expanded="false">
+                    <i class="fa-brands fa-microblog"></i>
+                    Blog Yönetimi
+                </a>
+                <div class="collapse" id="blog-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Blog" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Blog Listesi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="BlogCategory" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Blog Kategorileri
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Blog")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#slider-collapse" aria-expanded="false">
+                    <i class="fa-regular fa-image"></i>
+                    Slider Yönetimi
+                </a>
+                <div class="collapse" id="slider-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Slider" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Slider Listesi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Dashboard")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="DashboardManagement" asp-action="Index">
+                    <i class="fa-solid fa-bars-progress"></i>
+                    Anasayfa Yönetimi
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Announcement")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#announcement-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    Duyurular ve Bildirimler
+                </a>
+                <div class="collapse" id="announcement-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="p-2" asp-controller="Announcement" asp-action="Index">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                Duyurular
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Mail" asp-action="SendMail">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Mail Gönder
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Administrator")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    Admin Yönetimi ve Log
+                </a>
+                <div class="collapse" id="admin-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Todo" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Sistem İyileştirmeleri Bildirimleri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Administrator" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Adminler
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Administrator" asp-action="InOut">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Admin Giriş-Çıkış
+                            </a>
+                        </li>
+                       <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="CallbackResponseLog" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Callback Logları
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Mail" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Mail Şablonları
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="Mail" asp-action="GetData">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Mail Logları
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("SystemSetting")) != null)
+        {
+            <li>
+                <a class="btn btn-toggle collapsed p-2" data-bs-toggle="collapse" data-bs-target="#system-setting-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    Sistem Ayarları
+                </a>
+                <div class="collapse" id="system-setting-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small">
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="SystemSetting" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Genel Ayarlar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="PaymentTransferPoolDescriptionControl" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Ödeme Bloke Ayarları
+                            </a>
+                        </li>
+                        <li>
+                            <a class="ps-3 py-2 pe-1" asp-controller="PublicHoliday" asp-action="Index">
+                                <i class="fa-solid fa-hand-point-right"></i>
+                                Tatil Gün Ayarları
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+        <li>
+            <a class="p-2" asp-controller="Login" asp-action="LogOut">
+                <i class="fa-solid fa-door-open"></i>
+                Çıkış
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+    </ul>
+
+</nav>

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>StilPay | @ViewData["Title"]</title>
+
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon" />
+    <link rel="stylesheet" href="~/areas/panel/css/fontawesome/font-awesome.all.min.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/sidebars/sidebars.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/sweetalert/sweetalert2.min.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/animate/animate.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify-default.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/views/core.css" />
+
+    @RenderSection(name:"css", required:false)
+
+</head>
+<body>
+
+    @{
+        await Html.RenderPartialAsync("_Header");
+    }
+
+    <div class="container-fluid">
+        <main role="main">
+            <div class="wrapper">
+
+                @await Component.InvokeAsync("SideBar")
+
+                <div id="content">
+
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="container-fluid">
+                            <button type="button" class="btn btn-custom d-lg-none d-flex" id="sidebarCollapse">
+                                <span class="fa-solid fa-right-left"></span>
+                            </button>
+
+                            <button type="button" class="btn btn-custom d-lg-none d-flex ml-auto" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                                <i class="fa-solid fa-align-right"></i>
+                            </button>
+
+                            <div class="collapse navbar-collapse px-lg-5" id="collapsibleNavbar">
+                                <ul class="nav navbar-nav m-auto">
+                                    <li class="nav-item me-4 dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Ürünler/Çözümler</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="ps-3">
+                                                <a class="nav-link" target="_blank" asp-area="" asp-controller="Urunler" asp-action="Index">Havale/EFT</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" target="_blank" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" target="_blank" asp-area="" asp-controller="Entegrasyon" asp-action="Index">Entegrasyon</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" target="_blank" asp-area="" asp-controller="IsOrtaklarimiz" asp-action="Index">İş Ortaklarımız</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" target="_blank" asp-area="" asp-controller="Hakkimizda" asp-action="Index">Hakkımızda</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" target="_blank" asp-area="" asp-controller="Iletisim" asp-action="Index">İletişim</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div id="contentbody" style="width:99.5%;">
+                        @RenderBody()
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/bootstrap/bootstrap-bundle.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/fontawesome/font-awesome.all.min.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/sidebars/sidebars.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/sweetalert/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/alertifyjs/alertify.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/views/general.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/views/core.js"></script>
+
+    @RenderSection("js", required: false)
+
+</body>
+</html>

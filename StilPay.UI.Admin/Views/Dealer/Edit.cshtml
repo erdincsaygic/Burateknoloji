@@ -1,0 +1,2099 @@
+@using Newtonsoft.Json;
+@model CompanyEditViewModel
+
+@{
+    ViewData["Title"] = "Üye İşyeri";
+}
+
+@section css{
+
+    <link href="~/css/bootstrap/bootstrap-toggle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Dealer" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+            <input type="hidden" id="jsonCompanyUsers" value="@JsonConvert.SerializeObject(Model.CompanyUsers)" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="d-flex flex-row flex-nowrap justify-content-between align-items-center mt-2">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#main">Üye İşyeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#setting">Ayarlar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#fraudSetting">Fraud Ayarları</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#userList" onclick="initTable()">Kullanıcı Listesi</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab-content">
+    <div class="tab-pane active" id="main">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Bakiye Bilgileri</div>
+                    <div class="card-body">
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Toplam Bakiye :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Balance.TotalBalance.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <button type="button" class="form-control btn btn-custom" id="mdlCreateWithdrawalRequestBtn">Çekim Bildirimi Oluştur</button>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Kullanılabilir Bakiye :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Balance.UsingBalance.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlUsingBalanceBtn">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Blokedeki Bakiye :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Balance.BlockedBalance.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-dark" asp-controller="DealerBlock" asp-action="Index" target="_blank">İncele</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Eksi Bakiye Limit :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Balance.NegativeBalance.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlNegativeBalanceLimitBtn">Düzenle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Üye Durum :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-center" id="statusFlag" value="@(Model.entity.StatusFlag ? "Aktif" : "Pasif")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlCompanyStatusBtn">Düzenle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-custom bg-white mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Komisyon Oranları</div>
+                    <div class="card-body">
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Kredi Kartı Oranı :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Commission.CreditCardRate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" onclick="showMdlCommission(1)">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Tosla Oranı :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Commission.ToslaRate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" onclick="showMdlCommission(5)">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Yurt Dışı Kredi Kartı Oranı :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Commission.ForeignCreditCardRate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" onclick="showMdlCommission(4)">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Havale/EFT Oranı :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Commission.TransferRate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" onclick="showMdlCommission(2)">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-lg-3">
+                                <label class="form-label">Mobil Ödeme Oranı :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.Commission.MobilePayRate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" onclick="showMdlCommission(3)">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Bilgileri</div>
+                    <div class="card-body">
+                        <form asp-controller="Dealer" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                            <input type="hidden" asp-for="entity.ID" />
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Adı Soyadı :</label></div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.Name" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Şirket Ünvanı :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.Title" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Telefon No :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.Phone" maxlength="11" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Email :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.Email" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Faturada Gözükecek Ünvan :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.InvoiceTitle" maxlength="500" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Vergi Dairesi :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.TaxOffice" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Vergi No :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.TaxNr" maxlength="11" />
+                                </div>
+                            </div>
+
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>İl :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.City" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>İlçe :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.District" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Adres :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.Address" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Yurt Dışı Adresi Mi? :</label></div>
+
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="entity.IsAbroad">
+                                        <option value="false">Hayır</option>
+                                        <option value="true">Evet</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Hakediş Banka Hesap Sahibi :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.ProgressPaymentAccountHolder" />
+                                </div>
+                            </div>
+                            
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Hakediş Bankası IBAN :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="entity.ProgressPaymentIban" />
+                                </div>
+                            </div>
+
+@*                             <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Yurt Dışı Döviz Paneli Mi ? :</label></div>
+
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="entity.IsExchangeCreditCardPanel" onchange="isExchangeCreditCardPanelChange(this)">
+                                        <option value="false">Hayır</option>
+                                        <option value="true">Evet</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom" id="visibleCurrencyCode" @(Model.entity.IsExchangeCreditCardPanel ? "" : "hidden")>
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Para Birimi :</label></div>
+
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="entity.CurrencyCode">
+                                        <option value="">Seçiniz</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                            </div> *@
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Ortalama Aylık Ciro :</label></div>
+
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="entity.MonthlyGiro">
+                                        <option value="">Seçiniz</option>
+                                        <option value="1000 - 9999">1000 - 9999</option>
+                                        <option value="10000 - 49999">10000 - 49999</option>
+                                        <option value="50000 - 99999">50000 - 99999</option>
+                                        <option value="100000+">100000+</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-lg-3 offset-lg-9">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom">Güncelle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <div class="row border-bottom">
+                            <div class="col-lg-2 mt-lg-0 mt-2 mb-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.IdentityFrontSideStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="IdentityFrontSide" target="_blank">
+                                        Kimlik Ön Yüzü
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.IdentityBackSideStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="IdentityBackSide" target="_blank">
+                                        Kimlik Arka Yüzü
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.TaxPlateStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="TaxPlate" target="_blank">
+                                        Vergi Levhası
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.SignatureCircularsStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="SignatureCirculars" target="_blank">
+                                        İmza Sirküleri
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.TradeRegistryGazetteStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="TradeRegistryGazette" target="_blank">
+                                        Ticari Sicil Gazetesi
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <a class="btn btn-block btn-secondary @Model.entity.AgreementStatus" asp-action="ShowFile" asp-route-id="@Model.entity.ID" asp-route-name="Agreement" target="_blank">
+                                        Kullanıcı Sözleşmesi
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-custom bg-white mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Otomatik Havale - EFT Tutarı Limiti</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label class="form-label">Tutar :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.entity.AutoTransferLimit.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlAutoTransferLimitBtn">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-custom bg-white mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Otomatik Çekim Tutarı Limiti</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label class="form-label">Tutar :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.entity.AutoWithdrawalLimit.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlAutoWithdrawalLimitBtn">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-custom bg-white mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Otomatik Kredi Kartı Tutarı Limiti</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label class="form-label">Tutar :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.entity.AutoCreditCardLimit.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlAutoCreditCardLimitBtn">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-custom bg-white mt-2">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Otomatik Yurt Dışı Kredi Kartı Tutarı Limiti</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label class="form-label">Tutar :</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control bg-light text-end" value="@Model.entity.AutoForeignCreditCardLimit.ToString("n2")" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-3 my-lg-0 my-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-custom" id="mdlAutoForeignCreditCardLimitBtn">Güncelle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="tab-pane fade" id="setting">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Havale-EFT için iFrame Entegrasyonu ve Geri Bildirim Api Ayarları
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Dealer" asp-action="SaveIntegration" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                              data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                            <input type="hidden" asp-for="Integration.ID" />
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-1">
+                                    <label class="form-label">iFrame Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" value="https://stilpay.com/panel/paymentnotification" readonly="readonly" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="form-label">Servis Id :</label>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control" asp-for="Integration.ServiceID" readonly="readonly" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="form-label">Gizli Anahtar :</label>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control" asp-for="Integration.SecretKey" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-1">
+                                    <label class="form-label">Site Adresi :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.SiteUrl" maxlength="100" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="form-label">Yönlendirilecek Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.RedirectUrl" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-1">
+                                    <label class="form-label">Callback Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.CallbackUrl" maxlength="100" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="form-label">Auto Callback Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.AutoCallbackUrl" maxlength="100" />
+                                </div>                            
+                            </div>
+                            <div class="row border-bottom">                         
+                                <div class="col-lg-1">
+                                    <label class="form-label">Çekim Talebi Callback Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.WithdrawalRequestCallback" maxlength="100" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <label class="form-label">Çekim Talebi Auto Callback Url :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.AutoCallbackWithdrawalUrl" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row border-bottom">
+                                <div class="col-lg-1">
+                                    <label class="form-label">IP Adresleri :</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" asp-for="Integration.IPAddress" maxlength="500" />
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-2 offset-lg-5">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom">Güncelle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Havale-EFT Referans Sistemi Ayarları
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Dealer" asp-action="SaveCompanyAutoNotificationSettings" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                              data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                            <input type="hidden" asp-for="CompanyAutoNotificationSettings.IDCompany" value="@Model.Integration.ID"/>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-2">
+                                    <label class="form-label">Referans Başlangıç Numarası :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" asp-for="CompanyAutoNotificationSettings.ReferenceId" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="form-label">Referans Numarası Sorgu URL :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" asp-for="CompanyAutoNotificationSettings.RequestUrl" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-2">
+                                    <label class="form-label">CallbackUrl URL:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" asp-for="CompanyAutoNotificationSettings.CallbackUrl" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="form-label">Aktif Mi ?</label>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Evet" data-off="Hayır" data-onstyle="success" data-offstyle="danger"
+                                           data-width="100%" asp-for="CompanyAutoNotificationSettings.IsActive">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-2 offset-lg-5">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom">Güncelle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                       Para Birimi Yetki Ayarları ve Bakiyeleri
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var currency in Model.Currencies)
+                            {
+                                <div class="col-lg-3 mb-3">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">    
+                                            <label class="w-100 text-center">@currency.CurrencyName</label>
+                                            <label class="w-100 text-center">Toplam Bakiye: @((currency.Balance + currency.BlockedBalance).ToString("n2"))</label>
+                                            <label class="w-100 text-center">Kullanılabilir Bakiye: @currency.Balance.ToString("n2")</label>
+                                            <label class="w-100 text-center">Blokedeki Bakiye: @currency.BlockedBalance.ToString("n2")</label>
+
+                                            <form asp-controller="Dealer" asp-action="InsertCompanyCurrency" asp-antiforgery="true"
+                                                  data-ajax="true" data-ajax-method="POST" asp-route-currencyCode="@currency.CurrencyCode" asp-route-id="@Model.entity.ID"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" >
+
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="@currency.IsAddedCurrency" id="@currency.ID" name="addCurrency" onchange="$(this.form).submit()">
+                                            </form>
+                                            <br /> <br />   
+                                            <label class="w-100 text-center">Ödeme Alabilir Mi</label>
+
+                                            <form asp-controller="Dealer" asp-action="UpdateCompanyCurrency" asp-antiforgery="true"
+                                                  data-ajax="true" data-ajax-method="POST" asp-route-currencyCode="@currency.CurrencyCode" asp-route-IDCompany="@Model.entity.ID"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" >
+
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Evet" data-off="Hayır" data-onstyle="success" data-offstyle="danger"
+                                                       data-width="100%" asp-for="@currency.IsActive" name="IsActive" onchange="$(this.form).submit()">
+                                            </form>
+
+                                            <br /> <br />
+                                            <label class="w-100 text-center">Çekim Talebi Oluşturabilir Mi</label>
+
+                                            <form asp-controller="Dealer" asp-action="UpdateCompanyCurrency" asp-antiforgery="true" 
+                                                  data-ajax="true" data-ajax-method="POST" asp-route-currencyCode="@currency.CurrencyCode" asp-route-IDCompany="@Model.entity.ID"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Evet" data-off="Hayır" data-onstyle="success" data-offstyle="danger"
+                                                       data-width="100%" asp-for="@currency.CanCreateWithdrawalRequest" name="CanCreateWithdrawalRequest" onchange="$(this.form).submit()">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>               
+                </div>
+            </div>
+        </div>
+
+       <div class="row mt-2">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        iFrame Havale-EFT / Kredi Kartı Aktiflik Durumları
+                    </div>
+                    <form asp-controller="Dealer" asp-action="SetIframeUseSettings" asp-antiforgery="true" id="frmIframeUseSetting"
+                          data-ajax="true" data-ajax-method="POST"
+                          data-ajax-begin="onBegin" data-ajax-success="onSuccessIframeUseSettings" data-ajax-complete="onComplete">
+                        <input type="hidden" asp-for="@Model.entity.ID" />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Havale-EFT</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.IframeUseSetting.TransferBeUsed" onchange="$('#frmIframeUseSetting').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Kredi Kartı</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="creditCardToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.IframeUseSetting.CreditCardBeUsed" onchange="$('#frmIframeUseSetting').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Yurt Dışı Kredi Kartı</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="foreignCreditCardToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.IframeUseSetting.ForeignCreditCardBeUsed" onchange="$('#frmIframeUseSetting').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Çekim Talebi API Erişimi</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="withdrawalApiToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.IframeUseSetting.WithdrawalApiBeUsed" onchange="$('#frmIframeUseSetting').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+       <div class="row mt-2">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Havale-EFT için iFrame Kullanılabilir Banka Durumları
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var companyBank in Model.CompanyBankAccounts.Where(x => !x.IsExitAccount))
+                            {
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@companyBank.Name</label>
+                                            @{
+                                                bool isActiveBank = Model.CompanyBanks.Any(x => x.CompanyBankAccountID == companyBank.ID);
+                                            }
+                                            <form asp-controller="Dealer" asp-action="SetAvailableBank" asp-antiforgery="true" id="@("frmBank"+companyBank.ID)"
+                                                  data-ajax="true" data-ajax-method="POST"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" asp-route-id="@Model.entity.ID" asp-route-companyBankAccountID = "@companyBank.ID">
+
+                                                <input type="hidden" asp-for="@companyBank.IDBank" name="bankId" />
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@isActiveBank" id="@companyBank.ID" name="value" onchange="$('@("#frmBank"+companyBank.ID)').submit()">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+@*            <div class="col-lg-6">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Kredi Kartı Ödeme Servisi
+                    </div>
+                    <form asp-controller="Dealer" asp-action="SetCreditCardPaymentMethod" asp-antiforgery="true" id="frmCreditCardPaymentMethod"
+                          data-ajax="true" data-ajax-method="POST"
+                          data-ajax-begin="onBegin" data-ajax-success="onSuccessCreditCardPaymentMethod" data-ajax-complete="onComplete">
+                        <input type="hidden" asp-for="@Model.entity.ID" />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Param</label>
+                                            <input type="checkbox" class="chkBank" id="paramToggle" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.CreditCardPaymentMethods.CreditCardPaymentWithParam" onchange="$('#frmCreditCardPaymentMethod').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Pay N Kolay</label>
+                                            <input type="checkbox" class="chkBank" id="payNKolayToggle" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.CreditCardPaymentMethods.CreditCardPaymentWithPayNKolay" onchange="$('#frmCreditCardPaymentMethod').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Pay N Kolay ( Yurt Dışı )</label>
+                                            <input type="checkbox" class="chkBank" id="ForeignCreditCardPayNKolayToggle" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@Model.CreditCardPaymentMethods.ForeignCreditCardPaymentWithPayNKolay" onchange="$('#frmCreditCardPaymentMethod').submit();">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>*@
+
+        <div class="row mt-2" id="yourDivContainer">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Kredi Kartı Ödeme Servisi
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var item in Model.PaymentInstitutions.Where(x => !x.ForSpecialCreditCard))
+                            {
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+    @*                                     <div class="card-body">
+                                            <label class="w-100 text-center">@item.Name</label>
+                                            <hr>
+                                            <label class="w-100 text-center">Bayi Panelinde Gözüksün</label>
+                                            <form asp-controller="Dealer" asp-action="InsertCompanyPaymentInstitution" asp-antiforgery="true" id="@("frmPaymentInstitutionsShow"+item.ID)"
+                                                  data-ajax="true" data-ajax-method="POST"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" asp-route-id="@Model.entity.ID">
+
+                                                <input type="hidden" asp-for="@item.ID" name="paymentInstitutionId" />
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Evet" data-off="Hayır" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@item.IsVisibleCompanyPanel" name="value" onchange="$('@("#frmPaymentInstitutionsShow"+item.ID)').submit()">
+                                            </form>
+                                        </div> *@
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@item.Name</label>
+                                            <hr>
+                                            <label class="w-100 text-center mb-2">Bayi İçin Aktif Mi ?</label>
+                                            @{
+                                                bool isActive = Model.CompanyPaymentInstitutions.Where(x => x.ID == Model.entity.ID && x.PaymentInstitutionID == item.ID).Select(s => s.IsActive).FirstOrDefault();
+                                            }
+                                            <form asp-controller="Dealer" asp-action="InsertCompanyPaymentInstitution" asp-antiforgery="true" id="@("frmPaymentInstitutionsActive"+item.ID)"
+                                                  data-ajax="true" data-ajax-method="POST"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" asp-route-id="@Model.entity.ID">
+
+                                                <input type="hidden" asp-for="@item.ID" name="paymentInstitutionId" />
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@isActive" id="@item.ID" name="value" onchange="$('@("#frmPaymentInstitutionsActive"+item.ID)').submit()">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+   @*      <div class="row mt-2" id="yourDivContainer">
+            <div class="col-lg-12">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">
+                        Özel Kredi Kartları İçin Ödeme Servisi
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var item in Model.PaymentInstitutions.Where(x => x.ForSpecialCreditCard))
+                            {
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@item.Name</label>
+                                            <hr>
+                                            <label class="w-100 text-center">Bayi Panelinde Gözüksün</label>
+                                            <form asp-controller="Dealer" asp-action="InsertCompanyPaymentInstitution" asp-antiforgery="true" id="@("frmPaymentInstitutionsShow"+item.ID)"
+                                                  data-ajax="true" data-ajax-method="POST"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" asp-route-id="@Model.entity.ID">
+
+                                                <input type="hidden" asp-for="@item.ID" name="paymentInstitutionId" />
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Evet" data-off="Hayır" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@item.IsVisibleCompanyPanel" name="value" onchange="$('@("#frmPaymentInstitutionsShow"+item.ID)').submit()">
+                                            </form>
+                                        </div>
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Bayi Panelinde Aktif</label>
+                                            @{
+                                                bool isActive = Model.CompanyPaymentInstitutions.Where(x => x.ID == Model.entity.ID && x.PaymentInstitutionID == item.ID).Select(s => s.IsActive).FirstOrDefault();
+                                            }
+                                            <form asp-controller="Dealer" asp-action="UpdateCompanyPaymentInstitution" asp-antiforgery="true" id="@("frmPaymentInstitutionsActive"+item.ID)"
+                                                  data-ajax="true" data-ajax-method="POST"
+                                                  data-ajax-begin="onBegin" data-ajax-success="onSuccess" data-ajax-complete="onComplete" asp-route-id="@Model.entity.ID">
+
+                                                <input type="hidden" asp-for="@item.ID" name="paymentInstitutionId" />
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@isActive" id="@item.ID" name="value" onchange="$('@("#frmPaymentInstitutionsActive"+item.ID)').submit()">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> *@
+
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Ödeme Transfer Ayarları
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="small">
+                                Hesabınızda bulunan bakiyenin banka hesabınıza transferini bekletebilir veya transfer alt limiti belirleyebilirsiniz. Alt limit belirlerseniz, bakiyeniz belirlediğiniz tutarı aştığında hesabınıza aktarılır. Bakiyenizi beklemeye alabilirsiniz, böylece müşterilerinize iade yaparken bakiye yetersiz sorunu yaşamazsınız.
+                            </span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-2 mt-lg-0 mt-2">
+                            <div class="card border border-light border-4">
+                                <div class="card-header text-center border-2">
+                                    TL Transfer Ayarları
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Bakiyem:</label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Alt Bakiyem:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-center" />
+                                            <span class="input-group-append">
+                                                <span class="input-group-text bg-light d-block">
+                                                    TL
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 mt-lg-0 mt-2">
+                            <div class="card border border-light border-4">
+                                <div class="card-header text-center border-2">
+                                    USD Transfer Ayarları
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Bakiyem:</label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Alt Bakiyem:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-center" />
+                                            <span class="input-group-append">
+                                                <span class="input-group-text bg-light d-block">
+                                                    USD
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 mt-lg-0 mt-2">
+                            <div class="card border border-light border-4">
+                                <div class="card-header text-center border-2">
+                                    EURO Transfer Ayarları
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Bakiyem:</label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Alt Bakiyem:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-center" />
+                                            <span class="input-group-append">
+                                                <span class="input-group-text bg-light d-block">
+                                                    EURO
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 mt-lg-0 mt-2">
+                            <div class="card border border-light border-4">
+                                <div class="card-header text-center border-2">
+                                    GBP Transfer Ayarları
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Bakiyem:</label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Transfer Edilsin" data-height="25" data-width="100%" data-off="Transfer Edilmesin" data-onstyle="success" data-offstyle="secondary">
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <label>Alt Bakiyem:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-center" />
+                                            <span class="input-group-append">
+                                                <span class="input-group-text bg-light d-block">
+                                                    GBP
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mt-3">
+                        <div class="col-lg-2 offset-lg-5">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-custom">Transfer Ayarlarını Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Mağaza Durum Kontrolü
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <span class="small">
+                                Mağazanızı ihtiyaç duyduğunuz zaman test moduna alabilirsiniz. Canlı Mod seçimini Test Modu konumuna getirin ve ardından Değişiklikleri Kaydet butonuna tıklayın.
+                                <br />
+                                Önemli Bilgi: Mağazanız Test Modu durumundayken gerçek ödeme alamazsınız ve yapılan ödemeler muhasebeleşmez.
+                            </span>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="form-label float-lg-end">Mağaza Durumu :</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="checkbox" data-toggle="toggle" data-on="Canlı Mod" data-off="Kapalı Mod" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Mağaza Logo Yükleme
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="file" class="form-control form-control-sm" />
+                            <span class="small">Logo boyutu en fazla 300px X 100px ölçülerinde, PNG formatında olmalıdır.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Bildirim Ayarları
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 offset-lg-3">
+                            <div class="card border border-light border-4">
+                                <div class="card-header text-center border-2">
+                                    Mağaza Email Bildirimi
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center bg-white">
+                                        <input type="checkbox" data-toggle="toggle" data-on="Gönderilsin" data-off="Gönderilmesin" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Müşteri Hizmetleri E-mail Adresi
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="small">Müşterilerinizden gelebilecek şikayet ve itirazlar hakkında bildirimler aşağıdaki e-mail adresine gönderilecektir.</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" />
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-light d-block">
+                                        Kaydet
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mt-lg-0 mt-2">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Muhasabe E-mail Adresi
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="small">Ödeme hizmeti komisyonu için oluşturulan aylık e-faturanız aşağıdaki e-mail adresine gönderilecektir.</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" />
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-light d-block">
+                                        Kaydet
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="tab-pane fade" id="fraudSetting">
+        <div class="row mt-4">
+            <div class="col-lg-12 mt-lg-0 mt-2">
+                <div class="card border-custom bg-white">
+                    <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Fraud Kontrol Ayarları</div>
+                    <div class="card-body">
+
+                        <form asp-controller="Dealer" asp-action="SaveFraudControlSetting" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                            <input type="hidden" asp-for="FraudControl.ID" />
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card-header bg-white text-custom text-center fw-bold">Havale / EFT </div>
+                                    <div class="card-body">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Havale / EFT Sms Kontrolü ? </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsSmsConfirmationActiveTransfer">
+                                            </div>
+                                        </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Fraud Kontrolleri Aktif Mi ? </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsTransferFraudControlActive">
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Kişi Hangi Dakika İçerisinde İkinci Kez Ödeme Geçerse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="number" class="form-control" asp-for="FraudControl.TransferTimeSpanInRecentTransactionMinutes" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Kişi Belirli Dakika İçerisinde İkinci Kez Ödeme Geçerse ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.TransferTimeSpanInRecentTransactionMinutesLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Kişi Gün İçerisinde Kaçını Ödemesinden Sonrasında Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.TransferDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Kişi Gün İçerisinde Kaçını Ödemesinden Sonrasında ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.TransferDailyTransactionLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Kişi Gün İçerisinde Kaçını Ödemesinden Sonrasında Kesinlikle Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.BeStoppedTransferDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Kişinin İlk Ödemesi Hangi Tutardan Büyükse Durdurulsun:</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.TransferFirstTransactionLimit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="card-header bg-white text-custom text-center fw-bold">Yurt İçi Kredi Kartı</div>
+                                    <div class="card-body">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Kredi Kartı Sms Kontrolü ? </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsSmsConfirmationActiveCreditCard">
+                                            </div>
+                                        </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Fraud Kontrolleri Aktif Mi ? </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsCreditCardFraudControlActive">
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Hangi Dakika İçerisinde İkinci Kez Ödeme Geçilirse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="number" class="form-control" asp-for="FraudControl.CreditCardTimeSpanInRecentTransactionMinutes" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Belirli Dakika İçerisinde İkinci Kez Ödeme Geçilirse ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.CreditCardTimeSpanInRecentTransactionMinutesLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaçını İşleminden Sonrasında Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.CreditCardDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaçını İşleminden Sonrasında ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.CreditCardDailyTransactionLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaçını İşleminden Sonrasında Kesinlikle Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.BeStoppedCreditCardDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Kartın İlk İşlemi Hangi Tutardan Büyükse Durdurulsun:</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.CreditCardFirstTransactionLimit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="card-header bg-white text-custom text-center fw-bold">Yurt Dışı Kredi Kartı</div>
+                                    <div class="card-body">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Yurt Dışı Kredi Kartı Sms Kontrolü </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsSmsConfirmationActiveForeingCreditCard">
+                                            </div>
+                                        </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Fraud Kontrolleri Aktif Mi ? </label></div>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%"
+                                                       asp-for="FraudControl.IsForeignCreditCardFraudControlActive">
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Hangi Dakika İçerisinde İkinci Kez Ödeme Geçilirse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="number" class="form-control" asp-for="FraudControl.ForeignCreditCardTimeSpanInRecentTransactionMinutes" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Belirli Dakika İçerisinde İkinci Kez Ödeme Geçilirse ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.ForeignCreditCardTimeSpanInRecentTransactionMinutesLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaç İşlem Geçildikten Sonra Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.ForeignCreditCardDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaçını İşleminden Sonrasında ve Hangi Tutardan Büyükse Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.ForeignCreditCardDailyTransactionLimitAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span> Aynı Karttan Gün İçerisinde Kaçını İşleminden Sonrasında Kesinlikle Durdurulsun :</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.BeStoppedForeignCreditCardDailyTransactionCount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6"><label class="form-label"><span style="color:red">* </span>Kartın İlk İşlemi Hangi Tutardan Büyükse Durdurulsun:</label></div>
+
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" asp-for="FraudControl.ForeignCreditCardFirstTransactionLimit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-lg-3 offset-lg-9">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom">Güncelle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="userList">
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card border-1 border-custom">
+                <div class="card-header bg-custom text-white">Üye İşyeri Kullanıcı Listesi</div>
+                <div class="card-body table-responsive">
+                    <table id="Table" class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="bg-custom text-white">
+                                <th class="col-1 text-center">Durum</th>
+                                <th class="col-1 text-center">Kayıt Tarihi</th>
+                                <th class="col-4 text-center">Adı</th>
+                                <th class="col-2 text-center">Telefon</th>
+                                <th class="col-3 text-center">Email</th>
+                                <th class="col-1 text-center">Düzenle</th>
+                                <th class="d-none">ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CompanyUsers)
+                            {
+                                <tr class="text-center">
+                                    <td>
+                                        @if (@item.StatusFlag)
+                                        {
+                                            <span class="badge bg-info px-4 py-2">AKTİF</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary px-4 py-2">PASİF</span>
+                                        }
+                                    </td>
+                                    <td>@item.CDate</td>
+                                    @if (item.IsMainUser)
+                                    {
+                                        <td style="color: dodgerblue; font-weight:bold;">@item.Name (ANA KULLANICI) </td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Name</td>
+                                    }
+                                    <td>@item.Phone</td>
+                                    <td>@item.Email</td>
+                                    <td><a href="/DealerUser/DealerUserDetail/@item.ID">Düzenle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="tab-pane fade" id="userList">
+            <div class="row mt-2">
+                <div class="col-lg-12">
+                    <div class="card border-1 border-custom">
+                        <div class="card-header bg-custom text-white">Üye İşyeri Kullanıcı Listesi</div>
+                        <div class="card-body table-responsive">
+                            <table id="Table" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="bg-custom text-white">
+                                        <th class="col-1 text-center">Durum</th>
+                                        <th class="col-1 text-center">Kayıt Tarihi</th>
+                                        <th class="col-4 text-center">Adı</th>
+                                        <th class="col-2 text-center">Telefon</th>
+                                        <th class="col-3 text-center">Email</th>
+                                        <th class="col-1 text-center">Düzenle</th>
+                                        <th class="d-none">ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CompanyUsers)
+                                    {
+                                        <tr class="text-center">
+                                            <td>
+                                                @if (@item.StatusFlag)
+                                                {
+                                                    <span class="badge bg-info px-4 py-2">AKTİF</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary px-4 py-2">PASİF</span>
+                                                }
+                                            </td>
+                                            <td>@item.CDate</td>
+                                            @if (item.IsMainUser)
+                                            {
+                                                <td style="color: dodgerblue; font-weight:bold;">@item.Name (ANA KULLANICI) </td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Name</td>
+                                            }
+                                            <td>@item.Phone</td>
+                                            <td>@item.Email</td>
+                                            <td><a href="/DealerUser/DealerUserDetail/@item.ID">Düzenle</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlNegativeBalanceLimit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Eksi Bakiye Limiti Aç</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetNegativeBalance" asp-antiforgery="true" id="frmNegativeBalanceLimit"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="NegativeBalanceConfirmCode" name="NegativeBalanceConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlNegativeBalanceLimitSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <input type="text" class="form-control" asp-for="NegativeBalanceLimit" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-custom d-none">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlUsingBalance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Kullanılabilir Bakiye</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label class="form-label">İşlem Tipi :</label>
+
+                    </div>
+                    <div class="col-lg-10">
+                        <select class="form-select" id="operationType">
+                            <option value="balanceTransfer" selected>Hakediş Aktar</option>
+                            <option value="balanceUpdate">Bakiye Güncelle</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" id="companyName" value="@Model.entity.Title" />
+                <input type="hidden" id="selectedCompanyName" value=""  />
+               
+
+                <!-- Bakiye Güncelle Formu -->
+                <form asp-controller="Dealer" asp-action="SetUsingBalance" asp-antiforgery="true" id="frmUsingBalance"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance" class="operationForm balanceUpdateForm d-none">
+
+                    <input type="hidden" asp-for="Balance.UsingBalance" />
+                    <input type="hidden" asp-for="Commission.ID" />
+
+                    <div class="row mt-3">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="UsingBalanceConfirmCode" name="UsingBalanceConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlUsingBalanceSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <select class="form-select" asp-for="Balance.Type" required>
+                                <option value="1" selected>Arttır</option>
+                                <option value="0">Azalt</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                            <input type="text" class="form-control" asp-for="Balance.Amount" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Hakediş Aktar Formu -->
+                <form asp-controller="Dealer" asp-action="BalanceTransfer" asp-antiforgery="true" id="frmBalanceTransfer"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailureTransfer" data-ajax-success="onSuccessTransfer" class="operationForm balanceTransfer">
+
+                    <input type="hidden" asp-for="BalanceTransfer.IDCompany" value="@Model.entity.ID" />
+
+                    <div class="row mt-3">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" asp-for="BalanceTransfer.ConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdBalanceTransferSendCode">Kod Al</button>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <select class="form-select" id="slcCompanies" asp-for="BalanceTransfer.ReceiverIDCompany"></select>
+                        </div>
+                 
+                        <div class="col-lg-12 mt-3">
+                            <input type="text" class="form-control" asp-for="BalanceTransfer.Amount" placeholder="Tutar Giriniz"  />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                <button type="submit" form="frmUsingBalance" class="btn btn-custom d-none" id="balanceUpdateBtn">Güncelle</button>
+                <button type="submit" form="frmBalanceTransfer" class="btn btn-custom" id="transferBtn">Aktar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlAutoWithdrawalLimit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Otomatik Çekim Tutarı Limit Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetAutoWithdrawalLimit" asp-antiforgery="true" id="frmAutoWithdrawalLimit"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="AutoWithdrawalLimitConfirmCode" name="AutoWithdrawalLimitConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlAutoWithdrawalLimitSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <input type="text" class="form-control" asp-for="entity.AutoWithdrawalLimit" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-success d-none" id="autoWithdrawalSubmitBtn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlAutoTransferLimit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Otomatik Havale - EFT Tutarı Limit Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetAutoTransferLimit" asp-antiforgery="true" id="frmAutoTransferLimit"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="AutoTransferLimitConfirmCode" name="AutoTransferLimitConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlAutoTransferLimitSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <input type="text" class="form-control" asp-for="entity.AutoTransferLimit" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-success d-none" id="autoTransferSubmitBtn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlAutoCreditCardLimit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Otomatik Kredi Kartı Tutarı Limit Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetAutoCreditCardLimit" asp-antiforgery="true" id="frmAutoCreditCardLimit"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="AutoCreditCardLimitConfirmCode" name="AutoCreditCardLimitConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlAutoCreditCardLimitSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <input type="text" class="form-control" asp-for="entity.AutoCreditCardLimit" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-success d-none" id="autoCreditCardSubmitBtn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlAutoForeignCreditCardLimit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Otomatik Yurt Dışı Kredi Kartı Tutarı Limit Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetAutoForeignCreditCardLimit" asp-antiforgery="true" id="frmAutoForeignCreditCardLimit"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="AutoForeignCreditCardLimitConfirmCode" name="AutoForeignCreditCardLimitConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlAutoForeignCreditCardLimitSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <input type="text" class="form-control" asp-for="entity.AutoForeignCreditCardLimit" disabled="disabled" placeholder="Tutar Giriniz" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-success d-none" id="autoForeignCreditCardSubmitBtn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Doğrulama Kodu Sorgulama</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" placeholder="Doğrulama Kodu Giriniz" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom">Doğrula</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlCommission" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Komisyon Oranı Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SaveCommission" asp-antiforgery="true" id="frmCommission"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccessCommission">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="ConfirmCode" name="ConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="btnSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row mt-2" id="c1">
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.CreditCardRate"><small>Kredi Kartı Oranı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.CreditCardRate" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.CreditCardBlocked"><small>Bloke Süresi</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.CreditCardBlocked" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.CreditCardStatus"><small>Kredi Kartı Durumu</small></label>
+                            <input type="checkbox" data-toggle="toggle" data-on="Açık" data-off="Kapalı" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="Commission.CreditCardStatus">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="c4">
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.ForeignCreditCardRate"><small>Yurt Dışı Kredi Kartı Oranı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.ForeignCreditCardRate" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.ForeignCreditCardBlocked"><small>Bloke Süresi</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.ForeignCreditCardBlocked" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="c2">
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.TransferRate"><small>Transfer Oranı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.TransferRate" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.TransferBlocked"><small>Bloke Süresi</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.TransferBlocked" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.TransferStatus"><small>Transfer Durumu</small></label>
+                            <input type="checkbox" data-toggle="toggle" data-on="Açık" data-off="Kapalı" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="Commission.TransferStatus">
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.WithdrawalTransferAmount"><small>Çekim Talebi Havale / EFT Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.WithdrawalTransferAmount" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.SPWithdrawalTransferCostAmount"><small>Stilpay Çekim Talebi Havale / EFT Maliyet Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.SPWithdrawalTransferCostAmount" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.WithdrawalEftAmount"><small>Çekim Talebi FAST Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.WithdrawalEftAmount" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.SPWithdrawalEftCostAmount"><small>Stilpay Çekim Talebi FAST Maliyet Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.SPWithdrawalEftCostAmount" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.WithdrawalForeignCurrencySwiftAmount"><small>Döviz Para Birimi Swift Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.WithdrawalForeignCurrencySwiftAmount" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="Commission.SPWithdrawalForeignCurrencySwiftCostAmount"><small>Stilpay Döviz Para Birimi Swift Maliyet Tutarı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.SPWithdrawalForeignCurrencySwiftCostAmount" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="c3">
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.MobilePayRate"><small>Mobil Öde Oranı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.MobilePayRate" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.MobilePayBlocked"><small>Bloke Süresi</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.MobilePayBlocked" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.MobilePayStatus"><small>Mobil Öde Durumu</small></label>
+                            <input type="checkbox" data-toggle="toggle" data-on="Açık" data-off="Kapalı" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="Commission.MobilePayStatus">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="c5">
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.MobilePayRate"><small>Tosla Oranı</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.ToslaRate" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" asp-for="Commission.MobilePayBlocked"><small>Bloke Süresi</small></label>
+                            <input type="text" class="form-control text-end" asp-for="Commission.ToslaBlocked" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-custom d-none">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal CompanyStatus-->
+<div class="modal fade" id="mdlCompanyStatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Üye İşyeri Durum Güncelleme</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="SetCompanyStatus" asp-antiforgery="true" id="frmCompanyStatus"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onUsingBalance">
+
+                <input type="hidden" asp-for="Commission.ID" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" id="CompanyStatusConfirmCode" name="CompanyStatusConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlCompanyStatusSendCode">Kod Al</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <select class="form-select" id="selectStatus" asp-for="CompanyStatus" disabled="disabled">
+                                <option value="True">Aktif</option>
+                                <option value="False">Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-custom d-none">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal mdlCreateWithdrawalRequest-->
+<div class="modal fade" id="mdlCreateWithdrawalRequest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100" id="modalTitle">Para Biriminde Çekim Talebi Oluştur</h5>
+            </div>
+            <form asp-controller="Dealer" asp-action="CreateWithdrawalRequest" asp-antiforgery="true" id="frmCompanyCreateWithdrawalRequest"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccessCreateWithdrawal">
+
+                <input type="hidden" asp-for="CompanyCreateWithdrawalRequest.IDCompany" value="@Model.entity.ID" />
+                <input type="hidden" asp-for="@Model.Balance.UsingBalance" value="@Model.Balance.UsingBalance" />
+                <input type="hidden" id="companyName" value="@Model.entity.Title" value="@Model.entity.Title" />
+
+                @{
+                    var selectListItems = new List<SelectListItem>
+                {
+                new SelectListItem { Value = "TRY", Text = "Türk Lirası", Selected = true }
+                };
+
+                    selectListItems.AddRange(Model.CompanyCurrencies.Select(c => new SelectListItem
+                    {
+                        Value = c.CurrencyCode,
+                        Text = c.CurrencyName
+                    }));
+                }
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" asp-for="CompanyCreateWithdrawalRequest.ConfirmCode" placeholder="Sms Doğrulama Kodu" />
+                        </div>
+                        <div class="col-lg-5">
+                            <button type="button" class="btn btn-dark form-control" id="mdlCompanyCreateWithdrawalRequestSendCode">Kod Al</button>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-4">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Hesap Seçimi:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="CompanyCreateWithdrawalRequest.BankAccountID">
+                                <option value="">Bankasız Bildirim</option>
+
+                                @foreach (var item in ViewBag.CompanyBankAccounts)
+                                {
+                                    <option value="@item.ID">@item.Bank / @item.Title / @item.IBAN</option>
+                                }
+
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-4">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Para Birimi:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="CompanyCreateWithdrawalRequest.CurrencyCode" asp-items="selectListItems">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Tutarı:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control text-end" type="text" asp-for="CompanyCreateWithdrawalRequest.Amount" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>İşlem Ücreti:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control text-end" type="text" asp-for="CompanyCreateWithdrawalRequest.CurrencyCostTotal" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalClose">Kapat</button>
+                    <button type="submit" class="btn btn-custom d-none" id="createWithdrawalRequestSubmitBtn">Oluştur</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section js{
+    <script src="~/js/bootstrap/bootstrap-toggle.js"></script>
+    <script src="~/js/mask/imask.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/custom/numeric-format.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/dealer/edit.js"></script>
+    <script src="~/js/views/dealer/commission.js"></script>
+    <script src="~/js/views/core.js"></script>
+    }

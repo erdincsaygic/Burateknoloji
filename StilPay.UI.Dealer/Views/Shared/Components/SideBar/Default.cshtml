@@ -1,0 +1,196 @@
+﻿@model MenuInformation
+
+
+<nav id="sidebar">
+
+    <div class="sidebar-header text-center">
+        <img src="~/img/logo.png" alt="">
+        <strong>StilPay</strong>
+        <h6>Merhaba</h6>
+        <h6>@Model.Name</h6>
+        <small>
+            Son Girişi Tarihiniz:<br />
+            @(string.Concat(Model.LoginDate, " | ", Model.IPAddress))
+        </small>
+    </div>
+
+    <ul class="list-unstyled components">
+
+        <li>
+            <a class="p-2" asp-controller="Main" asp-action="Index">
+                <i class="fa-solid fa-house"></i>
+                Anasayfa
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Process")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="Process" asp-action="Index">
+                    <i class="fa-solid fa-sliders"></i>
+                    İşlemler
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("AccountTransaction")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="AccountTransaction" asp-action="Index">
+                    <i class="fa-solid fa-money-simple-from-bracket"></i>
+                    Hesap Hareketleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Block")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="Block" asp-action="Index">
+                    <i class="fa-solid fa-lock"></i>
+                    Blokeler
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Report")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="Report" asp-action="Index">
+                    <i class="fa-solid fa-file-contract"></i>
+                    Raporlar
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Report")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="ProgressPaymentCalendar" asp-action="Index">
+                    <i class="fa-solid fa-file-contract"></i>
+                    Hakediş Takvimi
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Process")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="TransactionQuery" asp-action="Index">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    İşlem Sorgulama
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PaymentNotification")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="PaymentNotification" asp-action="Add">
+                    <i class="fa-solid fa-thumbtack"></i>
+                    Ödeme Bildirimi Yap
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PaymentNotification")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="PaymentNotification" asp-action="Index">
+                    <i class="fa-solid fa-thumbtack"></i>
+                    Ödeme Bildirimleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PaymentNotification")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="CreditCardPaymentNotification" asp-action="Index">
+                    <i class="fa-solid fa-credit-card"></i>
+                    Kredi Kartı İşlemleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PaymentNotification")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="ForeignCreditCardPaymentNotification" asp-action="Index">
+                    <i class="fa-solid fa-credit-card"></i>
+                    Yurt Dışı Kredi Kartı İşlemleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("WithdrawalRequest")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="WithdrawalRequest" asp-action="Index">
+                    <i class="fa-solid fa-money-bills-simple"></i>
+                    Nakit Çekim Talepleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Invoice")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="Invoice" asp-action="Index">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    Faturalarım
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("RebateRequest")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="RebateRequest" asp-action="Index">
+                    <i class="fa-solid fa-right-left"></i>
+                    İadeler
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Support")) != null)
+        {
+            <li>
+                <a class="p-2" asp-controller="Support" asp-action="Index">
+                    <i class="fa-solid fa-headset"></i>
+                    Destek Talepleri
+                </a>
+            </li>
+
+            <li class="border-top m-1"></li>
+        }
+    </ul>
+</nav>

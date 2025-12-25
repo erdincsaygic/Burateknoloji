@@ -1,0 +1,112 @@
+﻿@model MenuInformation
+
+
+<ul class="navbar-nav ul-nav w-100 d-lg-flex flex-lg-row flex-lg-nowrap justify-content-lg-evenly align-items-lg-center">
+
+    <li class="nav-item w-100 col">
+        <a class="nav-link text-center text-custom fw-bold" asp-controller="Main" asp-action="Index">Hesap Özeti</a>
+    </li>
+
+    <li class="d-lg-block d-none border-end border-custom">&nbsp;</li>
+
+    <li class="nav-item w-100 col dropdown" style="w-20">
+        <a class="nav-link text-center text-custom fw-bold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Para Yönetimi</a>
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("PaymentRequest")) != null)
+        {
+            <ul class="dropdown-menu ms-lg-4 m-auto">
+                <li class="li-header">
+                    <a class="dropdown-item text-center text-white" href="javascript:;">Ödeme Alma İşlemleri</a>
+                </li>
+                <li><a class="dropdown-item" asp-controller="PaymentRequest" asp-action="Edit">Bakiye Yükleme</a></li>
+                <li><a class="dropdown-item" asp-controller="PaymentRequest" asp-action="Index">Ödeme Bildirimleri</a></li>
+            </ul>
+        }
+    </li>
+
+    <li class="d-lg-block d-none border-end border-custom">&nbsp;</li>
+
+    <li class="nav-item w-100 col dropdown">
+        <a class="nav-link text-center text-custom fw-bold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Muhasebe</a>
+        <ul class="dropdown-menu ms-lg-4 m-auto">
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("WithdrawalRequest")) != null)
+            {
+                <li class="li-header">
+                    <a class="dropdown-item text-center text-white" href="javascript:;">Çekim İşlemleri</a>
+                </li>
+                <li><a class="dropdown-item" asp-controller="WithdrawalRequest" asp-action="Edit">Nakit Çekim Talebi</a></li>
+                <li><a class="dropdown-item" asp-controller="WithdrawalRequest" asp-action="index">Nakit Çekim Talepleri</a></li>
+            }
+
+            @*@if (Model.Roles.FirstOrDefault(f => f.Equals("Block")) != null || Model.Roles.FirstOrDefault(f => f.Equals("AccountTransaction")) != null || Model.Roles.FirstOrDefault(f => f.Equals("Invoice")) != null)
+            {
+            <li class="li-header">
+            <a class="dropdown-item text-center text-white" href="javascript:;">Finansal İşlemleri</a>
+            </li>
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("Block")) != null)
+            {
+            <li><a class="dropdown-item" asp-controller="Block" asp-action="Index">Blokeler</a></li>
+            }
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("AccountTransaction")) != null)
+            {
+            <li><a class="dropdown-item" asp-controller="AccountTransaction" asp-action="Index">Hesap Hareketleri</a></li>
+            }
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("Invoice")) != null)
+            {
+            <li><a class="dropdown-item" asp-controller="Invoice" asp-action="Index">Faturalarım</a></li>
+            }
+            }*@
+
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("RebateRequest")) != null)
+            {
+                <li class="li-header">
+                    <a class="dropdown-item text-center text-white" href="javascript:;">İade & İptal İşlemleri</a>
+                </li>
+                <li><a class="dropdown-item" asp-controller="RebateRequest" asp-action="Edit" asp-route-id="">İade Talebi</a></li>
+                <li><a class="dropdown-item" asp-controller="RebateRequest" asp-action="Index">İade Talepleri</a></li>
+            }
+        </ul>
+    </li>
+
+    <li class="d-lg-block d-none border-end border-custom">&nbsp;</li>
+
+    <li class="nav-item w-100 col dropdown">
+        <a class="nav-link text-center text-custom fw-bold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Api</a>
+        @if (Model.Roles.FirstOrDefault(f => f.Equals("Integration")) != null)
+        {
+            <ul class="dropdown-menu ms-lg-4 m-auto">
+                <li class="li-header">
+                    <a class="dropdown-item text-center text-white" href="javascript:;">Api Yönetimi</a>
+                </li>
+                <li><a class="dropdown-item" asp-controller="Integration" asp-action="Index">Erişim Bilgilerim</a></li>
+                <li><a class="dropdown-item" href="https://stilpay.com/Entegrasyon" target="_blank">Entegrasyon Dosyaları</a></li>
+            </ul>
+        }
+    </li>
+
+    <li class="d-lg-block d-none border-end border-custom">&nbsp;</li>
+
+    <li class="nav-item w-100 col dropdown">
+        <a class="nav-link text-center text-custom fw-bold dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Hesap</a>
+        <ul class="dropdown-menu ms-lg-4 m-auto">
+            @if (Model.Roles.FirstOrDefault(f => f.Equals("Account")) != null)
+            {
+                <li class="li-header">
+                    <a class="dropdown-item text-center text-white" href="javascript:;">Hesap Yönetimi</a>
+                </li>
+                <li><a class="dropdown-item" asp-controller="Dealer" asp-action="Information">İşyeri Bilgilerim</a></li>
+                <li><a class="dropdown-item" asp-controller="User" asp-action="MyAccount">Hesap Bilgilerim</a></li>
+                <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Yetkilendirme</a></li>
+                <li><a class="dropdown-item" asp-controller="CommissionRates" asp-action="Index">Komisyon Oranları</a></li>
+                <li><a class="dropdown-item" asp-controller="BankAccount" asp-action="Index">Banka Hesapları</a></li>
+                <li><a class="dropdown-item" asp-controller="Dealer" asp-action="Settings">Ayarlar</a></li>
+            }
+
+            <li class="li-header">
+                <a class="dropdown-item text-center text-white" href="javascript:;">Güvenlik Yönetimi</a>
+            </li>
+            <li><a class="dropdown-item" asp-controller="User" asp-action="Security">Güvenlik Ayarları</a></li>
+            <li><a class="dropdown-item" asp-controller="Login" asp-action="LogOut">Çıkış Yap</a></li>
+        </ul>
+    </li>
+
+</ul>

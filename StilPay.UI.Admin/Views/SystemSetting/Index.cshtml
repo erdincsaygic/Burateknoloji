@@ -1,0 +1,300 @@
+@model SystemSettingEditViewModel
+
+@{
+    ViewData["Title"] = "Genel Sistem Ayarları";
+}
+
+@section css{
+    <link href="~/css/bootstrap/bootstrap-toggle.css" rel="stylesheet" />
+}
+
+
+
+<div class="card border-custom bg-white" style="margin:10px">
+    <div class="card-header bg-white text-custom text-center fw-bold">Genel Default Sistem Ayarları</div>
+    <div class="card-body">
+        <div class="col-lg-12">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Havale-EFT için iFrame Banka Durumları
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        @foreach (var companyIncomeBank in Model.CompanyBankAccounts.Where(x => !x.IsExitAccount && x.ShowInSystemSettings))
+                        {
+                            <div class="col-lg-2 mb-2">
+                                <form asp-controller="SystemSetting" asp-action="SetIFrameBank" asp-antiforgery="true" id="@("frmBank"+companyIncomeBank.ID)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@companyIncomeBank.Name</label>
+                                            <input type="hidden" asp-for="@companyIncomeBank.ID" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@companyIncomeBank.IsActiveForIFrame" onchange="$('@("#frmBank"+@companyIncomeBank.ID)').submit()">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    iFrame Havale-EFT / Kredi Kartı Aktiflik Durumları
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var setting in Model.Settings.Where(x => x.ParamType == "IFrame"))
+                        {
+                            <div class="col-lg-4 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="Update" asp-antiforgery="true" id="@("frmSubmit"+setting.ParamDef)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@setting.ParamVal</label>
+                                            <input type="hidden" asp-for="@setting.ParamDef" />
+                                            <input type="hidden" asp-for="@setting.ParamType" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@setting.ActivatedForGeneralUse" onchange="$('@("#frmSubmit"+setting.ParamDef)').submit()">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Kredi Kartı Ödeme Servisi
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var item in Model.PaymentInstitutions.Where(x => !x.ForSpecialCreditCard))
+                        {
+                            <div class="col-lg-2 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="UpdatePaymentInstitution" asp-antiforgery="true" id="@("frmSubmit"+item.ID)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@item.Name</label>
+                                            <input type="hidden" value="@item.ID" name="id" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@item.IsActive" name="isActive" onchange="$('@("#frmSubmit"+item.ID)').submit()">
+
+                                            
+                                            <label class="w-100 text-center mt-2">Ardışık İşlem Sayısı</label>
+                                            <div class="row">
+                 
+                                                <input class="col-sm-6" type="number" asp-for="@item.ConsecutiveTransactionLimit" name="consecutiveTransactionLimit">
+                   
+                                                <div class="col-sm-6">
+                                                    <button type="submit" class="btn btn-custom">Kaydet</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Özel Kredi Kartları İçin Ödeme Servisi
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var item in Model.PaymentInstitutions.Where(x => x.ForSpecialCreditCard))
+                        {
+                            <div class="col-lg-2 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="UpdatePaymentInstitution" asp-antiforgery="true" id="@("frmSubmit"+item.ID)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@item.Name</label>
+                                            <input type="hidden" value="@item.ID" name="id" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@item.IsActive" name="isActive" onchange="$('@("#frmSubmit"+item.ID)').submit()">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Çekim Talebi ve İade İçin Kullanılacak Banka
+                </div>
+                <div class="card-body">
+                    <div class="row">
+@*                         @foreach (var setting in Model.Settings.Where(x => x.ParamType == "Payments"))
+                        {
+                            <div class="col-lg-4 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="Update" asp-antiforgery="true" id="@("frmSubmit"+setting.ParamDef)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@setting.ParamVal</label>
+                                            <input type="hidden" asp-for="@setting.ParamDef" />
+                                            <input type="hidden" asp-for="@setting.ParamType" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@setting.ActivatedForGeneralUse" onchange="$('@("#frmSubmit"+setting.ParamDef)').submit()">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        } *@
+
+                        @foreach (var companyBank in Model.CompanyBankAccounts.Where(x => x.IsExitAccount && x.ShowInSystemSettings))
+                        {
+                            <div class="col-lg-4 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="UpdateWithdrawalBank" asp-antiforgery="true" id="@("withdrawal"+companyBank.ID)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">@companyBank.Name</label>
+                                            <input type="hidden" value="@companyBank.ID" name="id" />
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="@companyBank.IsActiveByDefaultExpenseAccount" name="IsActiveByDefaultExpenseAccount" onchange="$('@("#withdrawal"+companyBank.ID)').submit()">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                    Eft Yapılacak Saat Aralıkları
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var setting in Model.Settings.Where(x => x.ParamType == "EftHours"))
+                        {
+                            <div class="col-lg-4 mb-2">
+
+                                <form asp-controller="SystemSetting" asp-action="Update" asp-antiforgery="true" id="@("frmSubmit"+setting.ParamDef)"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            @if (@setting.ParamDef == "EftStartTime")
+                                            {
+                                                <label class="w-100 text-center">Eft Başlangıç Saati</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="w-100 text-center">Eft Bitiş Saati</label>
+                                            }
+                                            <input type="hidden" asp-for="@setting.ParamDef" />
+                                            <input type="hidden" asp-for="@setting.ParamType" />
+                                            <input type="time" class="w-100 text-center" id="time-input" style="font-weight: bold;margin-top: 10px" asp-for="@setting.ParamVal" asp-format="{0:HH:mm}" onchange="$('@("#frmSubmit"+setting.ParamDef)').submit()" maxlength="5">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-2">
+            <div class="card border-custom bg-white">
+                <div class="card-header bg-white text-custom text-center fw-bold">
+                   Fatura KDV Oranı
+                </div>
+                <div class="card-body">
+                    <div class="row">                                     
+                            @foreach (var setting in Model.Settings.Where(x => x.ParamType == "CompanyInvoiceTaxRate"))
+                            {
+                                <div class="col-lg-6 mb-2">
+
+                                    <form asp-controller="SystemSetting" asp-action="Update" asp-antiforgery="true" id="@("frmSubmit"+setting.ParamDef)"
+                                          data-ajax="true" data-ajax-method="POST"
+                                          data-ajax-begin="onBegin" data-ajax-success="onSuccess2" data-ajax-complete="onComplete">
+
+                                        <div class="card border border-light border-4 bg-white">
+                                            <div class="card-body">
+                                                <label class="w-100 text-center">Fatura KDV Oranı</label>
+
+                                                <input type="hidden" asp-for="@setting.ParamDef" />
+                                                <input type="hidden" asp-for="@setting.ParamType" />
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="w-100 text-center" style="font-weight: bold;margin-top: 10px" asp-for="@setting.ParamVal">
+                                                </div>
+                                      
+                                                <div class="col-md-6">
+                                                    <button type="submit" style="margin-top: 5px" class="btn btn-custom">Kaydet</button>
+                                                </div>             
+                                        </div>
+                                    </form>
+                                </div>
+                            }                              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section js{
+    <script src="~/js/bootstrap/bootstrap-toggle.js"></script>
+    <script src="~/js/mask/imask.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/custom/numeric-format.js"></script>
+    <script src="~/js/views/systemsetting/index.js"></script>
+    <script src="~/js/views/core.js"></script>
+    }

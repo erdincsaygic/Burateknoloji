@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Üye İşyeri Çekim Talebi Havuzu";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcBank">
+                            <option value="">Tümü / Banka Seç</option>
+                            @foreach (var companyBanks in ViewBag.CompanyBankAccounts)
+                            {
+                                <option value="@companyBanks.IDBank">@companyBanks.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcStatus">
+                            <option value="">Tümü / Eşleşme Durumu</option>
+                            <option value="2">Eşleşti</option>
+                            <option value="1">Eşleşmedi</option>
+                            <option value="3">Geçersiz</option> 
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Üye İşyeri Çekim Talebi ve İade Havuzu</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">İşlem Tipi</th>
+                            <th class="col-1 text-center">Banka</th>
+                            <th class="col-1 text-center">Alıcı Adı</th>
+                            <th class="col-1 text-center">Alıcı Iban</th>
+                            <th class="col-1 text-end">Gönderim Tutarı</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Dönüş Açıklama</th>
+                            <th class="col-1 text-center">İşlem Numarası</th>
+                            <th class="col-2 text-center">Durum</th>
+                            @* <th class="col-2 text-center">İşlemler</th> *@
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Rebate -->
+<div class="modal fade" id="mdlRebate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Ödemeyi İade Etmek İstiyor Musunuz ?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerTransferPayPool" asp-action="RebateUnmatched" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" name="tpId" id="tpId" value="" />
+                @*
+                <div class="row border-bottom mt-2">
+                <div class="modal-body">
+                <div class="row mt-2">
+                <div class="col-lg-12">
+                <select class="form-select" name="bankId" id="bankId" value="" >
+                <option value="">Banka Seçiniz..</option>
+                @foreach (var item in ViewBag.CompanyBankAccount as List<StilPay.Entities.Concrete.CompanyBankAccount>)
+                {
+                <option value=@item.IDBank>@item.Name</option>
+                }
+                </select>
+                </div>
+                </div>
+                </div>
+                </div> *@
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/dealerwithdrawalpool/index.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+}

@@ -1,0 +1,700 @@
+﻿@model RebateRequestEditViewModel
+
+@{
+    ViewData["Title"] = "İade Talebi";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class=" col-lg-12">
+        <div class="card border border-danger text-danger">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <i class="fa fa-circle-info"></i>
+                        <small>
+                            Dikkat !
+                        </small>
+                        <br />
+                        <small>
+                            İade süreci banka çalışma politikalarına göre değişkenlik göstermektedir.
+                        </small>
+                        <br />
+                        <small>
+                            İade işlemi 3-9 iş Günü arasında sonuçlandırılmaktadır.
+                        </small>
+                        <br />
+                        <small>
+                            İade oluşturulduktan sonra iptal edilemez.
+                        </small>
+                        <br />
+                        <small>
+                            Ödeme Süresi 15 Günü doldurmuş siparişler iade edilemez.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body fs-5">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label class="form-label"><span class="text-danger">*</span> İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="txtSearch"
+                               value="@Model.PaymentNotification?.TransactionNr" value="@(Model.hasProcess ? Model.entity.TransactionNr : Model.PaymentNotification != null ? Model.PaymentNotification?.TransactionNr : Model.CreditCardPaymentNotification != null ? Model.CreditCardPaymentNotification?.TransactionNr : Model.ForeignCreditCardPaymentNotification?.TransactionNr)" />
+
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-dark" id="btnSearch"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;İşlemi Bul</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#home">İade İşlemi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#others">Üyenin Ödeme Bildirimleri</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#creditCard">Üyenin Kredi Kartı Ödemeleri</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#foreignCreditCard">Üyenin Yurt Dışı Kredi Kartı Ödemeleri</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="home">
+
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                
+                <input type="hidden" asp-for="IDMember" />
+
+                @if (Model.hasProcess)
+                {
+                    <div class="card-border">
+                        <div class="card-body menu2step text-danger" style="width:unset; margin-top:2rem; ">
+                            <span>İade Edilmek İstenilen İşlem İçin Daha Önceden Talep Oluşturulmuştur.</span>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.PaymentNotification != null && !Model.hasProcess)
+                {
+                    <div class="card border bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">Ödeme Bildirimi Detayı</div>
+                        <div class="card-body">
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.Member" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Numarası :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.TransactionNr" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Banka :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.Bank" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderici Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.SenderName" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">IBAN :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.Iban" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Saati :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.ActionTime" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="PaymentNotification.Amount" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye İşyeri Hakediş Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for=PaymentNotification.NetTotal readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Durumu :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control fw-bold text-success" asp-for="PaymentNotification.Status" value="@(Model.PaymentNotification != null ? "ONAYLANDI" : "")" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            @if (!Model.isIbanValid)
+                            {
+                                <div class="row mt-4">
+                                    <div class="col-lg-9">
+                                        <div class="mt-2 text-danger">
+                                            <i class="fa fa-circle-info"></i>
+                                            <small>
+                                                Müşterinin Iban Bilgisi Eksik veya Hatalı Olduğu İçin IBan Bilgisi Girilmelidir.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-block btn-custom" id="btnSubmitIban"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;İban Bilgisi Gir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.PaymentNotification?.TransactionID) && Model.isIbanValid)
+                            {
+
+                                <div class="row mt-4">
+                                    <div class="col-lg-3 offset-lg-9">
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-block btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;İade Et</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+
+                @if (Model.CreditCardPaymentNotification != null && !Model.hasProcess)
+                {
+                    <div class="card border bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">Kredi Kartı Ödeme Detayı</div>
+                        <div class="card-body">
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.Member" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Numarası :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.TransactionNr" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderici Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.SenderName" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Kart Numarası :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.CardNumber" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Saati :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.ActionTime" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CreditCardPaymentNotification.Amount" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye İşyeri Hakediş Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for=CreditCardPaymentNotification.NetTotal readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Durumu :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control fw-bold text-success" asp-for="CreditCardPaymentNotification.Status" value="@(Model.CreditCardPaymentNotification != null ? "ONAYLANDI" : "")" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(Model.CreditCardPaymentNotification?.TransactionID))
+                            {
+                                <div class="row mt-4">
+                                    <div class="col-lg-3 offset-lg-9">
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-block btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;İade Et</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ForeignCreditCardPaymentNotification != null && !Model.hasProcess)
+                {
+                    <div class="card border bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">Yurt Dışı Kredi Kartı Ödeme Detayı</div>
+                        <div class="card-body">
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.Member" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Numarası :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.TransactionNr" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderici Adı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.SenderName" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Kart Numarası :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.CardNumber" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tarihi :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Saati :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.ActionTime" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Gönderim Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="ForeignCreditCardPaymentNotification.Amount" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Üye İşyeri Hakediş Tutarı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for=ForeignCreditCardPaymentNotification.NetTotal readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3">
+                                    <label class="form-label">İşlem Durumu :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control fw-bold text-success" asp-for="ForeignCreditCardPaymentNotification.Status" value="@(Model.ForeignCreditCardPaymentNotification != null ? "ONAYLANDI" : "")" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(Model.ForeignCreditCardPaymentNotification?.TransactionID))
+                            {
+                                <div class="row mt-4">
+                                    <div class="col-lg-3 offset-lg-9">
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-block btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;İade Et</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">İade Geçmişi</div>
+                    <div class="card-body table-responsive">
+                        <table id="Table1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col text-center">İade İşlem Tarihi</th>
+                                    <th class="col text-center">İade İşlem Tutarı</th>
+                                    <th class="col text-center">İade İşlem Yapan Admin</th>
+                                    <th class="col text-center">İade İşlem Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-pane" id="others">
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Ödeme Bildirimleri</div>
+                    <div class="card-body table-responsive">
+                        <table id="Table2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-1 text-center">İşlem Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Numarası</th>
+                                    <th class="col-2 text-center">Banka</th>
+                                    <th class="col-2 text-center">Gönderici Ad-Soyad</th>
+                                    <th class="col-1 text-center">Gönderici T.C.</th>
+                                    <th class="col-1 text-end">Gönderim Tutarı</th>
+                                    <th class="col-2 text-center">Durum</th>
+                                    <th class="col-1 text-center">Onay/İptal Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Detayı</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="creditCard">
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Kredi Kartı Ödemeleri</div>
+                    <div class="card-body table-responsive">
+                        <table id="Table3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-1 text-center">İşlem Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Numarası</th>
+                                    <th class="col-2 text-center">Gönderici Ad-Soyad</th>
+                                    <th class="col-2 text-center">Kredi Kartı Numarası</th>
+                                    <th class="col-1 text-center">Gönderici T.C.</th>
+                                    <th class="col-1 text-end">Gönderim Tutarı</th>
+                                    <th class="col-2 text-center">Durum</th>
+                                    <th class="col-1 text-center">Onay/İptal Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Detayı</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="foreignCreditCard">
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Yurt Dışı Kredi Kartı Ödemeleri</div>
+                    <div class="card-body table-responsive">
+                        <table id="Table4" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-1 text-center">İşlem Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Numarası</th>
+                                    <th class="col-2 text-center">Gönderici Ad-Soyad</th>
+                                    <th class="col-2 text-center">Kredi Kartı Numarası</th>
+                                    <th class="col-1 text-center">Gönderici T.C.</th>
+                                    <th class="col-1 text-end">Gönderim Tutarı</th>
+                                    <th class="col-2 text-center">Durum</th>
+                                    <th class="col-1 text-center">Onay/İptal Tarihi</th>
+                                    <th class="col-1 text-center">İşlem Detayı</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">İade Etmek İstediğinize Emin Misiniz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+            <form asp-controller="RebateRequest" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+
+                
+                @if (Model.CreditCardPaymentNotification != null)
+                {
+                    <input type="hidden" name="entity.TransactionID" value="@Model.CreditCardPaymentNotification?.TransactionID" />
+                    <input type="hidden" name="entity.PaymentRecordID" value="2" />
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <label class="form-label">İade Edilecek Tutar :</label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control bg-light text-end" name="entity.Amount" value="@Model.CreditCardPaymentNotification?.NetTotal"
+                                   id="creditCardAmountInput" />
+                        </div>
+                    </div>
+                }
+
+                @if (Model.ForeignCreditCardPaymentNotification != null)
+                {
+                    <input type="hidden" name="entity.TransactionID" value="@Model.ForeignCreditCardPaymentNotification?.TransactionID" />
+                    <input type="hidden" name="entity.PaymentRecordID" value="3" />
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <label class="form-label">İade Edilecek Tutar :</label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control bg-light text-end" name="entity.Amount" value="@Model.ForeignCreditCardPaymentNotification?.NetTotal" id="foreignCardAmountInput" />
+                        </div>
+                    </div>
+                }
+
+                @if(Model.PaymentNotification != null)
+                {
+                    <input type="hidden" name="entity.TransactionID" value="@Model.PaymentNotification?.TransactionID" />
+                    <input type="hidden" name="entity.PaymentRecordID" value="1" />
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <label class="form-label">İade Edilecek Tutar :</label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control bg-light text-end" name="entity.Amount" value="@Model.PaymentNotification?.NetTotal" id="paymentAmountInput" />
+                        </div>
+                    </div>
+                }
+
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Iban -->
+<div class="modal fade" id="mdlIban" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Lütfen Iban Bilgisini Eksiksiz Giriniz</h5>
+            </div>
+            <form asp-controller="RebateRequest" asp-action="SetIban" asp-antiforgery="true" id="frmDef2"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccessSetIBan" data-ajax-complete="onComplete">
+
+
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" name="pyID" value="@Model.PaymentNotification?.ID"/>
+                    <div class="input-group">
+                        <span class="input-group-text">TR</span>
+                        <input type="text" class="form-control" id="setIban" name="Iban" placeholder="Iban Giriniz" maxlength="32" />
+                    </div>                
+                </div>
+
+
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-success">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/js/select2/select2.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-jquery.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script type="text/javascript" src="~/js/custom/numeric-format.js"></script>
+    <script type="text/javascript" src="~/js/views/rebaterequest/edit.js"></script>
+}

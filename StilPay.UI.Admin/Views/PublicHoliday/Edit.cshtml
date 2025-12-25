@@ -1,0 +1,68 @@
+﻿@model EditViewModel<PublicHoliday>
+
+@{
+    ViewData["Title"] = "Tatil Günü";
+}
+
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="PublicHoliday" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Tatil Günü Ekle
+            </div>
+            <div class="card-body">
+                <form asp-controller="PublicHoliday" asp-action="Save" asp-antiforgery="true" id="frmPublicHoliday"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Tatil Günü Adı :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Name" placeholder="Tatil günü adı giriniz" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Tatil Günü Tarihi :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="date" asp-format="{0:yyyy-MM-dd}" asp-for="entity.HolidayDate" placeholder="Tatil günü tarihi giriniz" class="form-control bg-white datepicker">
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/publicholiday/edit.js"></script>
+    }

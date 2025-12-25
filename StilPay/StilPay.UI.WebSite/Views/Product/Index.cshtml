@@ -1,0 +1,135 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>StilPay | Ödeme Bildrimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Giriş Yap</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Mağaza</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ürün Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Ödeme</div>
+                </div>
+            </div>
+
+            <div class="deneme">
+                <!---------------STEP 1 START------------------>
+                <div class="slidercont" id="step1" >
+                    <div class="arrive">
+                        <p class="bold">Giriş Yapınız</p>
+                    </div>
+                    <div class="form" style="width:100%; margin:30px">
+                        <div class="arrive2phoneinp">
+                            <input type="number" class="boldsinp" id="telNo" placeholder="Telefon Numaranızı Giriniz" name="telNo" maxlength="11">
+                        </div>
+                    </div>
+                    <div class="formend" style="margin:30px">
+                        <div class="confirm">
+                            <button type="button" id="telSubmit" onclick="telSubmitFunc()">
+                                <i class="fa-solid fa-paper-plane"></i> Giriş Yap
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <img src="~/areas/panel/img/paymentnotification/3D.png" alt="">
+                        <div class="line-2"></div>
+                        <hr>
+                        <img src="~/areas/panel/img/paymentnotification/366-3669285_secure-ssl-encryption-logo-png-transparent-png.png" alt="">
+                        <div class="line-2"></div>
+                        <img src="~/areas/panel/img/paymentnotification/Stilpay1.png" alt="">
+                    </div>
+                </div>
+                <!---------------STEP 1 END------------------>
+            </div>
+
+            <div class="boxfooter">
+                <div class="boxlast">
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/4.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/13.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/8.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/10.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/6.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/9.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/7.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/5.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/14.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js"></script>
+
+    <script>
+        function telSubmitFunc() {
+            var tel = document.getElementById('telNo').value;
+            
+            if(tel == "" || tel == null || tel == undefined){
+                alert("Telefon Numarası Boş Bırakılamaz");
+            }
+
+
+            if (tel.length < 11) {
+                alert("Telefon Numarası 11 Haneli Olmalıdır");
+            }
+
+            else{
+                window.location.href = 'Product/Store'
+            }
+        }
+    </script>
+</body>
+
+</html>

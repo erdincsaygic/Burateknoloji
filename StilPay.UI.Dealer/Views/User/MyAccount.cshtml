@@ -1,0 +1,70 @@
+﻿@model EditViewModel<CompanyUser>
+
+@{
+    ViewData["Title"] = "Hesap Bilgilerim";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Hesap Bilgilerim
+            </div>
+            <div class="card-body">
+                <form asp-controller="User" asp-action="SaveMyAccount" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+                    <input type="hidden" asp-for="entity.StatusFlag" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Adı Soyadı&nbsp;:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" asp-for="entity.Name" maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Telefon&nbsp;:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" asp-for="entity.Phone" maxlength="11" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Email&nbsp;:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input class="form-control" asp-for="entity.Email" maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-4 offset-lg-8">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/user/myaccount.js"></script>
+    }

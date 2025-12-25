@@ -1,0 +1,165 @@
+﻿@{
+}
+@{
+    ViewData["Title"] = "Sanal Pos";
+}
+<!-- banner-section start -->
+<section class="banner-section inner-pages blog-single-2 reviews">
+    <div class="overlay">
+        <div class="banner-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        <div class="main-content">
+                            <h1>Sanal Pos</h1>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb d-flex align-items-center">
+                                        <li class="breadcrumb-item"><a asp-controller="AnaSayfa" asp-action="Index">Anasayfa</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Sanal Pos</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner-section end -->
+<!-- FAQs In start -->
+<section class="faqs-section">
+    <div class="overlay pt-120 pb-120">
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-10">
+                    <div class="section-header text-center">
+                        <h2 class="title">Sanal Pos</h2>
+                        <p>Müşterileriniz için Sanal Pos Ödeme Adımları </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row wrapper margin-o">
+                <div class="col-lg-6 consume">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item ">
+                            <h6 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                        aria-controls="flush-collapseOne">
+                                    1- Müşterilerinize Kredi Kartı / Banka Kartı Bilgileri İçin IFrame Ekranı Açılır
+                                </button>
+                            </h6>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        Müşteri kart sahibi adı soyadı, kart numarası, kart son kullanım tarihi (örn: 09/29 formatında), cvv ve telefon numarası (5xxxxx formatında) bilgilerini girer ve <u>'Hemen Ödeme'</u> butonuna basarak 3D
+                                        ekranına yönlendirilir.
+                                    </p>
+                                </div>
+                            </div>
+                            <img class="imgden" src="~/ui/assets/img/cc1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 salams">
+                    <div class="stepsimg">
+                        <img class="imgse" src="~/ui/assets/img/arrows.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row wrapper d-flex flex-row-reverse margin-o">
+                <div class="col-lg-6">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item ">
+                            <h6 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                    2- 3D Doğrulama Ekranı 
+                                </button>
+                            </h6>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        Bu aşamada Stilpay müşterinin kartına ait bankanın 3D Doğrulama ekranını iframe üzerinde müşteriye açar. Müşteri telefonundan 3D Doğrulama işlemini yaptıktan sonra bankanın onay butonuna basarak
+                                        3D Doğrulama aşamasını tamamlar.
+                                    </p>
+                                </div>
+                            </div>
+                            <img class="imgden" src="~/ui/assets/img/cc2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 salams">
+                    <div class="stepsimg rotates">
+                        <img class="imgse" src="~/ui/assets/img/arrows.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row wrapper margin-o">
+                <div class="col-lg-6">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item ">
+                            <h6 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                    3.1- 3D Doğrulama Başarılı Sonuç 
+                                </button>
+                            </h6>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        Müşterinin 3D Doğrulama sonucu başarılı ise aşağıdaki onay ekranına yönlendirilir. 15 saniye sonra müşteri üye işyerinin belirlediği url adresine yönlendirilir.
+                                        <br /><br />
+                                        Müşteri <u>'Siteye Geri Dön'</u> butonuna tıkladığında ise üye işyerinin belirlediği url adresine yönlendirilir.
+                                    </p>
+                                </div>
+                            </div>
+                            <img class="imgden" src="~/ui/assets/img/cc3success.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 salams">
+                    <div class="stepsimg">
+                        <img class="imgse" src="~/ui/assets/img/arrows.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row wrapper d-flex flex-row-reverse margin-o">
+                <div class="col-lg-6">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item ">
+                            <h6 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                    3.2- 3D Doğrulama Başarısız Sonuç
+                                </button>
+                            </h6>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        Müşterinin 3D Doğrulama sonucu başarısız ise aşağıdaki başarısız ekranına yönlendirilir. Ödeme sonucu kısmında hata mesajı yer alır. 15 saniye sonra müşteri üye işyerinin belirlediği url adresine yönlendirilir.
+                                        <br /><br />
+                                        Müşteri <u>'Siteye Geri Dön'</u> butonuna tıkladığında ise üye işyerinin belirlediği url adresine yönlendirilir.
+                                    </p>
+                                </div>
+                            </div>
+                            <img class="imgden" src="~/ui/assets/img/cc4error.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- FAQs In end -->

@@ -1,0 +1,241 @@
+﻿@model DealerAccountSummaryEditViewModel
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row justify-content-center" id="#anaDiv" >
+    <div class="card col-lg-12 mt-2 border-1 border-custom me-2 ms-2">
+        <div class="card-body table-responsive">
+            <table id="TransferTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Toplam Kredi Kartı ve Havale Ciro<br />
+                            <span class="small">
+                                @{
+                                    var paymentTotal = Model?.DealerAccountSummaries?.PaymentNotificationTotalAmount ?? 0;
+                                    var creditCardPaymentTotal = Model?.DealerAccountSummaries?.CreditCardPaymentNotificationTotalAmount ?? 0;
+                                    // var foreignCreditCardPaymentTotal = Model?.DealerAccountSummaries?.ForeignCreditCardPaymentNotificationTotalAmount ?? 0;
+                                    var withdrawalTotalAmnount = Model?.DealerAccountSummaries?.WithdrawalRequestTotalAmount ?? 0;
+                                    var bankCardPaymentTotal = Model?.DealerAccountSummaries?.BankCardTypePaymentNotificationTotalAmount ?? 0;
+                                    var averageCommissionRate = Model?.DealerAccountSummaries?.AverageCommissionRate ?? 0;
+                                    var totalAmount = paymentTotal + creditCardPaymentTotal + bankCardPaymentTotal;
+
+                                    var paymentCount = Model?.DealerAccountSummaries?.PaymentNotificationCount ?? 0;
+                                    var creditCardCount = Model?.DealerAccountSummaries?.CreditCardCount ?? 0;
+                                    var bankCardCount = Model?.DealerAccountSummaries?.BankCardTypeCount ?? 0;
+                                    var withdrawalCount = Model?.DealerAccountSummaries?.WithdrawalRequestCount ?? 0;
+                                    // var foreignCreditCardCount = Model?.DealerAccountSummaries?.ForeignCreditCardCount ?? 0;    
+                                }
+
+                                @totalAmount.ToString("n2") ₺
+                            </span>
+                        </th>
+         
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Havale Toplam Ciro<br /> 
+                            <span class="small">
+                                @paymentTotal.ToString("n2") ₺ / @paymentCount.ToString("n2") Adet
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Kredi Kartı Toplam Ciro<br /> 
+                            <span class="small">
+                                @creditCardPaymentTotal.ToString("n2") ₺ / @creditCardCount.ToString("n2") Adet
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Banka Kartı Toplam Ciro<br />
+                            <span class="small">
+                                @bankCardPaymentTotal.ToString("n2") ₺ / @bankCardCount.ToString("n2") Adet
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Banka-Kredi Kartı Ortalama Oran <br />
+                            <span class="small">
+                                @averageCommissionRate.ToString("n2")
+                            </span>
+                        </th>
+
+@* 
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Yurt Dışı Kredi Kartı Toplam Ciro<br />
+                            <span class="small">
+                                @foreignCreditCardPaymentTotal.ToString("n2") ₺ / @foreignCreditCardCount.ToString("n2") Adet
+                            </span>
+                        </th> *@
+@* 
+                        @if(Model != null)
+                        {
+                            @foreach (var item in Model.DealerAccountSummaries.ForeignCreditCardSummaries)
+                            {
+
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    Yurt Dışı Kredi Kartı @item.Currency Toplam Ciro<br />
+                                    <span class="small">@item.SumTotal.ToString("n2") @item.Currency / @item.Count.ToString("n2") Adet</span>
+                                </th>
+                            }
+                        } *@
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Çekim Talebi Toplam Ciro<br />
+                            <span class="small">
+                                @withdrawalTotalAmnount.ToString("n2") ₺ / @withdrawalCount.ToString("n2") Adet
+                            </span>                                
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-body table-responsive">
+            <table id="TransferTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">
+                            Toplam Kâr<br />
+                            <span class="small">
+                                @{
+                                    var paymentProfit = Model?.DealerAccountSummaries?.PaymentNotificationProfit ?? 0;
+                                    var creditCardProfit = Model?.DealerAccountSummaries?.CreditCardPaymentNotificationProfit ?? 0;
+                                    var bankCardProfit = Model?.DealerAccountSummaries?.BankCardTypePaymentNotificationProfit ?? 0;
+                                    // var foreignCardProfit = Model?.DealerAccountSummaries?.ForeignCreditCardPaymentNotificationProfit ?? 0;
+                                    var withdrawalProfit = Model?.DealerAccountSummaries?.WithdrawalRequestProfit ?? 0;
+                                    var totalProfit = paymentProfit + creditCardProfit + withdrawalProfit + bankCardProfit;
+                                }
+
+                                @totalProfit.ToString("n2") ₺
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">Havale Toplam Kâr<br />
+                            <span class="small">@paymentProfit.ToString("n2") ₺ </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">Kredi Kartı Toplam Kâr<br />
+                            <span class="small">@creditCardProfit.ToString("n2") ₺ </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Banka Kartı Toplam Kâr<br />
+                            <span class="small">@bankCardProfit.ToString("n2") ₺ </span>
+                        </th>
+@* 
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Yurt Dışı Kredi Kartı Toplam Kâr<br />
+                            <span class="small">@foreignCardProfit.ToString("n2") ₺ </span>
+                        </th> *@
+@* 
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model.DealerAccountSummaries.ForeignCreditCardSummaries)
+                            {
+
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    Yurt Dışı Kredi Kartı @item.Currency Toplam Kâr<br />
+                                    <span class="small">@item.Profit.ToString("n2") @item.Currency / @item.Count.ToString("n2") Adet </span>
+                                </th>
+                            }
+                        }
+ *@
+
+                        <th class="col-1 text-custom text-center fw-bold">Çekim Talebi Toplam Kâr<br />
+                            <span class="small">@withdrawalProfit.ToString("n2") ₺ </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table id="TransferTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">
+                            Toplam Gider<br />
+                            <span class="small">
+                                @{
+                                    var rebateExpense = Model?.DealerAccountSummaries?.RebateNetAmount ?? 0;
+                                    var fraudExpense = Model?.DealerAccountSummaries?.FraudExpenseProfitAmount ?? 0;
+                                    var totalExpense = rebateExpense + fraudExpense;
+                                }
+
+                                @totalExpense.ToString("n2") ₺
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            İade Gideri<br />
+                            <span class="small">@rebateExpense.ToString("n2") ₺</span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Fraud Gideri<br />
+                            <span class="small">@fraudExpense.ToString("n2") ₺</span>                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-body">
+            <div class="card-header text-center text-custom bg-white fw-bold">Yurt Dışı Kredi Kartı İşlemleri <hr /></div>
+            @if (Model != null && Model.DealerAccountSummaries.ForeignCreditCardSummaries != null && Model.DealerAccountSummaries.ForeignCreditCardSummaries.Count > 0)
+            {
+                foreach (var item in Model.DealerAccountSummaries.ForeignCreditCardSummaries.OrderByDescending(x => x.Currency.Contains("TRY") || x.Currency.Contains("USD")))
+                {
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-custom text-center fw-bold">Toplam Ciro <br /> <span class="small"> @item.SumTotal.ToString("n2") @item.Currency </span></th>
+                                    <th class="text-custom text-center fw-bold">Toplam Kâr <br /> <span class="small"> @item.Profit.ToString("n2") @item.Currency</span></th>
+                                    @if (item.Currency != "TRY")
+                                    {
+                                        <th class="text-custom text-center fw-bold">Çekim Talebi Toplam Ciro <br /> <span class="small"> @item.WithdrawalRequestSummary.WithdrawalRequestTotalAmount.ToString("n2") @item.Currency</span></th>
+                                        <th class="text-custom text-center fw-bold">Çekim Talebi Toplam Kâr <br /> <span class="small"> @item.WithdrawalRequestSummary.WithdrawalRequestProfit.ToString("n2") @item.Currency</span></th>
+
+                                    }
+                                    else
+                                    {
+                                
+                                    }
+                                    <th class="text-custom text-center fw-bold">İade Gideri <br /> <span class="small"> @item.RebateRequestSummary.ForeignRebateNetAmount.ToString("n2") @item.Currency</span></th>
+                                    <th class="text-custom text-center fw-bold">Fraud Gideri <br /> <span class="small"> @item.FraudExpenseSummary.FraudExpenseAmount.ToString("n2") @item.Currency</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var dealerAccountSummaryModel = @Html.Raw(Json.Serialize(Model));
+</script>
+
+@section js {
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/core.js"></script>
+    }

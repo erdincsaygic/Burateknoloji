@@ -1,0 +1,93 @@
+﻿@model AccountSummaryEditViewModel
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row justify-content-center" id="#anaDiv" >
+    <div class="card col-lg-12 mt-2 border-1 border-custom me-2 ms-2">
+        <div class="card-body table-responsive">
+            <table id="TransferTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Toplam Kredi Kartı ve Havale Ciro<br />
+                            <span class="small">
+                                @{
+                                    var paymentTotal = Model?.DealerAccountSummaries?.PaymentNotificationTotalAmount ?? 0;
+                                    var creditCardPaymentTotal = Model?.DealerAccountSummaries?.CreditCardSumTotal ?? 0;
+                                    var creditCardNetTotal = Model?.DealerAccountSummaries?.CreditCardSumNetTotal ?? 0;
+                                    var paymentNetTotal = Model?.DealerAccountSummaries?.PaymentNotificationSumNetTotal ?? 0;
+                                    var withdrawalTotalAmnount = Model?.DealerAccountSummaries?.WithdrawalRequestTotalAmount ?? 0;
+                                    var totalAmount = paymentTotal + creditCardPaymentTotal;
+
+                                    var paymentCount = Model?.DealerAccountSummaries?.PaymentNotificationCount ?? 0;
+                                    var creditCardCount = Model?.DealerAccountSummaries?.CreditCardCount ?? 0;
+                                    var withdrawalCount = Model?.DealerAccountSummaries?.WithdrawalRequestCount ?? 0;
+                                }
+
+                                @totalAmount.ToString("n2") ₺
+                            </span>
+                        </th>
+         
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Havale Toplam Ciro<br /> 
+                            <span class="small">
+                                @paymentTotal.ToString("n2") ₺ / @paymentCount.ToString("n2") Adet
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Kredi Kartı Toplam Ciro<br /> 
+                            <span class="small">
+                                @creditCardPaymentTotal.ToString("n2") ₺ / @creditCardCount.ToString("n2") Adet
+                            </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Çekim Talebi Toplam Ciro<br />
+                            <span class="small">
+                                @withdrawalTotalAmnount.ToString("n2") ₺ / @withdrawalCount.ToString("n2") Adet
+                            </span>                                
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table id="TransferTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Havale Toplam Hakediş<br />
+                            <span class="small">@paymentNetTotal.ToString("n2") ₺ </span>
+                        </th>
+
+                        <th class="col-1 text-custom text-center fw-bold">
+                            Kredi Kartı Toplam Hakediş<br />
+                            <span class="small">@creditCardNetTotal.ToString("n2") ₺ </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dealerAccountSummaryModel = @Html.Raw(Json.Serialize(Model));
+</script>
+
+@section js {
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/core.js"></script>
+    }

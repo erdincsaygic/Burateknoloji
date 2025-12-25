@@ -1,0 +1,188 @@
+@{
+    ViewData["Title"] = "Üye İşyeri Kredi Kartı Ödeme Havuzu";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+
+    <style>
+        .text-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+        }
+
+        .text-ellipsis:hover::after {
+            content: attr(data-original-title);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            white-space: normal;
+            background: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            z-index: 1000;
+            display: block;
+            max-width: 200px;
+            word-wrap: break-word;
+            font-size: 12px; /* Tooltip metninin boyutunu ayarlayabilirsiniz */
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcPaymentMethod">
+                            <option value="0">Tümü</option>
+                            @foreach (var item in ViewBag.PaymentInstitution)
+                            {
+                                <option value=@item.ID>@item.Name</option>                              
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <select class="form-select" id="slcStatus">
+                            <option value="0">Tümü</option>
+                            <option value="1">Bekliyor</option>
+                            <option value="2">Onaylandı</option>
+                            <option value="3">İptal Edildi</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 mt-2" style="margin:0; padding: 0">
+                            <button type="button" onclick="HideShow()" class="btn btn-sm btn-outline-dark">Detaylı Arama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i> </button>
+                         </div>
+                    </div>
+
+                    <div id="idFilter" style="display:none;">
+                        <div class="row">
+                            <div class="col-lg-3 offset-lg-3">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="form-label">
+                                            Başlangıç Saati
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="dtStartDateTime" value="00:00:00" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="form-label">
+                                            Bitiş Saati
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="dtEndDateTime" value="00:00:00" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="w-100">
+@*             <div class="col text-center">
+                <div class="w-100 py-1 text-white">Ödeme Kuruluşu Brüt</div>
+                <div class="w-100 py-1 bg-white" id="divPaymentInstitutionTotalAmount"></div>
+            </div>
+            <div class="col text-center">
+                <div class="w-100 py-1 text-white">Ödeme Kuruluşu Hesaplanan Net Tutar</div>
+                <div class="w-100 py-1 bg-white" id="divPaymentInstitutionNetAmount"></div>
+            </div>
+            <div class="col text-center">
+                <div class="w-100 py-1 text-white">Stilpay Hesaplanan Net Tutar</div>
+                <div class="w-100 py-1 bg-white" id="divSPNetAmount"></div>
+            </div> *@
+        </div>
+        <div class="card border-1 border-custom mt-2">
+            <div class="card-header bg-custom text-white">Üye İşyeri Kredi Kartı Ödeme Havuzu</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-2 text-center">Banka</th>
+                            <th class="col-1 text-center">Gönderici Adı</th>
+                            <th class="col-1 text-center">Kart Numarası</th>
+                            <th class="col-1 text-center">Kart Tipi</th>
+                            <th class="col-1 text-center">İşlem Tipi</th>
+                            <th class="col-1 text-center">Tutar</th>
+                            <th class="col-1 text-center">Ö.K Durum</th>
+                            <th class="col-1 text-center">Açıklama</th>
+                            <th class="col-1 text-center">StilPay Durum</th>
+                            <th class="col-1 text-center">SP Atılan Callback Durum</th>
+                            <th class="col-1 text-center">Callback Geri Dönüş Cevabı</th>
+                            <th class="col-1 text-end">Ö.K. İşlem Numarası</th>
+                            <th class="col-2 text-center">Ödeme Kuruluşu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/dealercreditcardpaypool/paypool.js"></script>
+}

@@ -1,0 +1,232 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "Örnek Kod";
+}
+
+<div id="notification">
+    <h2 class="text-center">.NET Örnekleri</h2>
+    <br />
+    <pre><code>
+    <b>IFrame Token Alımı ve IFrame Ekranı Açımı :</b>
+
+        var serviceID = "3748";
+        var secretKey = "lahlUk";
+
+        MD5 md5Hasher = MD5.Create();
+        byte[] data = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(secretKey));
+        StringBuilder sBuilder = new StringBuilder();
+        for (int i = 0; i < data.Length; i++)
+            sBuilder.Append(data[i].ToString("x2"));
+
+        var ciphered = sBuilder.ToString();
+
+        var body = new
+        {
+            service_id = serviceID,
+            ciphered = ciphered,
+            data = new
+            {
+                amount = 1,
+                transaction_id = DateTime.Now.ToLongDateString(),
+            }
+        };
+
+        var options = new RestClientOptions("http://stilpaytest.stilpay.com")
+        {
+            MaxTimeout = -1,
+        };
+        var client = new RestClient(options);
+        var request = new RestRequest("/api/Transfer/frame", Method.Post);
+        request.AddHeader("Content-Type", "application/json");
+        request.AddStringBody(JsonConvert.SerializeObject(body), DataFormat.Json);
+        RestResponse response = client.Execute(request);
+
+        if (response != null && response.StatusCode == HttpStatusCode.OK)
+        {
+            string baseUrl = "http://stilpay.stilpay.com/panel/paymentnotification/";
+
+            //IFrame Açımı
+            string redirectUrl = $"{baseUrl}?service_id={serviceID}&frame_id={response.Content.Trim('"')}";
+
+            //Sadece Havale/EFT IFrame Açımı
+            //string redirectUrl = $"{baseUrl}transfer?service_id={serviceID}&frame_id={response.Content.Trim('"')}";
+
+            //Sadece Kredi Kartı IFrame Açımı
+            //string redirectUrl = $"{baseUrl}creditCard?service_id={serviceID}&frame_id={response.Content.Trim('"')}";
+
+            //Sadece Yurt Dışı Kredi Kartı IFrame Açımı
+            //string redirectUrl = $"{baseUrl}foreignCreditCard?service_id={serviceID}&frame_id={response.Content.Trim('"')}";
+
+            ContentResult result = new ContentResult
+            {
+                Content = $"<script>window.open('{redirectUrl}', '_blank');</script>",
+                ContentType = "text/html"
+            };
+
+            return result;
+        }
+
+        return Error();
+
+    </code></pre>
+
+    <pre><code>
+    <b>Nakit Çekim Talebi :</b>
+
+        // Gelen JSON Response Değerlerini Nesneye Aktarmak İçin Oluşturulan Örnek Class
+        public class WithdrawalRequestResponse
+        {
+            public class Data
+            {
+                public string request_nr { get; set; }
+            }
+
+            public class Response
+            {
+                public int ResponseStatus { get; set; }
+                public string Status { get; set; }
+                public object Message { get; set; }
+                public Data Data { get; set; }
+            }
+        }
+
+
+        var serviceID = "3748";
+        var secretKey = "lahlUk";
+
+        MD5 md5Hasher = MD5.Create();
+        byte[] data = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(secretKey));
+        StringBuilder sBuilder = new StringBuilder();
+        for (int i = 0; i < data.Length; i++)
+            sBuilder.Append(data[i].ToString("x2"));
+
+        var ciphered = sBuilder.ToString();
+
+        var body = new
+        {
+            service_id = serviceID,
+            ciphered = ciphered,
+            data = new
+            {
+                title = "StilPay",
+                iban = "TR32 0001 0015 4897 7360 4050 01",
+                amount = 10,
+                is_eft = true,
+                request_nr = "Test123456789"
+            }
+        };
+
+        var options = new RestClientOptions("http://stilpaytest.stilpay.com")
+        {
+            MaxTimeout = -1,
+        };
+        var client = new RestClient(options);
+        var request = new RestRequest("/api/Transfer/withdrawalrequest", Method.Post);
+        request.AddHeader("Content-Type", "application/json");
+        request.AddStringBody(JsonConvert.SerializeObject(body), DataFormat.Json);
+        RestResponse response = client.Execute(request);
+
+        var deserialize = JsonConvert.DeserializeObject<WithdrawalRequestResponse.Response>(response.Content);
+
+        if (response != null && response.StatusCode == HttpStatusCode.OK)
+        {
+            if (deserialize.ResponseStatus == 1 && deserialize.Status == "OK")
+            {
+                İstek StilPay'e Ulaştı ve İşleme Alındı
+            }  
+            
+            if (deserialize.ResponseStatus == 0 && deserialize.Status == "ERROR")
+            {
+                İstek İşleme Alınamadı. 
+                Hata Mesajına Ulaşmak İçin => deserialize.Message
+            }   
+        }
+
+        return Error();
+
+    </code></pre>
+
+
+
+</div>
+
+<br />
+
+<div id="notification">
+    <h2 class="text-center">PHP Örnekleri</h2>
+    <br />
+
+    <pre><code>
+    <b>IFrame Token Alımı ve IFrame Ekranı Açımı :</b>
+        {
+            $secretKey = "lahlUk";
+            $serviceID = "3748"
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL            => "http://stilpaytest.stilpay.com/api/Transfer/frame",
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_CUSTOMREQUEST  => "POST",
+                CURLOPT_HTTPHEADER     => ["Content-Type:application/json"],
+                CURLOPT_POSTFIELDS     => json_encode([
+                    "service_id" => $serviceID,
+                    "ciphered"   =>  md5($secretKey),
+                    "data"       => [
+                        "transaction_id" => time(),
+                        "amount"         => 1,
+                    ]
+                ]),
+            ]);
+
+            $token =  curl_exec($curl);
+
+            //IFrame
+            string redirectUrl = "https://stilpay.stilpay.com/panel/paymentnotification/?service_id=.$serviceID.&frame_id=" . $token;
+
+
+
+            //IFrame Açımı
+            string redirectUrl = "https://stilpay.stilpay.com/panel/paymentnotification/?service_id=.$serviceID.&frame_id=" . $token;
+
+            //Sadece Havale/EFT IFrame Açımı
+            string redirectUrl = "https://stilpay.stilpay.com/panel/paymentnotification/transfer?service_id=.$serviceID.&frame_id=" . $token;
+
+            //Sadece Kredi Kartı IFrame Açımı
+            string redirectUrl = "https://stilpay.stilpay.com/panel/paymentnotification/creditCard?service_id=.$serviceID.&frame_id=" . $token;
+
+            //Sadece Yurt Dışı Kredi Kartı IFrame Açımı
+            string redirectUrl = "https://stilpay.stilpay.com/panel/paymentnotification/foreignCreditCard?service_id=.$serviceID.&frame_id=" . $token;
+        }
+
+    </code></pre>
+
+    <pre><code>
+    <b>Nakit Çekim Talebi :</b>
+        {
+            $secretKey = "lahlUk";
+            $serviceID = "3748"
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL            => "https://servis.stilpay.com/api/Transfer/withdrawalrequest",
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_CUSTOMREQUEST  => "POST",
+                CURLOPT_HTTPHEADER     => ["Content-Type:application/json"],
+                CURLOPT_POSTFIELDS     => json_encode([
+                    "service_id" => $serviceID,
+                    "ciphered"   =>  md5($secretKey),
+                    "data"       => [
+                        title = "StilPay",
+                        iban = "TR32 0001 0015 4897 7360 4050 01",
+                        amount = 10,
+                        is_eft = true,
+                        request_nr = time()
+                    ]
+                ]),
+            ]);
+
+
+            $result = curl_exec($curl);
+            prep($result);
+        }
+    </code></pre>
+
+</div>

@@ -1,0 +1,124 @@
+﻿@using Newtonsoft.Json;
+@model EditViewModel<Administrator>
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-2">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Administrator" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-8 offset-lg-2">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Admin Tanımla
+            </div>
+            <div class="card-body">
+                <form asp-controller="Administrator" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+                    <input type="hidden" asp-for="entity.ShowRoles" />
+
+                    <div class="row">
+
+                        <div class="col-lg-7">
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-3">
+                                    <label class="form-label" asp-for="entity.Name"><span style="color:red">* </span>Adı Soyadı :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input class="form-control" asp-for="entity.Name" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-3">
+                                    <label class="form-label" asp-for="entity.Phone"><span style="color:red">* </span>Telefon :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input class="form-control" asp-for="entity.Phone" maxlength="11" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-3">
+                                    <label class="form-label" asp-for="entity.Email"><span style="color:red">* </span>Email :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input class="form-control" asp-for="entity.Email" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-3">
+                                    <label class="form-label" asp-for="entity.Password"><span style="color:red">* </span>Şifre :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <input class="form-control" asp-for="entity.Password" maxlength="25" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-3">
+                                    <label class="form-label" asp-for="entity.StatusFlag"><span style="color:red">* </span>Durum :</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="entity.StatusFlag">
+                                        <option value="true">Aktif</option>
+                                        <option value="false">Pasif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (Model.entity.ShowRoles)
+                        {
+                            <div class="col-lg-5 mt-lg-0 mt-2" id="divRoles">
+                                <ul class="list-group">
+                                    <li class="list-group-item text-dark fw-bold text-center">Yetkileri</li>
+                                    @for (int i = 0; i < Model.entity.AdministratorRoles.Count; i++)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="form-check ms-3">
+                                                <input type="hidden" asp-for="entity.AdministratorRoles[i].IDAdministrator">
+                                                <input type="hidden" asp-for="entity.AdministratorRoles[i].RoleKey">
+                                                <input class="form-check-input" type="checkbox" asp-for="entity.AdministratorRoles[i].Authorized">
+                                                <label class="form-check-label">@Model.entity.AdministratorRoles[i].Name</label>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-2 offset-lg-10">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/administrator/edit.js"></script>
+}

@@ -1,0 +1,154 @@
+@model BankAccountEditViewModel
+
+@{
+    ViewData["Title"] = "Banka Hesabı Tanımla";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="AccountingReport" asp-action="BankAccount"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <form asp-controller="AccountingReport" asp-action="SaveMyBank" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+                    <input type="hidden" asp-for="entity.IsActiveByDefaultExpenseAccount" />
+                    <input type="hidden" asp-for="entity.IsActiveForIFrame" />
+
+                    
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Hesap Sahibi Adı :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Title" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Takma Adı :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Name" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Banka :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IDBank" asp-items="@(new SelectList(Model.Banks,"ID","Name"))">
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>IBAN :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.IBAN" maxlength="32">
+                        </div>
+                    </div>
+
+                    
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Hesap Numarası :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.AccountNr">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>IFrame Uyarı Mesajı :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.IFrameWarnText">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>IFrame Sıra No :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <input type="number" class="form-control" asp-for="entity.OrderNr" min="1">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Hesap Tipi :</label>
+                        </div>
+                        <di class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IsExitAccount">
+                                <option value="false">Gelir Hesabı</option>
+                                <option value="true">Gider Hesabı</option>
+                            </select>
+                        </di
+                        v>
+                    </div>
+                    <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Durum :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.StatusFlag">
+                                <option value="true">Aktif</option>
+                                <option value="false">Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                     <div class="row border-bottom mt-2">
+                      <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Genel Ayarlar <br /> Sayfasında Gözüksün Mü ? :</label>
+                        </div>
+                         <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.ShowInSystemSettings">
+                                <option value="true">Evet</option>
+                                <option value="false">Hayır</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/mask/imask.js"></script>
+    <script src="~/js/views/bankaccount/edit.js"></script>
+    }

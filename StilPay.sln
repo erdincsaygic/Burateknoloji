@@ -1,0 +1,255 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.DAL", "StilPay.DAL\StilPay.DAL.csproj", "{8B105169-1F89-445F-BE32-7EA9CA58C440}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Utility", "StilPay.Utility\StilPay.Utility.csproj", "{37AA59F9-5DE4-42A2-AEA6-1F60E52EB28E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.BLL", "StilPay.BLL\StilPay.BLL.csproj", "{B073504E-70DA-44FB-BFF1-9967D15C3091}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.ApiService", "StilPay.ApiService\StilPay.ApiService.csproj", "{39415109-AE68-4E10-8DCF-720F2B7F68D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.UI.WebSite", "StilPay.UI.WebSite\StilPay.UI.WebSite.csproj", "{006D9657-F14A-4402-ACC2-00D0D13015EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Entities", "StilPay.Entities\StilPay.Entities.csproj", "{78F993A1-9BA5-4281-A5B4-41D186F5E87A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.UI.Admin", "StilPay.UI.Admin\StilPay.UI.Admin.csproj", "{803276DA-E228-4601-9DE3-4997EBF4CA89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.UI.Dealer", "StilPay.UI.Dealer\StilPay.UI.Dealer.csproj", "{275B40A0-845F-4329-88DE-7093DA2E662F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.IsBankasi", "StilPay.Job.IsBankasi\StilPay.Job.IsBankasi.csproj", "{9D517D94-16A2-4502-B741-7ECE1764923B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.GarantiBankasi", "StilPay.Job.GarantiBankasi\StilPay.Job.GarantiBankasi.csproj", "{2718353B-BE48-4A1A-8D94-2AD36953819F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.ZiraatBankasi", "StilPay.Job.ZiraatBankasi\StilPay.Job.ZiraatBankasi.csproj", "{86A04A49-1531-469E-B9A1-851DCE99C251}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.GeneralBank", "StilPay.Job.GeneralBank\StilPay.Job.GeneralBank.csproj", "{C2A60350-B259-48E9-9854-6509B2436A12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{530CD98B-1C50-4200-AA9F-8619B4FC3F65}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.KuveytTurk", "StilPay.Job.KuveytTurk\StilPay.Job.KuveytTurk.csproj", "{19645B2E-03FA-49A1-AF97-33A968A57A90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.Halkbank", "StilPay.Job.Halkbank\StilPay.Job.Halkbank.csproj", "{3D6880CB-5A1C-436E-B1AD-0EE3AA35DC54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.IsBankasi2", "StilPay.Job.IsBankasi2\StilPay.Job.IsBankasi2.csproj", "{F82339D8-14D5-4888-851B-B0BA60F003F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.KuveytTurkExitAccount", "StilPay.Job.KuveytTurkExitAccount\StilPay.Job.KuveytTurkExitAccount.csproj", "{BB582BE7-6079-4949-9C2B-1E37B15C0793}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StilPay.Job.Papara", "StilPay.Job.Papara\StilPay.Job.Papara.csproj", "{FF561B73-283E-40A3-8AD8-7F3AB2A01BCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.KuveytTurkOVG", "StilPay.Job.KuveytTurkOVG\StilPay.Job.KuveytTurkOVG.csproj", "{0D22E8E6-E97D-487D-A97C-200E1067A823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.Emlakkatilim", "StilPay.Job.Emlakkatilim\StilPay.Job.Emlakkatilim.csproj", "{37D85FA2-08F5-4910-8207-E180AE021DAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.Vakifkatilim", "StilPay.Job.Vakifkatilim\StilPay.Job.Vakifkatilim.csproj", "{CB18EFC4-635C-489E-80EC-AB9191E01148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.TangoEmlakkatilim", "StilPay.Job.TangoEmlakkatilim\StilPay.Job.TangoEmlakkatilim.csproj", "{ABF0F13C-820D-49DC-AFF0-7019B2B07425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.EmreBey.Emlakkatilim", "StilPay.Job.EmreBey.Emlakkatilim\StilPay.Job.EmreBey.Emlakkatilim.csproj", "{446AB3E0-CED2-4247-8D65-EC741AD2DF2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.MamedifyEmlakkatilim", "StilPay.Job.MamedifyEmlakkatilim\StilPay.Job.MamedifyEmlakkatilim.csproj", "{5DD427BA-30EC-4ACB-A0E3-66324B585A2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.Mamedify.KuveytTurk", "StilPay.Job.Mamedify.KuveytTurk\StilPay.Job.Mamedify.KuveytTurk.csproj", "{0146F8A3-4F60-4FE7-B6B0-537CF312AAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stilpay.Job.TangoKuveytturk", "Stilpay.Job.TangoKuveytturk\Stilpay.Job.TangoKuveytturk.csproj", "{580F51B2-BACF-4FD4-B844-AE9542F4F594}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B105169-1F89-445F-BE32-7EA9CA58C440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B105169-1F89-445F-BE32-7EA9CA58C440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B105169-1F89-445F-BE32-7EA9CA58C440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B105169-1F89-445F-BE32-7EA9CA58C440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AA59F9-5DE4-42A2-AEA6-1F60E52EB28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AA59F9-5DE4-42A2-AEA6-1F60E52EB28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AA59F9-5DE4-42A2-AEA6-1F60E52EB28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AA59F9-5DE4-42A2-AEA6-1F60E52EB28E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B073504E-70DA-44FB-BFF1-9967D15C3091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B073504E-70DA-44FB-BFF1-9967D15C3091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B073504E-70DA-44FB-BFF1-9967D15C3091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B073504E-70DA-44FB-BFF1-9967D15C3091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39415109-AE68-4E10-8DCF-720F2B7F68D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39415109-AE68-4E10-8DCF-720F2B7F68D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39415109-AE68-4E10-8DCF-720F2B7F68D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39415109-AE68-4E10-8DCF-720F2B7F68D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006D9657-F14A-4402-ACC2-00D0D13015EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006D9657-F14A-4402-ACC2-00D0D13015EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006D9657-F14A-4402-ACC2-00D0D13015EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006D9657-F14A-4402-ACC2-00D0D13015EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F993A1-9BA5-4281-A5B4-41D186F5E87A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F993A1-9BA5-4281-A5B4-41D186F5E87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F993A1-9BA5-4281-A5B4-41D186F5E87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F993A1-9BA5-4281-A5B4-41D186F5E87A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803276DA-E228-4601-9DE3-4997EBF4CA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803276DA-E228-4601-9DE3-4997EBF4CA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803276DA-E228-4601-9DE3-4997EBF4CA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803276DA-E228-4601-9DE3-4997EBF4CA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{275B40A0-845F-4329-88DE-7093DA2E662F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275B40A0-845F-4329-88DE-7093DA2E662F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275B40A0-845F-4329-88DE-7093DA2E662F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275B40A0-845F-4329-88DE-7093DA2E662F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D517D94-16A2-4502-B741-7ECE1764923B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D517D94-16A2-4502-B741-7ECE1764923B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D517D94-16A2-4502-B741-7ECE1764923B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D517D94-16A2-4502-B741-7ECE1764923B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2718353B-BE48-4A1A-8D94-2AD36953819F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2718353B-BE48-4A1A-8D94-2AD36953819F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2718353B-BE48-4A1A-8D94-2AD36953819F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2718353B-BE48-4A1A-8D94-2AD36953819F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86A04A49-1531-469E-B9A1-851DCE99C251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A04A49-1531-469E-B9A1-851DCE99C251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A04A49-1531-469E-B9A1-851DCE99C251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A04A49-1531-469E-B9A1-851DCE99C251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A60350-B259-48E9-9854-6509B2436A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A60350-B259-48E9-9854-6509B2436A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A60350-B259-48E9-9854-6509B2436A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A60350-B259-48E9-9854-6509B2436A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19645B2E-03FA-49A1-AF97-33A968A57A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19645B2E-03FA-49A1-AF97-33A968A57A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19645B2E-03FA-49A1-AF97-33A968A57A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19645B2E-03FA-49A1-AF97-33A968A57A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6880CB-5A1C-436E-B1AD-0EE3AA35DC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6880CB-5A1C-436E-B1AD-0EE3AA35DC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6880CB-5A1C-436E-B1AD-0EE3AA35DC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6880CB-5A1C-436E-B1AD-0EE3AA35DC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F82339D8-14D5-4888-851B-B0BA60F003F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F82339D8-14D5-4888-851B-B0BA60F003F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F82339D8-14D5-4888-851B-B0BA60F003F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F82339D8-14D5-4888-851B-B0BA60F003F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB582BE7-6079-4949-9C2B-1E37B15C0793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB582BE7-6079-4949-9C2B-1E37B15C0793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB582BE7-6079-4949-9C2B-1E37B15C0793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB582BE7-6079-4949-9C2B-1E37B15C0793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF561B73-283E-40A3-8AD8-7F3AB2A01BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF561B73-283E-40A3-8AD8-7F3AB2A01BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF561B73-283E-40A3-8AD8-7F3AB2A01BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF561B73-283E-40A3-8AD8-7F3AB2A01BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D22E8E6-E97D-487D-A97C-200E1067A823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D22E8E6-E97D-487D-A97C-200E1067A823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D22E8E6-E97D-487D-A97C-200E1067A823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D22E8E6-E97D-487D-A97C-200E1067A823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D85FA2-08F5-4910-8207-E180AE021DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D85FA2-08F5-4910-8207-E180AE021DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D85FA2-08F5-4910-8207-E180AE021DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D85FA2-08F5-4910-8207-E180AE021DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB18EFC4-635C-489E-80EC-AB9191E01148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB18EFC4-635C-489E-80EC-AB9191E01148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB18EFC4-635C-489E-80EC-AB9191E01148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB18EFC4-635C-489E-80EC-AB9191E01148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF0F13C-820D-49DC-AFF0-7019B2B07425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF0F13C-820D-49DC-AFF0-7019B2B07425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF0F13C-820D-49DC-AFF0-7019B2B07425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF0F13C-820D-49DC-AFF0-7019B2B07425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{446AB3E0-CED2-4247-8D65-EC741AD2DF2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446AB3E0-CED2-4247-8D65-EC741AD2DF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446AB3E0-CED2-4247-8D65-EC741AD2DF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446AB3E0-CED2-4247-8D65-EC741AD2DF2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD427BA-30EC-4ACB-A0E3-66324B585A2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD427BA-30EC-4ACB-A0E3-66324B585A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD427BA-30EC-4ACB-A0E3-66324B585A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD427BA-30EC-4ACB-A0E3-66324B585A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0146F8A3-4F60-4FE7-B6B0-537CF312AAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0146F8A3-4F60-4FE7-B6B0-537CF312AAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0146F8A3-4F60-4FE7-B6B0-537CF312AAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0146F8A3-4F60-4FE7-B6B0-537CF312AAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0739E04A-F65C-4143-B25D-6C2E17006A93}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 26
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/kartalc4n
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = StilPay.ApiService\\StilPay.ApiService.csproj
+		SccProjectName1 = StilPay.ApiService
+		SccLocalPath1 = StilPay.ApiService
+		SccProjectUniqueName2 = StilPay.BLL\\StilPay.BLL.csproj
+		SccProjectName2 = StilPay.BLL
+		SccLocalPath2 = StilPay.BLL
+		SccProjectUniqueName3 = StilPay.DAL\\StilPay.DAL.csproj
+		SccProjectName3 = StilPay.DAL
+		SccLocalPath3 = StilPay.DAL
+		SccProjectUniqueName4 = StilPay.Entities\\StilPay.Entities.csproj
+		SccProjectName4 = StilPay.Entities
+		SccLocalPath4 = StilPay.Entities
+		SccProjectUniqueName5 = StilPay.Job.GarantiBankasi\\StilPay.Job.GarantiBankasi.csproj
+		SccProjectName5 = StilPay.Job.GarantiBankasi
+		SccLocalPath5 = StilPay.Job.GarantiBankasi
+		SccProjectUniqueName6 = StilPay.Job.GeneralBank\\StilPay.Job.GeneralBank.csproj
+		SccProjectName6 = StilPay.Job.GeneralBank
+		SccLocalPath6 = StilPay.Job.GeneralBank
+		SccProjectUniqueName7 = StilPay.Job.Halkbank\\StilPay.Job.Halkbank.csproj
+		SccProjectName7 = StilPay.Job.Halkbank
+		SccLocalPath7 = StilPay.Job.Halkbank
+		SccProjectUniqueName8 = StilPay.Job.IsBankasi\\StilPay.Job.IsBankasi.csproj
+		SccProjectName8 = StilPay.Job.IsBankasi
+		SccLocalPath8 = StilPay.Job.IsBankasi
+		SccProjectUniqueName9 = StilPay.Job.KuveytTurk\\StilPay.Job.KuveytTurk.csproj
+		SccProjectName9 = StilPay.Job.KuveytTurk
+		SccLocalPath9 = StilPay.Job.KuveytTurk
+		SccProjectUniqueName10 = StilPay.Job.ZiraatBankasi\\StilPay.Job.ZiraatBankasi.csproj
+		SccProjectName10 = StilPay.Job.ZiraatBankasi
+		SccLocalPath10 = StilPay.Job.ZiraatBankasi
+		SccProjectUniqueName11 = StilPay.UI.Admin\\StilPay.UI.Admin.csproj
+		SccProjectName11 = StilPay.UI.Admin
+		SccLocalPath11 = StilPay.UI.Admin
+		SccProjectUniqueName12 = StilPay.UI.Dealer\\StilPay.UI.Dealer.csproj
+		SccProjectName12 = StilPay.UI.Dealer
+		SccLocalPath12 = StilPay.UI.Dealer
+		SccProjectUniqueName13 = StilPay.UI.WebSite\\StilPay.UI.WebSite.csproj
+		SccProjectName13 = StilPay.UI.WebSite
+		SccLocalPath13 = StilPay.UI.WebSite
+		SccProjectUniqueName14 = StilPay.Utility\\StilPay.Utility.csproj
+		SccProjectName14 = StilPay.Utility
+		SccLocalPath14 = StilPay.Utility
+		SccProjectUniqueName15 = StilPay.Job.IsBankasi2\\StilPay.Job.IsBankasi2.csproj
+		SccProjectName15 = StilPay.Job.IsBankasi2
+		SccLocalPath15 = StilPay.Job.IsBankasi2
+		SccProjectUniqueName16 = StilPay.Job.KuveytTurkExitAccount\\StilPay.Job.KuveytTurkExitAccount.csproj
+		SccProjectName16 = StilPay.Job.KuveytTurkExitAccount
+		SccLocalPath16 = StilPay.Job.KuveytTurkExitAccount
+		SccProjectUniqueName17 = StilPay.Job.Papara\\StilPay.Job.Papara.csproj
+		SccProjectName17 = StilPay.Job.Papara
+		SccLocalPath17 = StilPay.Job.Papara
+		SccProjectUniqueName18 = StilPay.Job.KuveytTurkOVG\\StilPay.Job.KuveytTurkOVG.csproj
+		SccProjectName18 = StilPay.Job.KuveytTurkOVG
+		SccLocalPath18 = StilPay.Job.KuveytTurkOVG
+		SccProjectUniqueName19 = StilPay.Job.Emlakkatilim\\StilPay.Job.Emlakkatilim.csproj
+		SccProjectName19 = StilPay.Job.Emlakkatilim
+		SccLocalPath19 = StilPay.Job.Emlakkatilim
+		SccProjectUniqueName20 = StilPay.Job.Vakifkatilim\\StilPay.Job.Vakifkatilim.csproj
+		SccProjectName20 = StilPay.Job.Vakifkatilim
+		SccLocalPath20 = StilPay.Job.Vakifkatilim
+		SccProjectUniqueName21 = StilPay.Job.TangoEmlakkatilim\\StilPay.Job.TangoEmlakkatilim.csproj
+		SccProjectName21 = StilPay.Job.TangoEmlakkatilim
+		SccLocalPath21 = StilPay.Job.TangoEmlakkatilim
+		SccProjectUniqueName22 = StilPay.Job.EmreBey.Emlakkatilim\\StilPay.Job.EmreBey.Emlakkatilim.csproj
+		SccProjectName22 = StilPay.Job.EmreBey.Emlakkatilim
+		SccLocalPath22 = StilPay.Job.EmreBey.Emlakkatilim
+		SccProjectUniqueName23 = StilPay.Job.MamedifyEmlakkatilim\\StilPay.Job.MamedifyEmlakkatilim.csproj
+		SccProjectName23 = StilPay.Job.MamedifyEmlakkatilim
+		SccLocalPath23 = StilPay.Job.MamedifyEmlakkatilim
+		SccProjectUniqueName24 = StilPay.Job.Mamedify.KuveytTurk\\StilPay.Job.Mamedify.KuveytTurk.csproj
+		SccProjectName24 = StilPay.Job.Mamedify.KuveytTurk
+		SccLocalPath24 = StilPay.Job.Mamedify.KuveytTurk
+		SccProjectUniqueName25 = Stilpay.Job.TangoKuveytturk\\Stilpay.Job.TangoKuveytturk.csproj
+		SccProjectName25 = Stilpay.Job.TangoKuveytturk
+		SccLocalPath25 = Stilpay.Job.TangoKuveytturk
+	EndGlobalSection
+EndGlobal

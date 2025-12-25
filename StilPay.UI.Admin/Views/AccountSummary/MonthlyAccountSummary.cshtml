@@ -1,0 +1,419 @@
+@model AccountingSummaryMonthlyEditViewModel
+
+@{
+    ViewData["Title"] = "Aylık Hesap Özeti";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+<div class="row mt-4">
+    <div class="col-lg-2 offset-lg-3">
+        <div class="input-group">
+            <select class="form-select select2" id="slcMonth"></select>
+            <label for="slcMonth" class="input-group-text">Ay</label>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="input-group">
+            <select class="form-select select2" id="slcYear"></select>
+            <label for="slcYear" class="input-group-text">Yıl</label>
+        </div>
+    </div>
+    <div class="col-lg-1 mt-lg-0 mt-2">
+        <div class="d-grid">
+            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+        </div>
+    </div>
+
+</div>
+
+
+    <input type="hidden" id="selectedMonth" value="@Model.SelectedMonth" />
+    <input type="hidden" id="selectedYear"  value="@Model.SelectedYear" />
+
+    <div class="row justify-content-center" id="#anaDiv" >
+        <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">   
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Başlangıç Neti <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.PreviousReportNetAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;"> Bugünki Net <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.NetAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Çıkan Fark <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.Difference.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Bu Ayın Ödeme Toplamı <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.MonthlyTotalPaymentAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Bu Haftanın Ödeme Toplamı <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.WeeklyTotalPaymentAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Bugünün Ödeme Toplamı <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.DailyTotalPaymentAmount.ToString("n2") ₺</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">
+            @{
+                var ghostColBank = Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Count() - 4;
+                var ghostColCC = Model.MonthlyCreditCardAccountSummaryReportDetails.Count() - 4;
+                var ghostColForeignCC = Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Count() - 4;
+                var ghostColExpBank = Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Count() - 4;
+            }
+            <div class="card-body table-responsive">
+                <table id="TransferTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Aylık Toplam Havale <br /><span class="small">@Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Sum(s => s.Balance).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in  Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.BankName<br /> 
+                                    <span class="small">@item.Balance.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index <  Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColBank < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColBank); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-body table-responsive">
+                <table id="CCTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Aylık Toplam K.Kartı Ödemeleri <br /><span class="small">@Model.MonthlyCreditCardAccountSummaryReportDetails.Sum(s => s.Balance).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyCreditCardAccountSummaryReportDetails.Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.PaymentInstitutionName<br /> 
+                                    <span class="small">@item.Balance.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyCreditCardAccountSummaryReportDetails.Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColCC < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColCC); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-body table-responsive">
+                <table id="ForeignCCTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Aylık Toplam Yurt Dışı K.Kartı Ödemeleri <br /><span class="small">@Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Sum(s => s.Balance).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.PaymentInstitutionName<br /> 
+                                    <span class="small">@item.Balance.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColForeignCC < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColForeignCC); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-body table-responsive">
+                <table id="WithdrawalTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Toplam Çekim Talebi Ödenen <br /><span class="small">@Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Sum(s => s.WithdrawalBankBalance).ToString("n2") ₺ / @Model.DealerTransactionDetails.Sum(s => s.WithdrawalTransactionCount).ToString("n2") Adet</span></th>
+                            @foreach (var (index, item) in Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.BankName<br /> 
+                                    <span class="small">@item.WithdrawalBankBalance.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+                            @if(ghostColExpBank < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColExpBank); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+       
+        <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">   
+            @{
+                var ghostColBankProfit = Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Count() - 4;
+                var ghostColCCProfit = Model.MonthlyCreditCardAccountSummaryReportDetails.Count() - 4;
+                var ghostColForeignCCProfit = Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Count() - 4;
+                var ghostColWithdrawalProfit = Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Count() - 4;
+            }
+            <div class="card-body table-responsive">
+                <table id="TransferProfitTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Havale Toplam Kâr <br /><span class="small">@Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Sum(s => s.TotalProfit).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.BankName<br /> 
+                                    <span class="small">@item.TotalProfit.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => !x.IsExitAccount).Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColBankProfit < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColBankProfit); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <table id="CCProfit" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">K.Kartı Toplam Kâr <br /><span class="small">@Model.MonthlyCreditCardAccountSummaryReportDetails.Sum(s => s.TotalProfit).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyCreditCardAccountSummaryReportDetails.Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.PaymentInstitutionName<br /> 
+                                    <span class="small">@item.TotalProfit.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyCreditCardAccountSummaryReportDetails.Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColCCProfit < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColCCProfit); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <table id="ForeignCCProfit" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Yurt Dışı K.Kartı Toplam Kâr <br /><span class="small">@Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Sum(s => s.TotalProfit).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.PaymentInstitutionName<br /> 
+                                    <span class="small">@item.TotalProfit.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyForeignCreditCardAccountSummaryReportDetails.Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColForeignCCProfit < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColForeignCCProfit); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <table id="WithdrawalProfitTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Çekim Talebi Toplam Kâr <br /><span class="small">@Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Sum(s => s.WithdrawalTotalProfit).ToString("n2") ₺</span></th>
+                            @foreach (var (index, item) in Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.BankName<br /> 
+                                    <span class="small">@item.WithdrawalTotalProfit.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.MonthlyBankTransferAccountSummaryReportDetails.Where(x => x.IsExitAccount).Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+
+                            @if(ghostColWithdrawalProfit < 0)
+                            {
+                                @for (int i = 0; i < Math.Abs(ghostColWithdrawalProfit); i++)
+                                {
+                                    <th class="col-1"></th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">   
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Giderler <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.ExpenseAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">İade Gideri <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.RebateNetAmount.ToString("n2") ₺</span>
+                            </th>
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Fraud Gideri <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.FraudExpenseProfitAmount.ToString("n2") ₺</span>
+                            </th>
+
+
+                            <th class="col-1 text-center text-custom fw-bold" rowspan="5" style="vertical-align: middle;">Gelirler <br /> 
+                                <span class="small">@Model.MonthlyAccountSummaries.IncomeAmount.ToString("n2") ₺</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+ 
+        <div class="card col-lg-11 mt-2 border-1 border-custom me-2 ms-2">   
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            @foreach (var (index, item) in Model.DealerTransactionDetails.Select((value, i) => (i, value)))
+                            {
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.CompanyName - Toplam Ciro<br /> 
+                                    <span class="small">@item.TotalTransactionAmount.ToString("n2") ₺</span>
+                                </th>
+
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.CompanyName - Toplam Çekim Talebi Ciro<br /> 
+                                    <span class="small">@item.TotalWithdrawalTransactionAmount.ToString("n2") ₺ / @item.WithdrawalTransactionCount.ToString("n2") Adet</span> 
+                                </th>
+
+                                <th class="col-1 text-custom text-center fw-bold">
+                                    @item.CompanyName - Toplam Kazandırdığı<br /> 
+                                    <span class="small">@item.TransactionProfitAmount.ToString("n2") ₺</span>
+                                </th>
+
+                                if ((index + 1) % 4 == 0 && index < Model.DealerTransactionDetails.Count() - 1)
+                                {
+                                    @:</tr><tr>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+
+     </div>
+@section js {
+
+
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/core.js"></script>
+    <script src="~/js/views/accountsummary/monthlyindex.js"></script>
+    }

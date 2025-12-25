@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>StilPay | @ViewData["Title"]</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/fav.png">
+
+    <link rel="stylesheet" href="~/css/fontawesome/font-awesome.all.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/sidebars/sidebars.css" />
+    <link rel="stylesheet" href="~/css/sweetalert/sweetalert2.min.css" />
+    <link rel="stylesheet" href="~/css/animate/animate.css" />
+    <link rel="stylesheet" href="~/css/alertifyjs/alertify.css" />
+    <link rel="stylesheet" href="~/css/alertifyjs/alertify-default.css" />
+    <link rel="stylesheet" href="~/css/views/core.css" />
+
+    @RenderSection(name:"css", required:false)
+
+</head>
+<body>
+
+    @await Component.InvokeAsync("Header")
+
+    <div class="container-fluid">
+        <main role="main">
+            <div class="wrapper">
+
+                @await Component.InvokeAsync("SideBar")
+
+                <div id="content">
+
+                    <nav class="navbar navbar-expand-lg navbar-light d-lg-none d-flex">
+                        <div class="container-fluid">
+                            <button type="button" class="btn btn-custom" id="sidebarCollapse">
+                                <span class="fa-solid fa-right-left"></span>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div id="contentbody" style="width:99.5%;">
+                        @RenderBody()
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script type="text/javascript" src="~/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap/bootstrap-bundle.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/js/fontawesome/font-awesome.all.min.js"></script>
+    <script type="text/javascript" src="~/js/sidebars/sidebars.js"></script>
+    <script type="text/javascript" src="~/js/sweetalert/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="~/js/alertifyjs/alertify.js"></script>
+    <script type="text/javascript" src="~/js/views/general.js"></script>
+    <script type="text/javascript" src="~/js/views/core.js"></script>
+
+    @RenderSection("js", required: false)
+
+</body>
+</html>

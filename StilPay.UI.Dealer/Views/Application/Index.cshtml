@@ -1,0 +1,155 @@
+﻿@model CompanyApplication
+
+@{
+    ViewData["Title"] = "Evraklarım";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="alert alert-danger text-dark text-center">
+            <strong>Onay süreciniz devam etmektedir.</strong>
+            <br />
+            <strong>Lütfen şirket bilgilerinizi ve evraklarınızı doğru ve eksiksiz bir şekilde tamamlayınız.</strong>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                <h5>Evraklarım</h5>
+            </div>
+            <div class="card-body">
+                <form id="frmDef" method="post" asp-antiforgery="true" enctype="multipart/form-data"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="ID" />
+                    <input type="hidden" asp-for="IdentityFrontSide" />
+                    <input type="hidden" asp-for="IdentityBackSide" />
+                    <input type="hidden" asp-for="TaxPlate" />
+                    <input type="hidden" asp-for="SignatureCirculars" />
+                    <input type="hidden" asp-for="TradeRegistryGazette" />
+                    <input type="hidden" asp-for="Agreement" />
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">Kimlik Ön Yüz</label>
+                            <input type="file" class="form-control d-none" id="fileIdentityFrontSide" name="FileIdentityFrontSide" onchange="ChangeFile(event, 'IdentityFrontSide')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtIdentityFrontSide" readonly="readonly" value="@(Model.IdentityFrontSide==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('IdentityFrontSide')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('IdentityFrontSide')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.IdentityFrontSideStatus > 0)
+                            {
+                                <label class="@(Model.IdentityFrontSideStatus==1?"text-success":"text-danger")">@(Model.IdentityFrontSideStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">Kimlik Arka Yüz</label>
+                            <input type="file" class="form-control d-none" id="fileIdentityBackSide" name="FileIdentityBackSide" onchange="ChangeFile(event, 'IdentityBackSide')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtIdentityBackSide" readonly="readonly" value="@(Model.IdentityBackSide==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('IdentityBackSide')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('IdentityBackSide')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.IdentityBackSideStatus > 0)
+                            {
+                                <label class="@(Model.IdentityBackSideStatus==1?"text-success":"text-danger")">@(Model.IdentityBackSideStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">Vergi Levhası</label>
+                            <input type="file" class="form-control d-none" id="fileTaxPlate" name="FileTaxPlate" onchange="ChangeFile(event, 'TaxPlate')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtTaxPlate" readonly="readonly" value="@(Model.TaxPlate==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('TaxPlate')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('TaxPlate')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.TaxPlateStatus > 0)
+                            {
+                                <label class="@(Model.TaxPlateStatus==1?"text-success":"text-danger")">@(Model.TaxPlateStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">İmza Sirküleri</label>
+                            <input type="file" class="form-control d-none" id="fileSignatureCirculars" name="FileSignatureCirculars" onchange="ChangeFile(event, 'SignatureCirculars')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtSignatureCirculars" readonly="readonly" value="@(Model.SignatureCirculars==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('SignatureCirculars')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('SignatureCirculars')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.SignatureCircularsStatus > 0)
+                            {
+                                <label class="@(Model.SignatureCircularsStatus==1?"text-success":"text-danger")">@(Model.SignatureCircularsStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">Ticari Sicil Gazetesi</label>
+                            <input type="file" class="form-control d-none" id="fileTradeRegistryGazette" name="FileTradeRegistryGazette" onchange="ChangeFile(event, 'TradeRegistryGazette')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtTradeRegistryGazette" readonly="readonly" value="@(Model.TradeRegistryGazette==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('TradeRegistryGazette')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('TradeRegistryGazette')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.TradeRegistryGazetteStatus > 0)
+                            {
+                                <label class="@(Model.TradeRegistryGazetteStatus==1?"text-success":"text-danger")">@(Model.TradeRegistryGazetteStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label mb-0">Kullanıcı Sözleşmesi</label>
+                            <input type="file" class="form-control d-none" id="fileAgreement" name="FileAgreement" onchange="ChangeFile(event, 'Agreement')" accept=".pdf" />
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-white text-custom fw-bold" id="txtAgreement" readonly="readonly" value="@(Model.Agreement==null ? "" : "Evrak yüklendi")" />
+                                <button type="button" class="btn btn-outline-danger" onclick="ClearFile('Agreement')"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary" onclick="AddFile('Agreement')"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            @if (Model.AgreementStatus > 0)
+                            {
+                                <label class="@(Model.AgreementStatus==1?"text-success":"text-danger")">@(Model.AgreementStatus == 1 ? "Evrak onaylandı." : "Evrak İptal Edildi. Tekrar yükleyiniz.")</label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/views/application/index.js"></script>
+    }

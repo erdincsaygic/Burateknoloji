@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "Entegrasyon";
+}
+
+<div id="start">
+    <h2 class="text-center">Başlarken</h2>
+
+    <p>StilPay Nakit Ödeme ve Banka Transfer Hizmeti, üye iş yerlerine Türkiye’de yaygın şekilde kullanılmakta olan bankalar aracılığı ile StilPay Ödeme Platformu ve ödeme hesapları üzerinden ATM’ler, Internet’den veya fiziksel şubeler aracılığıyla, bankaların EFT ve havale hizmetlerini kullanarak ödeme almalarına imkan verir.</p>
+
+    <p>İlgili bölümlerde teknik detayları anlatılan şekilde StilPay Platformuna entegre olduktan sonra gelişmiş arayüzlerle tüm satış ve tahsilat detaylarına anlık olarak ulaşabilir ve raporlama yapabilir, kendi finansal sistemlerinize herhangi bir sıkıntı yaşamadan bilgi akışı sağlayabilirsiniz. Tek bir entegrasyonla StilPay platformundaki tüm banka şubeleri (internet ve mobil şubeler dahil) ve ATM'leri aracılığı ile ödeme kabul etmeye başlarsınız.</p>
+
+    <div class="w-100 d-flex flex-row flex-wrap justify-content-center">
+        <img class="img-fluid mt-2" src="~/integration/img/islem-1.png" />
+        <img class="img-fluid mt-2" src="~/integration/img/islem-2.png" />
+        <img class="img-fluid mt-2" src="~/integration/img/islem-3.png" />
+        <img class="img-fluid mt-2" src="~/integration/img/islem-4.png" />
+    </div>
+
+@*    <div class="w-100 d-flex flex-row flex-wrap justify-content-center mt-2">
+        <img class="w-100 img-fluid" src="~/integration/img/islem-id.png" />
+    </div>*@
+
+</div>
+
+<br />
+
+<div id="integration">
+    <h2 class="text-center">Entegrasyon</h2>
+    <p>StilPay Nakit Ödeme ve Banka Transferi API entegrasyonu, üye işyelerine StilPay hesaplarına kendileri ile ilgili yapılan ödemeleri "dinleme", müşterinin üye işyerine iletmiş olduğu ödeme bildirimlerini StilPay sisteminde sorgulama ve bu iki süreç sonrasında söz konusu ödemeleri kayıt altına alarak finansallaştırma imkanını sağlayan bir finans ve teknoloji çözümüdür. Bu API'nin bileşenleri aşağıda adımları gösterilen ödeme sürecinde kullanılmak üzere üye işyeri ile StilPay arasındaki teknik iletişimi sağlar.</p>
+    <ul>
+        <li>Müşteri, üye işyerinin kendi sitesine eklemiş olduğu "Nakit Ödeme ve Para Transferi" opsiyonunu seçer</li>
+        <li>Üye iş yeri müşterisine yapmış olduğu alışveriş/vermiş olduğu sipariş ile ilgili <strong>İşlem ID</strong> (müşteri özel) ve ödeme yapabileceği StilPay'ya ait banka hesap numalarını bu sayfa üzerinde gösterir. </li>
+@*        <li>Müşteri dilediği banka aracılığı ile ATM'den, banka şubesinden veya dijital ve mobil bankacılık kanalları üzerinden ödemesini gerçekleştirirken söz konusu <strong>İşlem ID</strong>'sini, banka arayüzlerindeki <strong>"açıklama"</strong> alanına girer.</li>
+*@        <li>StilPay, yapmış olduğu banka entegrasyonları üzerinden kendi hesaplarına yapılmış olan ödeme bilgilerini alır ve açıklama alanına girilmiş olan İşlem ID'sini üye işyeri kayıtları ile eşleyerek ödemenin ait olduğu ilgili üye iş yerini tesbit eder ve üye iş yerine iş bu API entegrasyonu üzerinden ilgili ödeme bildirimini yapar. </li>
+        <li>İşlem ID'sinin eşleşmediği durumlarda StilPay ödeme miktarını korumalı hesapları üzerinde tutar. Müşteri'nin bu durumda alışveriş yapmış olduğu üye iş yerinin web sitesi üzerinden <strong>"manuel ödeme bildirimi"</strong> yapması gerekmektedir. </li>
+        <li>Müşteri'nin üye iş yeri web sitesinde gerekli bildirimi yapmasını takiben, üye iş yeri ilgili parametrelerle StilPay platformunu müşterinin ödemesi için sorgular</li>
+        <li>StilPay sorgulama esnasında almış olduğu ödeme bilgilerini kendi sistemindeki ödeme bilgileri ile eşleştirir ve üye iş yerine ilgili ödemenin yapıldığı bildirimini iletir ve ödeme işlemini finalize eder. </li>
+    </ul>
+    <p>Görüldüğü gibi üye iş yerinden iki adet müşteri arayüzü geliştirmesi beklenmektedir.</p>
+    <ol>
+        <li>Nakit Ödeme ve Para Transferi işlemi için yaratılacak olan müşteriye özel <strong>İşlem ID</strong>'sini müşteriyle paylaşılacağı arayüz.</li>
+        <li>Müşteri'nin <strong>manuel ödeme bildirimi</strong> yapacağı arayüz.</li>
+    </ol>
+    <p>Bunun dışında yukarıda özeti verilen ödeme sürecinde kullanılacak olan tüm API bileşenleri, ilgili başlıklar altında anlatılmış ve çeşitli platformlardaki kod parçaları ile örneklendirilmiştir.</p>
+</div>
+
+<br />

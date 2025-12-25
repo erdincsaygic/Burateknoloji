@@ -1,0 +1,110 @@
+﻿@model MenuInformation
+
+<nav id="sidebar">
+
+    <div class="sidebar-header text-center">
+        <img src="~/areas/panel/img/logo.png" alt="">
+        <strong>StilPay</strong>
+        <h6>Merhaba</h6>
+        <h6>@Model.Name</h6>
+        <h6 class="d-block">@(string.Concat("Bakiyeniz: ", (Model.Balance.HasValue ? Model.Balance.Value.ToString("n2") : "-")))</h6>
+        <small>
+            Son Giriş Tarihiniz<br />
+            @(string.Concat(Model.LoginDate, " | ", Model.IPAddress))
+        </small>
+    </div>
+
+    <ul class="list-unstyled components">
+
+        <li>
+            <a class="p-2" asp-controller="Master" asp-action="index">
+                <i class="fa-solid fa-user"></i>
+                Bireysel Panel
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="MoneyTransferRequest" asp-action="Edit">
+                <i class="fa-solid fa-money-bill"></i>
+                Para Transferi
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="PaymentRequest" asp-action="Edit">
+                <i class="fa-solid fa-wallet"></i>
+                Bakiye Yükleme
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="WithdrawalRequest" asp-action="Edit">
+                <i class="fa-solid fa-money-bills-simple"></i>
+                Nakit Çek
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="AccountTransaction" asp-action="index">
+                <i class="fa-solid fa-money-simple-from-bracket"></i>
+                Hesap Hareketlerim
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="Invoice" asp-action="index">
+                <i class="fa-solid fa-file-invoice"></i>
+                Faturalarım
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="InvoiceInformation" asp-action="index">
+                <i class="fa-solid fa-circle-info"></i>
+                Fatura Bilgilerim
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="MyAccount" asp-action="index">
+                <i class="fa-solid fa-user-gear"></i>
+                Hesap Bilgilerim
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="Support" asp-action="index">
+                <i class="fa-solid fa-headset"></i>
+                Destek Merkezi
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+        <li>
+            <a class="p-2" asp-controller="Login" asp-action="LogOut">
+                <i class="fa-solid fa-headset"></i>
+                Güvenli Çıkış
+            </a>
+        </li>
+
+        <li class="border-top m-1"></li>
+
+    </ul>
+</nav>

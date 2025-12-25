@@ -1,0 +1,106 @@
+﻿@model InvoiceInformationEditViewModel
+
+@{
+    ViewData["Title"] = "Fatura Bilgilerim";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-4 offset-lg-4">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Fatura Bilgilerim
+            </div>
+            <div class="card-body">
+
+                <form asp-area="Panel" asp-controller="InvoiceInformation" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" id="jsonTowns" value="@JsonConvert.SerializeObject(Model.Towns)" />
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>Fatura Durumu :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <select class="form-control" asp-for="entity.SendStatus">
+                                <option value="false">HAYIR - GÖNDERME</option>
+                                <option value="true">EVET - GÖNDER</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>Ad Soyad :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="entity.Member" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>T.C. Kimilk :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="entity.IdentityNr" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>İl :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <select class="form-select" asp-for="entity.IDCity" asp-items="@(new SelectList(Model.Cities,"ID","Name"))">
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>İlçe :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <select class="form-select" asp-for="entity.IDTown" asp-items="@(new SelectList(Model.Towns.Where(w=>w.IDCity==Model.entity.IDCity),"ID","Name"))">
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label"><span style="color:red">* </span>Adres :</label>
+                        </div>
+                        <div class="col-lg-8 pb-1">
+                            <textarea type="text" class="form-control" asp-for="entity.Address" rows="3" maxlength="100"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-4 offset-lg-8">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/views/invoiceinformation/index.js"></script>
+    }

@@ -1,0 +1,14 @@
+﻿body {
+    background-color: #f8f9fa !important;
+}
+
+.gradient-button a {
+    padding: .6rem 1.5rem !important;
+    color: #fff !important;
+    background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+    border-radius: 1.5rem;
+}
+
+#ui-datepicker-div {
+    z-index: 9999 !important;
+}

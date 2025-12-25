@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Havale/EFT";
+}
+    <!-- banner-section start -->
+    <section class="banner-section inner-pages blog-single-2 reviews">
+        <div class="overlay">
+            <div class="banner-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-10">
+                            <div class="main-content">
+                                <h1>Havale / Eft</h1>
+                                <div class="breadcrumb-area">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb d-flex align-items-center">
+                                            <li class="breadcrumb-item"><a asp-controller="AnaSayfa" asp-action="Index">Anasayfa</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Havale / Eft</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner-section end -->
+    <!-- FAQs In start -->
+    <section class="faqs-section">
+        <div class="overlay pt-120 pb-120">
+            <div class="container wow fadeInUp">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-10">
+                        <div class="section-header text-center">
+                            <h2 class="title">Havale / Eft</h2>
+                            <p>Müşterileriniz için Havale / Eft Bildirim Adımları </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row wrapper margin-o">
+                    <div class="col-lg-6 consume">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item ">
+                                <h6 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                            aria-controls="flush-collapseOne">
+                                        1- Müşterilerinize havale/EFT yapabilecekleri farklı banka seçenekleri sunulur
+                                    </button>
+                                </h6>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                        Müşteri havale/eft yaptığı bankayı seçerek gerekli form bilgileri doldurur  <u>'Hemen Ödeme Bildir'</u> butonuna basarak ikinci aşamaya yönlendirilir.
+                                        </p>
+                                    </div>
+                                </div>
+                                <img class="imgden" src="~/ui/assets/img/eft1.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 salams">
+                        <div class="stepsimg">
+                            <img class="imgse" src="~/ui/assets/img/arrows.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row wrapper d-flex flex-row-reverse margin-o">
+                    <div class="col-lg-6">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item ">
+                                <h6 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                            aria-controls="flush-collapseTwo">
+                                        2- Müşteriye bilgi formu gösterilir
+                                    </button>
+                                </h6>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                            <u>'Hemen Ödeme Bildir'</u> butonuna bastıktan sonraki aşamada müşteriye iframe de seçtiği banka ve form bilgileri gösterilerek müşterinin girdiğini bilgilerin doğruluğunu teyit
+                                        etmesi ve onaylaması beklenir. Müşteri bilgilerin doğruluğunu teyit ettikten sonra <u>'Onayla'</u> butonuna basarak bildirimi Stilpay'e iletir.
+                                        </p>
+                                    </div>
+                                </div>
+                                <img class="imgden" src="~/ui/assets/img/eft2.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 salams">
+                        <div class="stepsimg rotates">
+                            <img class="imgse" src="~/ui/assets/img/arrows.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row wrapper margin-o">
+                    <div class="col-lg-6">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item ">
+                                <h6 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                            aria-controls="flush-collapseTwo">
+                                       3- Onay Bekleme Ekranı
+                                    </button>
+                                </h6>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                        Müşteri onay bekleme ekranında maksimum 5 Dakika boyunca bekletilir. Bu süreç boyunca 5 saniye aralıklarla Stilpay bildirim durumunu sorgular. Bu süreçte eğer bildirim başarılı ise <a href="#"></a>
+                                        <u>'Onay Bekliyor'</u> yazısı yeşil renkte <u>'Onaylandı'</u> olarak güncellenir ve müşteri üye işyerinin belirlediği url adresine yönlendirilir. 5 dakika boyunca bildirim onaylanmazsa
+                                        müşteri yine üye işyerinin belirlediği url adresine yönlendirilir. <br /><br />
+                                        Müşteri <u>'Siteye Geri Dön'</u> butonuna tıkladığında ise üye işyerinin belirlediği url adresine yönlendirilir.
+                                    </p>
+                                    </div>
+                                </div>
+                                <img class="imgden" src="~/ui/assets/img/eft3.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQs In end -->

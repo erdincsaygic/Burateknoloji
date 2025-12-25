@@ -1,0 +1,104 @@
+﻿@model PaymentNotificationViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>StilPay | Ödeme Bildirimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css?v.2.1" rel="stylesheet" />
+        <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Ödeme<br> Yöntemi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Ödeme <br>Bilgileri</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ödeme <br>Özeti</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Sms<br>Doğrulama</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-5"></i></div>
+                    <div class="baba">Üye<br>Profil</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-6"></i></div>
+                    <div class="baba">İşlem <br>Bilgileri</div>
+                </div>
+            </div>
+            <div class="deneme">
+                <div class="slidercont" data-value="2" id="step2cc">
+                    <div class="topm">
+                        <div class="infor">
+                            <div class="st1">
+                                <div class="text1">SİPARİŞ NUMARASI:</div>
+                                <div class="text2">@Model.entity.TransactionID</div>
+                            </div>
+                            <div class="st1">
+                                <div class="text1">TARİH:</div>
+                                <div class="text2">@DateTime.Today.ToString("dd MMMM yyyy")</div>
+                            </div>
+                            <div class="st1">
+                                <div class="text1">TOPLAM:</div>
+                                <div id="amount" class="text2">@(string.Concat(Model.entity.Amount.ToString("n2"), " ₺"))</div>
+                            </div>
+                            <div class="st1 none">
+                                <div class="text1">ÖDEME YÖNTEMİ:</div>
+                                <div class="text2">Kredi Kartı</div>
+                            </div>
+                        </div>
+                        <div class="parrots">
+                            <p class="thins2" style="margin-top:1rem;margin-bottom:1rem;">@(string.Concat("İŞLEM NUMARANIZ #", Model.entity.TransactionID))</p>
+                        </div>
+                    </div>
+                    <iframe class="embed-responsive-item" srcdoc="@Model.CreditCardModel.UCD_URL" width="1000" height="800" style="margin-top:75px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js?v.2.1"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js"></script>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-timepicker.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/paynkolaythreedsecure.js"></script>
+    <script type="text/javascript">
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+﻿@model EditViewModel<Member>
+
+@{
+    ViewData["Title"] = "Bireysel Üye";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Member" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-lg-6">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Bireysel Üye Bakiye Bilgileri</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Toplam Bakiye :</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control bg-light text-end" value="@(Model.entity.UsingBalance)" readonly="readonly" />
+                    </div>
+                    <div class="col-lg-3 my-lg-0 my-2">
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Bakiye Aç :</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control bg-light text-end" value="0,00" readonly="readonly" />
+                    </div>
+                    <div class="col-lg-3 my-lg-0 my-2">
+                        <form asp-controller="Member" asp-action="SendConfirmSms" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBeginSms" data-ajax-failure="onFailureSms" data-ajax-success="onSuccessSms('Member_Edit_Balance_Update', xhr.responseJSON)">
+
+                            <input type="hidden" name="OperationType" value="Member_Edit_Balance_Update" />
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">Düzenle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Tipi :</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control bg-light text-center" value="@Model.entity.MemberTypeName" readonly="readonly" />
+                    </div>
+                    <div class="col-lg-3 my-lg-0 my-2">
+                        <form asp-controller="Member" asp-action="SendConfirmSms" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBeginSms" data-ajax-failure="onFailureSms" data-ajax-success="onSuccessSms('Member_Edit_Member_Type', xhr.responseJSON)">
+
+                            <input type="hidden" name="OperationType" value="Member_Edit_Member_Type" />
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">Güncelle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Durum :</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control bg-light text-center" value="@(Model.entity.StatusFlag ? "Aktif" : "Pasif")" readonly="readonly" />
+                    </div>
+                    <div class="col-lg-3 my-lg-0 my-2">
+                        <form asp-controller="Member" asp-action="SendConfirmSms" asp-antiforgery="true"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBeginSms" data-ajax-failure="onFailureSms" data-ajax-success="onSuccessSms('Member_Edit_Member_Status', xhr.responseJSON)">
+
+                            <input type="hidden" name="OperationType" value="Member_Edit_Member_Status" />
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">Güncelle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mt-lg-0 mt-2">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Bireysel Üye Bilgileri</div>
+            <div class="card-body">
+                <form asp-controller="Member" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+                    <input type="hidden" asp-for="entity.StatusFlag" />
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>T.C. Kimlik :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.IdentityNr" maxlength="11" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Adı Soyadı :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Name" maxlength="100" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Telefon No :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Phone" maxlength="11" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Email :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Email" maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Doğum Yılı :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.BirthYear" maxlength="4" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Modal Kullanılabilr Bakiye Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Doğrulama Kodu Sorgulama</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" placeholder="Doğrulama Kodu Giriniz" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom">Doğrula</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlUsingBalance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Kullanılabilir Bakiye</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="Güvenlik Kodu Giriniz" />
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-dark">Doğrula</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 mt-2">
+                        <input type="text" class="form-control" disabled="disabled" placeholder="Bakiye Giriniz" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom disabled">Eksilt</button>
+                <button type="button" class="btn btn-custom disabled">Artır</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Bakiye Onay -->
+<div class="modal fade" id="mdlBalance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Bakiye Aç</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="Güvenlik Kodu Giriniz" />
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-dark">Doğrula</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 mt-2">
+                        <input type="text" class="form-control" disabled="disabled" placeholder="Bakiye Giriniz" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom disabled">Eksilt</button>
+                <button type="button" class="btn btn-custom disabled">Artır</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Üye Tipi Onay -->
+<div class="modal fade" id="mdlMemberType" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Üye Tipi Güncelleme</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="Doğrulama Kodu Giriniz" />
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-dark form-control">Doğrula</button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-12">
+                        <select class="form-select" disabled="disabled">
+                            <option value="">Üye Tipi Seçiniz</option>
+                            <option value="1">Üye Tipi - 1</option>
+                            <option value="2">Üye Tipi - 2</option>
+                            <option value="3">Üye Tipi - 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom disabled">Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Üye Tipi Onay -->
+<div class="modal fade" id="mdlMemberStatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Üye Durumu Güncelleme</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="Doğrulama Kodu Giriniz" />
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-dark form-control">Doğrula</button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-12">
+                        <select class="form-select" disabled="disabled">
+                            <option value="1">Aktif</option>
+                            <option value="0">Pasif</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-custom disabled">Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/member/edit.js"></script>
+    }

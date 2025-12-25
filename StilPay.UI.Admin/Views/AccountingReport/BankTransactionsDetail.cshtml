@@ -1,0 +1,211 @@
+﻿@model AccountingReportEditViewModel
+@{
+    ViewData["Title"] = "";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+<div class="row mt-11">
+    <div class="col-lg-2">
+        <a class="btn btn-dark btn-block" asp-controller="AccountingReport" asp-action="BankTransactions"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+    </div>
+
+    <div class="text-custom text-center fw-bold" id="bankName"></div>
+</div>
+
+<form class="bg-white py-2 mt-2 ms-2 me-2 border border-1 border-custom">
+
+    <div class="row">
+        <div class="col-lg-2 offset-lg-4">
+            <div class="input-group">
+                <input type="text" class="form-control datepicker" readonly="readonly" id="dtStartDate" value="@DateTime.Today.ToString("dd.MM.yyyy")" style="text-align:center; background-color:#fff;" />
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar-days"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="input-group">
+                <input type="text" class="form-control datepicker" readonly="readonly" id="dtEndDate"  value="@DateTime.Today.ToString("dd.MM.yyyy")" style="text-align:center; background-color:#fff;" />
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar-days"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="row">
+            <div class="col-lg-1 offset-lg-7">
+                <button type="button" class="form-control btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+            </div>
+        </div>
+
+
+@*        <div class="col-lg-1">
+            <button class="form-control btn btn-dark"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+        </div>
+*@
+
+    </div>
+
+</form>
+
+<div class="row mt-2 ms-2 me-2">
+        <div class="col-lg-6 ps-0">
+            <div class="card border-1 border-custom">
+                <div class="card-header bg-custom text-white">Gelir Detayı</div>
+                <div class="card-body table-responsive">
+                    <table id="tblIncome" class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="bg-custom text-white">
+                                <th class="col-1 text-center">İşlem Tarihi</th>
+                                <th class="col-1 text-center">Tutar</th>
+                                <th class="col-2 text-center">Gelir Tipi</th>
+                                <th class="col-2 text-center">Açıklama</th>
+                                <th class="col-1 text-center">İşlemi Yapan Yetkili</th>
+                                <th class="d-none">ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 pe-0">
+            <div class="card border-1 border-custom">
+                <div class="card-header bg-custom text-white">Gider Detayı</div>
+                <div class="card-body table-responsive">
+                    <table id="tblExpense" class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="bg-custom text-white">
+                                <th class="col-1 text-center">İşlem Tarihi</th>
+                                <th class="col-1 text-center">Tutar</th>
+                                <th class="col-2 text-center">Gider Tipi</th>
+                                <th class="col-2 text-center">Açıklama</th>
+                                <th class="col-1 text-center">İşlemi Yapan Yetkili</th>
+                                <th class="d-none">ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<div class="row mt-2 ms-2 me-2">
+    <div class="col-lg-6 ps-0">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Ödeme Kuruluşundan Gelen Para Transferi Detayı</div>
+            <div class="card-body table-responsive">
+                <table id="tblIncomePaymentInstitution" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Tutar</th>
+                            <th class="col-2 text-center">Transfer Tipi</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Ödeme Kuruluşu</th>
+                            <th class="col-1 text-center">İşlemi Yapan Yetkili</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 pe-0">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Bankaya Gelen Para Transferi Detayı</div>
+            <div class="card-body table-responsive">
+                <table id="tblIncomeBank" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Tutar</th>
+                            <th class="col-2 text-center">Transfer Tipi</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Banka Adı</th>
+                            <th class="col-1 text-center">İşlemi Yapan Yetkili</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-2 ms-2 me-2">
+    <div class="col-lg-6 ps-0">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Bankadan Çıkan Para Transferi Detayı</div>
+            <div class="card-body table-responsive">
+                <table id="tblExpenseBank" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Tutar</th>
+                            <th class="col-2 text-center">Transfer Tipi</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-2 text-center">Banka Adı</th>
+                            <th class="col-1 text-center">İşlemi Yapan Yetkili</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/bankaccount/bankTransactionsDetailIndex.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $.ajax({
+                type: "GET",
+                url: 'GetBankName',
+                contentType: 'application/json; charset=utf-8',
+                data: { id: new URLSearchParams(window.location.search).get('id') },
+                success: function (data) {
+                    if (data)
+                        document.getElementById('bankName').innerText = data;
+                },
+                error: function () {
+                    onFailure();
+                },
+                complete: function () {
+                    hideLoading();
+                }
+            });
+        });
+    </script>
+}

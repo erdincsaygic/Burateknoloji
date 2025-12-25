@@ -1,0 +1,359 @@
+﻿@model AccountingReportEditViewModel
+
+
+@section css{
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/select2/select2-bootstrap-5-theme.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-5 offset-7">
+        <div class="d-flex justify-content-end mt-2">
+            <a class="btn btn-primary btn-block" style="margin:0 5px" id="getBankBalancesLogBtn" data-bs-toggle="modal" data-bs-target="#mdlBankBalances">
+                <i class="fa-solid fa fa-server"></i>&nbsp;Bakiye Sorgulama Geçmişi
+            </a>
+            <a class="btn btn-dark btn-block" style="margin:0 5px" asp-controller="AccountingReport" asp-action="BankAccount">
+                <i class="fa-solid fa fa-plus"></i>&nbsp;Banka Ekle
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+@foreach (var item in ViewBag.CompanyBankAccount)
+{
+    <div class="card mt-2 border-1 border-custom me-2 ms-2">
+        <div class="card-header bg-white text-custom text-center fw-bold">@item.Name</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-row flex-nowrap justify-content-between align-items-center">
+
+                    <div>
+                        <a class="btn btn-default" data-bs-toggle="modal" onclick=idBankChange("@item.ID") data-bs-target="#mdlIncome">
+                            <i class="fa-solid fa-building-columns"></i>&nbsp;Gelir Ekle
+                        </a>
+                    </div>
+                    <div>
+                        <a class="btn btn-default" data-bs-toggle="modal" onclick=idBankChange("@item.ID") data-bs-target="#mdlExpense">
+                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Gider Ekle
+                        </a>
+                    </div>
+                    <div>
+                        <a class="btn btn-default" data-bs-toggle="modal" onclick=idBankChange("@item.ID") data-bs-target="#mdlBankIncome">
+                            <i class="fa-solid fa-right-left"></i>&nbsp;Banka Transferi Ekle
+                        </a>
+                    </div>
+                    <div>
+                        <a class="btn btn-default" data-bs-toggle="modal" onclick="document.getElementById('IDBank').value='@item.ID'" data-bs-target="#mdlPaymentInstitutionTransfer">
+                            <i class="fa-solid fa-right-left"></i>&nbsp;Ödeme Kuruluşu Transferi Ekle
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-2 fw-bold text-center">
+                    TOPLAM PARA
+                    <br />
+                    <span class="text-custom">@item.Amount ₺</span>
+                </div>
+
+                <div class="col-lg-1 fw-bold text-center">
+                    <a href="BankTransactionList?id=@item.ID" target="_blank">
+                        <i class="fa fa-search" title="Cari Hareketler"></i>
+                    </a>
+                </div>
+
+                <div class="col-lg-1 fw-bold text-center">
+                    <a href="BankTransactionsDetail?id=@item.ID">
+                        <i class="fa fa-circle-info" onclick=idBankChange(2)></i>&nbsp;Detay
+                    </a>
+                </div>
+
+
+                @*                <div class="col-lg-1 d-flex align-items-center">
+            <a asp-controller="AccountingReport" asp-action="BankTransactionDetail">
+            <i class="fa fa-circle-info"></i>&nbsp;Detay
+            </a>
+            </div>*@
+            </div>
+        </div>
+    </div>
+}
+
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlIncome" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-controller="AccountingReport" asp-action="CompanyFinanceTransferInsert" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.TransactionType" value="1" />
+                <input type="hidden" asp-for="entity.PaymentMethod" value="1" />
+                <input type="hidden" id="idBank1" asp-for="entity.IDBankAccount" />
+
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">Gelir Ekle</h5>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" value="0,00" placeholder="Tutar" asp-for="entity.Amount" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <select class="form-select" asp-for="entity.TransactionDetailType">
+                                    <option value="1">Muhtelif Gelirler</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" placeholder="Açıklama" asp-for="entity.Description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" id="btnExpense" class="btn btn-custom">Ekle</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlExpense" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-controller="AccountingReport" asp-action="CompanyFinanceTransferInsert" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.TransactionType" value="2" />
+                <input type="hidden" asp-for="entity.PaymentMethod" value="1" />
+                <input type="hidden" id="idBank2" asp-for="entity.IDBankAccount" />
+
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">Gider Ekle</h5>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" value="0,00" placeholder="Tutar" asp-for="entity.Amount" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <select class="form-select" asp-for="entity.TransactionDetailType">
+                                <option value="1">Muhtelif Giderler</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" placeholder="Açıklama" asp-for="entity.Description" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" id="btnExpense" class="btn btn-custom">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlBankIncome" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-controller="AccountingReport" asp-action="CompanyFinanceTransferInsert" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.TransactionType" value="2" />
+                <input type="hidden" asp-for="entity.PaymentMethod" value="1" />
+                <input type="hidden" asp-for="entity.TransactionDetailType" value="2" />
+                <input type="hidden" id="idBank3" asp-for="entity.IDBankAccount" />
+
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">Banka Giriş Ekle</h5>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" value="0,00" placeholder="Tutar" asp-for="entity.Amount" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+
+                                <select class="form-select" asp-for="entity.IDBankAccount2">
+                                    <option value=>Banka Seçiniz..</option>
+                                    @foreach (var item in ViewBag.CompanyBankAccount)
+                                    {
+                                        <option value=@item.ID>@item.Name</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" placeholder="Açıklama" asp-for="entity.Description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" id="btnExpense" class="btn btn-custom">Ekle</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal O.K Transfer Onay -->
+<div class="modal fade" id="mdlPaymentInstitutionTransfer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-controller="AccountingReport" asp-action="PaymentInstitutionTransferInsert" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+
+                <input type="hidden" id="IDBank" asp-for="entity.IDBankAccount" />
+
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">Ödeme Kuruluşuna Transfer Ekle</h5>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" value="0,00" placeholder="Tutar" asp-for="entity.Amount" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+
+                                <select class="form-select" asp-for="entity.CompanyIntegrationType">
+                                    <option value=>Ödeme Kuruluşu Seçiniz..</option>
+                                    @foreach (var item in ViewBag.PaymentInstitution)
+                                    {
+                                        <option value=@item.ID>@item.Name</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" placeholder="Açıklama" asp-for="entity.Description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" id="btnExpense" class="btn btn-custom">Ekle</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Bank Balances -->
+<div class="modal fade" id="mdlBankBalances" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header d-flex bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Bakiye Sorgulama Geçmişi</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-lg-12">                
+                    <div class="col-lg-2 offset-lg-10 mb-2">
+                        <a class="btn btn-success btn-block" style="margin:5px" id="bankBalanceQuerytBtn" onclick="$('#frmGetBalances').submit();">
+                            <i class="fa-solid fa fa-plus"></i>&nbsp;Bakiye Sorgula
+
+                            <form asp-controller="AccountingReport" asp-action="GetBankBalances" asp-antiforgery="true" id="frmGetBalances"
+                                  data-ajax="true" data-ajax-method="POST"
+                                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                                  data-ajax-success="onSuccessGetBankBalance" data-ajax-complete="onComplete">
+                            </form>
+                        </a>
+                    </div>
+                    <div class="card border-1 border-custom">
+                        <div class="card-header bg-custom text-white">Bakiye Sorgulama Geçmişi</div>
+                        <div class="card-body table-responsive">
+                            <table id="bankBalanceLogsTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="bg-custom text-white">
+                                        <th class="col-1 text-center">Oluşturulma Tarihi</th>
+                                        <th class="col-1 text-center">Oluşturan</th>
+                                        <th class="col-1 text-center">Banka</th>
+                                        <th class="col-1 text-center">Hesap Tipi</th>
+                                        <th class="col-2 text-center">IBAN</th>
+                                        <th class="col-1 text-center">Bakiye</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js//select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/bankaccount/index.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+
+    <script>
+
+    </script>
+}

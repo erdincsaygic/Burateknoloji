@@ -1,0 +1,40 @@
+﻿body {
+    background-color: #f8f9fa !important;
+}
+
+#ui-datepicker-div {
+    z-index: 9999 !important;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.text-ellipsis:hover::after {
+    content: attr(data-original-title);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    white-space: normal;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 1000;
+    display: block;
+    max-width: 200px;
+    word-wrap: break-word;
+    font-size: 12px; 
+}
+
+.fraud-highlight {
+    background-color: red !important;
+    color: white !important;
+}
+
+.select2-results__options {
+    overflow-y: auto !important;
+}

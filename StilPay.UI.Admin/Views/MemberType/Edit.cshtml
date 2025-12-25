@@ -1,0 +1,110 @@
+﻿@model EditViewModel<MemberType>
+
+@{
+    ViewData["Title"] = "Üye Tip Tanımla";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="MemberType" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <form asp-controller="MemberType" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Adı :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Name" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Otomatik Mi :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IsAuto">
+                                <option value="true">Evet</option>
+                                <option value="false">Hayır</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Min Tutar :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.MinAmount" maxlength="18">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Max Tutar :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.MaxAmount" maxlength="18">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Adet :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Quantity" maxlength="5">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Durum :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.StatusFlag">
+                                <option value="true">Aktif</option>
+                                <option value="false">Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/custom/numeric-format.js"></script>
+    <script src="~/js/views/membertype/edit.js"></script>
+    }

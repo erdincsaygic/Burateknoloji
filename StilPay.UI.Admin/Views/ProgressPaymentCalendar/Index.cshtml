@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "StilPay Hakediş Takvimi";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/fullcalendar/fullcalendar.css" />
+}
+
+<style>
+    /* Make the events container scrollable */
+    .fc-daygrid-day-events {
+        max-height: 120px; /* Set the max height for the events section */
+        overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        padding: 4px; /* Add padding for better alignment */
+        box-sizing: border-box; /* Include padding in the total size */
+    }
+
+    /* Ensure each event takes full width */
+    .fc-event {
+        width: 100%; /* Make the event take full width of the container */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow content */
+        text-overflow: ellipsis; /* Add ellipsis for long text */
+        font-size: 12px; /* Adjust font size for a better fit */
+        padding: 2px 0; /* Optional: Adjust padding for a clean look */
+    }
+
+    /* Adjust the height of calendar cells */
+    .fc-daygrid-day {
+        height: 150px; /* Set a fixed height for the day cells */
+        overflow: hidden; /* Prevent content overflow in the cell */
+    }
+
+    /* Hide unnecessary event indicators */
+    .fc-event-title, .fc-event-time, .fc-daygrid-event-dot {
+        display: none;
+    }
+
+    .pyTotal, .pyName {
+        font-weight: bold;
+        color: blue;
+    }
+
+    .pyValue {
+        font-weight: bold;
+        color: black;
+    }
+
+    .fc-prev-button {
+        background: blue !important;
+        border: none !important;
+    }
+    .fc-next-button {
+        background: #215ecf !important;
+        border: none !important;
+    }
+
+    .fc-day-today{
+        background-color: whitesmoke !important
+    }
+
+
+</style
+
+<div class="col-lg-12">
+    <div class="card border-1 border-custom">
+
+        <div class="card-body">
+             <div id='calendar'></div>
+        </div>
+    </div>
+
+</div>
+
+
+@section js {
+    <script src="~/js/jquery/jquery.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/fullcalendar/fullcalendar.js"></script>
+    <script src="~/js/views/progresspaymentcalendar/index.js"></script>
+}

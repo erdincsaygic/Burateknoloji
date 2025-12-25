@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Blog Detay";
+}
+@model StilPay.Entities.Concrete.Blog
+
+    <!-- banner-section start -->
+    <section class="banner-section inner-pages blog blog-2 blog-single">
+        <div class="overlay">
+            <div class="banner-content pb-120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-10">
+                            <div class="main-content">
+                                <h1>Blog Detay</h1>
+                                <div class="breadcrumb-area">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb d-flex align-items-center">
+                                            <li class="breadcrumb-item"><a asp-controller="AnaSayfa" asp-action="Index">AnaSayfa</a></li>
+                                            <li class="breadcrumb-item"><a asp-controller="Blog" asp-action="Index">Blog</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Blog Detay</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="banner-bottom-area">
+            <div class="container">
+                <div class="top-area">
+                    <div class="top-item">
+                    <img src="data:image/jpeg;base64,@Model.Image" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner-section end -->
+
+    <!-- Blog Single In start -->
+    <section class="blog-single latest-articles latest">
+        <div class="overlay pb-120">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-10">
+                        <div class="sub-heading">
+                            <span class="crypto">@Model.BlogCategoryName</span>
+                            <span class="date">@Model.BlogDate.ToShortDateString()</span>
+                        </div>
+                       @* <div class="section-header">
+                            <h2 class="title">
+                                What are NFTs and why are some selling for millions of dollars?
+                            </h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel ut congue varius congue
+                                aliquet leo. Netus neque nibh semper in diam viverra nibh.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="row cus-mar">
+                        <div class="col-lg-12">
+                            <div class="single-content">
+                                <h4 class="title-area">@Model.Title</h4>
+                                <p>@Model.Body
+                                </p>
+                            </div>
+                        </div>
+@*                         <div class="col-lg-4">
+                            <div class="sidebar-area">
+                                <div class="single-side follow author text-center">
+                                    <h5>@Model.Creator</h5>
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Single In end -->

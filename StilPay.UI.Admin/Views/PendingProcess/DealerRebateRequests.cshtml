@@ -1,0 +1,330 @@
+﻿@{
+
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/select2.css" />
+    <link rel="stylesheet" href="~/css/select2-bootstrap-5-theme.css" />
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap5.css" />
+}
+
+<form class="bg-white py-2 mt-2 border border-1 border-custom">
+
+    <div class="row">
+        <div class="col-lg-2 offset-lg-4">
+            <div class="input-group">
+                <input type="text" class="form-control datepicker" readonly="readonly" value="@DateTime.Today.AddDays(-7).ToString("dd.MM.yyyy")" style="text-align:center; background-color:#fff;" />
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar-days"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="input-group">
+                <input type="text" class="form-control datepicker" readonly="readonly" value="@DateTime.Today.ToString("dd.MM.yyyy")" style="text-align:center; background-color:#fff;" />
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar-days"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 offset-lg-5">
+            <div class="d-grid">
+                <button type="button" onclick="HideShow()" class="btn btn-sm btn-outline-dark">Detaylı Arama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i> </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="idFilter" style="display:none;">
+
+        <div class="row">
+            <div class="col-lg-3 offset-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Başlangıç Saati
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Bitiş Saati
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 offset-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Email Addresi
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Gönderici Adı
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 offset-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Sipariş No
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label">
+                            Banka
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select class="form-select">
+                            <option>Seçiniz</option>
+                            <option value="1">Akbank</option>
+                            <option value="2">Garanti</option>
+                            <option value="3">İş Bankası</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-1 offset-lg-7">
+            <button class="form-control btn btn-custom"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;İndir</button>
+        </div>
+        <div class="col-lg-1">
+            <button class="form-control btn btn-dark"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+        </div>
+    </div>
+
+</form>
+
+<div class="card mt-2 border-1 border-custom">
+    <div class="card-header bg-custom text-white">Üye İşyeri İade Talepleri</div>
+    <div class="card-body">
+        <table id="Table" class="table table-bordered table-hover">
+            <thead>
+                <tr class="bg-custom text-white">
+                    <th class="col-1 text-center">İşlem Tarihi</th>
+                    <th class="col-2 text-center">İşlem Numarası</th>
+                    <th class="col-2 text-center">Üye İşyeri</th>
+                    <th class="col-2 text-center">Üye Adı</th>
+                    <th class="col-1 text-center">İade Tutarı</th>
+                    <th class="col-1 text-center">Durum</th>
+                    <th class="col-2 text-center">Yetkili</th>
+                    <th class="col-1 text-center">Detay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-1 text-center">05.07.2022 23:12</td>
+                    <td class="col-2 text-center">VATAN123DFGDFG2</td>
+                    <td class="col-2">VATAN GAME</td>
+                    <td class="col-2">Can Bey</td>
+                    <td class="col-1 text-center">793,50</td>
+                    <td class="col-1 text-center text-success">Ödeme Başarılı</td>
+                    <td class="col-2 text-center">Onaylayan Kişi Gelecek</td>
+                    <td class="text-center"><a asp-controller="PendingProcess" asp-action="DealerRebateRequestDetail">Detay</a></td>
+                </tr>
+                <tr>
+                    <td class="col-1 text-center">05.07.2022 23:12</td>
+                    <td class="col-2 text-center">VATAN123DFGDFG2</td>
+                    <td class="col-2">VATAN GAME</td>
+                    <td class="col-2">Can Bey</td>
+                    <td class="col-1 text-center">793,50</td>
+                    <td class="col-1 text-center text-success">Ödeme Başarılı</td>
+                    <td class="col-2 text-center">Onaylayan Kişi Gelecek</td>
+                    <td class="text-center"><a asp-controller="PendingProcess" asp-action="DealerRebateRequestDetail">Detay</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/select2.js"></script>
+    <script src="~/js/jquery.dataTables.js"></script>
+    <script src="~/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd.mm.yy",
+                altFieldTimeOnly: false,
+                altFormat: "yy-mm-dd",
+                altTimeFormat: "h:m",
+                altField: "#tarih-db",
+                monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+                dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+                firstDay: 1
+            });
+
+            Table.init();
+        });
+
+        function HideShow() {
+            $("#idFilter").slideToggle(500);
+        }
+
+        var Table = function () {
+
+            var initTable = function () {
+
+                var table = $('#Table');
+
+                var otable = table.dataTable({
+
+                    "language": {
+                        "aria": {
+                            "sortAscending": ": artan sütun sıralamasını aktifleştir",
+                            "sortDescending": ": azalan sütun sıralamasını aktifleştir"
+                        },
+                        "emptyTable": "Tabloda herhangi bir veri mevcut değil",
+                        "info": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                        "infoEmpty": "Kayıt yok",
+                        "infoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                        "infoThousands": ".",
+                        "lengthMenu": "Sayfada _MENU_ kayıt göster",
+                        "loadingRecords": "Yükleniyor...",
+                        "processing": "İşleniyor...",
+                        "search": "Ara:",
+                        "zeroRecords": "Eşleşen kayıt bulunamadı",
+                        "paginate": {
+                            "first": "İlk",
+                            "last": "Son",
+                            "next": "Sonraki",
+                            "previous": "Önceki"
+                        },
+                    },
+
+                    "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                        //nRow.setAttribute("id", "tr_" + aData[3]);
+                    },
+
+                    "columnDefs": [
+                        //{
+                        //    "searchable": false,
+                        //    "targets": [0, 3]
+                        //}
+                    ],
+
+                    "order": [
+                        [0, "asc"]
+                    ],
+
+                    "lengthMenu": [
+                        [15, 25, 50, 100, -1],
+                        [15, 25, 50, 100, "Tümü"]
+                    ],
+
+                    "columns": [
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": true
+                        },
+                        {
+                            "orderable": false
+                        }
+                    ]
+                });
+
+                var tableWrapper = $('#Table_wrapper');
+                tableWrapper.find('.dataTables_length select').select2({
+                    minimumResultsForSearch: Infinity,
+                });
+            }
+
+            var initData = function () {
+                showLoading();
+
+                $.get('/city/gets', function (list) {
+                    var otbl = $('#Table').DataTable();
+                    if (list)
+                        $.each(list, function (i, item) {
+                            otbl.rows.add([[initBtnOperations(item.id), item.name, item.statusFlag ? 'Active' : 'Pasive', item.id]]);
+                        })
+                    otbl.draw();
+                }).done(function () {
+                    hideLoading();
+                }).fail(function () {
+                    onFailure();
+                }).always(function () { });
+            }
+
+            return {
+                init: function () {
+                    if (!jQuery().dataTable) {
+                        return;
+                    }
+                    initTable();
+                    //initData();
+                }
+            };
+
+        }();
+
+    </script>
+}

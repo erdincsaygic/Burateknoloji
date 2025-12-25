@@ -1,0 +1,185 @@
+﻿@{
+    ViewData["Title"] = "Üye İşyeri Blokeler";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#bank">HAVALE / EFT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#creditCard">KREDİ KARTI</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#foreignCreditCard">YURT DIŞI KREDİ KARTI</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="row mt-3 mb-4">
+        <div class="col-lg-4 offset-lg-3">
+            <div class="input-group">
+                <select class="form-select select2" id="slcCompanies"></select>
+            </div>
+        </div>
+        <div class="col-lg-2 mt-lg-0 mt-2">
+            <div class="d-grid">
+                <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane active" id="bank">
+        <div class="row mt-2">
+            <div class="col-lg-6">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokeli İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="TableBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Bloke Süresi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokesi Kaldırılan İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="TableNotBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Açılış Tarihi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="tab-pane" id="creditCard">
+        <div class="row mt-2">
+            <div class="col-lg-6">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokeli İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="CreditCardTableBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Bloke Süresi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokesi Kaldırılan İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="CreditCardTableNotBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Açılış Tarihi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="tab-pane" id="foreignCreditCard">
+        <div class="row mt-2">
+            <div class="col-lg-6">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokeli İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="ForeignCreditCardTableBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Bloke Süresi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-lg-0 mt-2">
+                <div class="card border-1 border-custom">
+                    <div class="card-header bg-custom text-white">Blokesi Kaldırılan İşlemler</div>
+                    <div class="card-body table-responsive">
+                        <table id="ForeignCreditCardTableNotBlocked" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-custom text-white">
+                                    <th class="col-3 text-center">İşlem Tarihi</th>
+                                    <th class="col-3 text-center">İşlem Numarası</th>
+                                    <th class="col-3 text-end">İşlem Tutarı</th>
+                                    <th class="col-3 text-center">Açılış Tarihi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+@section js {
+    <script type="text/javascript" src="~/js/select2/select2.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-jquery.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script type="text/javascript" src="~/js/views/dealerblock/index.js"></script>
+}

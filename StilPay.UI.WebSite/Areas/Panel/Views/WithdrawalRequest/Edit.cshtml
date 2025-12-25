@@ -1,0 +1,218 @@
+﻿@model WithdrawalRequestEditViewModel
+
+@{
+    ViewData["Title"] = "Nakit Çek";
+}
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+        <div class="card border border-danger text-danger">
+            <div class="card-header bg-white text-center fw-bold">
+                Türk Lirası Para Çekim Uyarısı
+            </div>
+            <div class="card-body text-center">
+                <i class="fa fa-circle-question fs-5"></i>
+                <span>Cuma 11:00'den sonra ve hafta sonu yapılan para çekim talepleri <u>pazartesi mesai saatleri</u> içerisinde gönderilir.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-3 offset-lg-3">
+        <div class="card border border-success text-success">
+            <div class="card-header bg-white text-center fw-bold">
+                Çekilebilir Türk Lira(₺) Bakiyesi
+            </div>
+            <div class="card-body fs-5 text-center">
+                <i class="fa fa-circle-check"></i><span> 111,03 TRY</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 mt-lg-0 mt-2">
+        <div class="card border-1 border-custom text-custom">
+            <div class="card-header bg-white text-center fw-bold">
+                Toplam Türk Lira(₺) Bakiyesi
+            </div>
+            <div class="card-body fs-5 text-center">
+                <i class="fa fa-circle-info"></i><span> 111,03 TRY</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <form asp-controller="WithdrawalRequest" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label" asp-for="entity.IDBank"><span style="color:red">* </span>Banka :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IDBank" asp-items="@(new SelectList(Model.Banks,"ID","Name"))">
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label" asp-for="entity.IBAN"><span style="color:red">* </span>IBAN :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-text">TR</span>
+                                <input type="text" class="form-control" asp-for="entity.IBAN" maxlength="32">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label" asp-for="entity.Title"><span style="color:red">* </span>Hesap Sahibi :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Title" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label for="text" class="form-label" asp-for="entity.Amount"><span style="color:red">* </span>Talep Edilen Tutar :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-end" asp-for="entity.Amount" maxlength="10">
+                                <span class="input-group-text"><i class="fa fa-plus"></i></span>
+                                <span class="input-group-text">TRY</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-center" value="6,00 TRY" readonly>
+                                <span class="input-group-text">&nbsp;İşlem Ücreti&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Gönderim Tipi :</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group d-flex flex-nowrap justify-content-between">
+                                <label class="form-label"><input type="radio" class="form-radio" id="rdEFT" asp-for="entity.IsEFT" value="true" /> Havale/EFT</label>
+                                <label class="form-label"><input type="radio" class="form-radio" id="rdFAST" asp-for="entity.IsEFT" value="false" /> Fast</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;Para Çek</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body bg-light p-0 m-0">
+
+                <div class="card border-0 bg-light">
+                    <div class="card-header text-white bg-secondary mt-3 mx-4 text-center fw-bold">
+                        Nakit Çekim Formu
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Banka :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailBank" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">IBAN :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailIBAN" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Hesap Sahibi :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailTitle" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Talep Edilen Tutar :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailAmount" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Gönderim Tipi :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailType" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <h6 class="text-center text-secondary fw-bold">Bilgileri Onaylıyor Musunuz ?</h6>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-4 offset-lg-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-dark btn-block" id="btnOK">Tamam</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-secondary btn-block" data-bs-dismiss="modal">Vazgeç</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/views/withdrawalrequest/edit.js"></script>
+}

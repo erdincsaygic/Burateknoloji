@@ -1,0 +1,134 @@
+﻿@model PaymentNotification
+
+@{
+    ViewData["Title"] = "Ödeme Bildirimi Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Ödeme Bildirimi Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Member" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Banka :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Bank" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderici Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="SenderName" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderici IP Adresi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="MemberIPAddress" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderici Port :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="MemberPort" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">IBAN :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Iban" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Saati :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="ActionTime" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tutarı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Durumu :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control fw-bold text-success" asp-for="Status" value="ONAYLANDI" readonly="readonly" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+@section js{
+   <script src="~/js/mask/imask.js"></script>
+    <script>
+    $(document).ready(function () {
+        $("#Iban").mask('TR00 0000 0000 0000 0000 0000 00')
+    });
+</script>
+}

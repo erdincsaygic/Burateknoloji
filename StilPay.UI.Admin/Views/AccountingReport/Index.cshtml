@@ -1,0 +1,200 @@
+@{
+    ViewData["Title"] = "İşlemler";
+}
+
+@section css{
+    @*    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+        <link rel="stylesheet" href="~/css/select2.css" />
+        <link rel="stylesheet" href="~/css/select2-bootstrap-5-theme.css" />
+        <link rel="stylesheet" href="~/css/dataTables.bootstrap5.css" />*@
+
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+
+}
+
+
+<div class="row">
+    <div class="col-lg-2 offset-lg-4">
+        <div class="input-group">
+            <input type="text" id="dtStartDate" class="form-control datepicker" readonly="readonly" style="text-align:center; background-color:#fff;" />
+            <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar-days"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="input-group">
+            <input type="text" id="dtEndDate" class="form-control datepicker" readonly="readonly" style="text-align:center; background-color:#fff;" />
+            <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar-days"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 offset-lg-5">
+        <div class="d-grid">
+            <button type="button" onclick="HideShow()" class="btn btn-sm btn-outline-dark">Detaylı Arama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i> </button>
+        </div>
+    </div>
+</div>
+
+<div id="idFilter" style="display:none;">
+
+    <div class="row">
+        <div class="col-lg-3 offset-lg-3">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="form-label">
+                        Başlangıç Saati
+                    </label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" id="dtStartDateTime" value="00:00" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="form-label">
+                        Bitiş Saati
+                    </label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" id="dtEndDateTime" value="00:00" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 offset-lg-7">
+        <button class="form-control btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+    </div>
+</div>
+
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;">TOPLAMLAR</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Ciro</div>
+        <div class="col text-center">Toplam Kâr</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divTotalCiro" class="col text-center">0,00 TL</div>
+        <div id="divTotalProfit" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;">HAVALE KOMİSYON RAPORU</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Ciro</div>
+        <div class="col text-center">Toplam Komisyon Kârı</div>
+        <div class="col text-center">Toplam Ödenen Tutar</div>
+        <div class="col text-center">Toplam Eşleşmeyen Tutar</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divTransferTotalAmount" class="col text-center">0,00 TL</div>
+        <div id="divTransferCommissionProfitAmount" class="col text-center">0,00 TL</div>
+        <div id="divTransferDealerPaidAmount" class="col text-center">0,00 TL</div>
+        <div id="divTransferNotMatchedAmount" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;">KREDİ KARTI KOMİSYON RAPORU</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Ciro</div>
+        <div class="col text-center">Toplam Komisyon Kârı</div>
+        <div class="col text-center">Toplam Ödenen Tutar</div>
+        <div class="col text-center">Ödeme Kuruluşuna Ödenen Tutar</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divCreditCardTotalAmount" class="col text-center">0,00 TL</div>
+        <div id="divCreditCardCommissionProfitAmount" class="col text-center">0,00 TL</div>
+        <div id="divCreditCardDealerPaidAmount" class="col text-center">0,00 TL</div>
+        <div id="divCreditCardPaymentInstitutionPaidAmount" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;">YURT DIŞI KREDİ KARTI KOMİSYON RAPORU</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Ciro</div>
+        <div class="col text-center">Toplam Komisyon Kârı</div>
+        <div class="col text-center">Toplam Ödenen Tutar</div>
+        <div class="col text-center">Ödeme Kuruluşuna Ödenen Tutar</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divForeignCreditCardTotalAmount" class="col text-center">0,00 TL</div>
+        <div id="divForeignCreditCardCommissionProfitAmount" class="col text-center">0,00 TL</div>
+        <div id="divForeignCreditCardDealerPaidAmount" class="col text-center">0,00 TL</div>
+        <div id="divForeignCreditCardPaymentInstitutionPaidAmount" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;">İŞLEM ÜCRETİ RAPORU</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Ciro</div>
+        <div class="col text-center">Toplam Ödenen Tutar</div>
+        <div class="col text-center">EFT/HAVALE</div>
+        <div class="col text-center">FAST</div>
+        <div class="col text-center">Toplam İşlem Ücreti</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divWithdrawalTotalAmount" class="col text-center">0,00 TL</div>
+        <div id="divWithdrawalTotalPaidAmount" class="col text-center">0,00 TL</div>
+        <div id="divWithdrawalEftAmount" class="col text-center">0,00 TL</div>
+        <div id="divWithdrawalFastAmount" class="col text-center">0,00 TL</div>
+        <div id="divWithdrawalTotalTransactionFeeAmount" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+<div class="row mt-3 mx-3">
+    <div class="col-lg-12 text-white py-2 bg-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col" style="text-align:Center;"> GELİR / GİDER RAPORU</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom text-custom fw-bold" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div class="col text-center">Toplam Gider</div>
+        <div class="col text-center">Toplam İade Gideri</div>
+        <div class="col text-center">Toplam Fraud Gideri</div>
+        <div class="col text-center">Toplam Gelir</div>
+    </div>
+    <div class="col-lg-12 bg-white py-2 border border-1 border-custom" style="display:flex; flex-direction:row; flex-wrap: nowrap; align-content: center; justify-content: space-between; align-items: center;">
+        <div id="divTotalExpenseAmount" class="col text-center">0,00 TL</div>
+        <div id="divTotalRebateExpenseProfitAmount" class="col text-center">0,00 TL</div>
+        <div id="divTotalFraudExpenseProfitAmount" class="col text-center">0,00 TL</div>
+        <div id="divTotalIncomeAmount" class="col text-center">0,00 TL</div>
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/accountingreport/index.js"></script>
+}

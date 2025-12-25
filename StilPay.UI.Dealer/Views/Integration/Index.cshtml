@@ -1,0 +1,114 @@
+﻿@model EditViewModel<CompanyIntegration>
+
+@{
+    ViewData["Title"] = "Erişim Bilgilerim";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-8 offset-lg-2">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Erişim Bilgilerim
+            </div>
+            <div class="card-body">
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">iFrame Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" value="https://stilpay.com/panel/paymentnotification" disabled>
+                    </div>
+                </div>
+
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Servis Id :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ServiceID" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Gizli Anahtar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.SecretKey" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Site Adresi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.SiteUrl" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Ödeme Sonrası Yönlendirilecek Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.RedirectUrl" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Callback Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CallbackUrl" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Auto Callback Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.AutoCallbackUrl" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Çekim Talebi Callback Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.WithdrawalRequestCallback" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Çekim Talebi Auto Callback Url :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.AutoCallbackWithdrawalUrl" readonly>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3 pt-2">
+                        <label class="form-label">Tanımlanmış IP Adreslerim :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.IPAddress" readonly>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section js{
+}

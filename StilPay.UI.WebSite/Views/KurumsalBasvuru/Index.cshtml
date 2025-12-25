@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+@*<!doctype html>
+<html class="no-js" style="height:100%;overflow:scroll;overflow-x:hidden;overflow-y:hidden" lang="en">
+<head>
+    <title>Stilpay - Yeni Nesil Dijital Pazaryeri Platformu</title>
+
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+<body style="margin:0;height:100%">
+    <iframe src="http://localhost:26653/Application/Frame" style="width:100%;height:100%"></iframe> <!--Canlı adresi ile değişmesi gerekiyor-->
+</body>
+
+</html>*@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/ui/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ui/assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/ui/assets/css/plugin/nice-select.css">
+    <link rel="stylesheet" href="~/ui/assets/css/plugin/slick.css">
+    <link rel="stylesheet" href="~/ui/assets/css/custom-family.css">
+    <link rel="stylesheet" href="~/ui/assets/css/plugin/magnific-popup.css">
+    <link rel="stylesheet" href="~/ui/assets/css/plugin/animate.css">
+    <link rel="stylesheet" href="~/ui/assets/css/style.css">
+
+</head>
+
+<body>
+    <!-- start preloader -->
+    <div class="preloader" id="preloader"></div>
+    <!-- end preloader -->
+    <!-- Scroll To Top Start-->
+    <a href="javascript:void(0)" class="scrollToTop"><i class="fas fa-angle-double-up"></i></a>
+    <!-- Scroll To Top End -->
+    <!-- Register In start -->
+    <section class="log-reg register">
+        <div class="overlay">
+            <div class="container">
+                <div class="top-head-area">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-sm-5 col">
+                            <a class="back-home" asp-controller="AnaSayfa" asp-action="Index">
+                                <img src="~/ui/assets/img/left-icon.png" alt="image">
+                                Anasayfa' ya Geri Dön
+                            </a>
+                        </div>
+                        <div class="col-sm-5 col">
+                            <a asp-controller="AnaSayfa" asp-action="Index">
+                                <img src="~/ui/assets/img/logo.png" alt="image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-6 col-md-7 z-1 text-center">
+                        <div class="form-box">
+                            <h4>Mağaza Başvurusu Yap</h4>
+                            <p class="alr-acc dont-acc">Mevcut Hesabın mı var? <br /> <a asp-controller="Giris" asp-action="Index">Hemen Giriş Yap.</a></p>
+                            <div class="tab-content" id="myTabContent" style="margin: 35px 0 40px;">
+                                <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                                     <iframe src="https://bayi.stilpay.com/Application/Frame" style="width:100%; height: 60vh;"></iframe>
+                                     @* <iframe src="http://localhost:26653/Application/Frame" style="width:100%;height:60vh"></iframe> <!--Canlı adresi ile değişmesi gerekiyor-->  *@
+    @*                                 <div class="privacy">
+                                        <p>Kayıt olarak onaylıyorum (<a asp-controller="Sozlesmeler" asp-action="Index" target="_blank">Sözleşmeler ve Gizlilik Politikaları</a> )</p>
+                                    </div> *@
+@*                                     <br />
+                                    <div class="accordion-item">
+                                        <h6 class="accordion-header" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#flush-collapseTwo"
+                                                    aria-expanded="false"
+                                                    aria-controls="flush-collapseTwo">
+                                                Vergi Levhası olan Şahıs, Limited ve Anonim şirket başvuru noktasıdır.
+                                            </button>
+                                        </h6>
+                                        <div id="flush-collapseTwo"
+                                             class="accordion-collapse collapse"
+                                             aria-labelledby="flush-headingTwo"
+                                             data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <p>
+                                                    Lütfen bir vergi levhanız yoksa buradan başvuru yapınız. <br />
+                                                    Değerlendirme sonrasında tanımlı oranları Mağaza Paneli üzerinden görebilirsiniz.
+                                                    Mağaza Paneli bölümünden giriş yaparak başvuru durumunuzu takip edebilirsiniz. <br />
+                                                    Bir sorunuz varsa +90 (533) 636 81 26 whatsapp hattımızdan bize ulaşabilirsiniz.
+                                                    Başvurunuzun durumu 24 saat içinde sms ile bildirilir.<br />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> *@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Register In end -->
+    <script src="~/ui/assets/js/jquery.min.js"></script>
+    <script src="~/ui/assets/js/proper-min.js"></script>
+    <script src="~/ui/assets/js/bootstrap.min.js"></script>
+    <script src="~/ui/assets/js/fontawesome.js"></script>
+    <script src="~/ui/assets/js/plugin/slick.js"></script>
+    <script src="~/ui/assets/js/plugin/jquery.magnific-popup.min.js"></script>
+    <script src="~/ui/assets/js/plugin/apexcharts.min.js"></script>
+    <script src="~/ui/assets/js/plugin/jquery.nice-select.min.js"></script>
+    <script src="~/ui/assets/js/plugin/jquery.countdown.js"></script>
+    <script src="~/ui/assets/js/plugin/wow.min.js"></script>
+    <script src="~/ui/assets/js/plugin/plugin.js"></script>
+    <script src="~/ui/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+﻿@model EditViewModel<CompanyInvoice>
+
+@{
+    ViewData["Title"] = "Fatura Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Invoice" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6">
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Detay</div>
+            <div class="card-body">
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye İşyeri :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control bg-light" value="@(Model.entity.Company)" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Fatura Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control bg-light" value="@(Model.entity.InvoiceNumber)" readonly="readonly" />
+                    </div>
+                </div>
+                 <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">KDV Tutarı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control bg-light text-end" value="@(Model.entity.TaxAmount)" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Net Tutar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control bg-light text-end" value="@(Model.entity.NetAmount)" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Toplam Tutar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control bg-light text-end" value="@(Model.entity.TotalAmount)" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mt-lg-0 mt-2">
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Bağlı İşlemler</div>
+            <div class="card-body">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">İşlem Numarası</th>
+                            <th class="col-2 text-center">Banka</th>
+                            <th class="col-1 text-end">Vergi</th>
+                            <th class="col-1 text-end">Net Tutar</th>
+                            <th class="col-1 text-end">Toplam Tutar</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.entity.CompanyTransactions)
+                        {
+                            <tr>
+                                <td class="col-1 text-center">@item.TransactionDate.ToString("hh:mm dd.MM.yyyy")</td>
+                                <td class="col-1 text-center">@item.TransactionNr</td>
+                                <td class="col-2 text-center">@item.Bank</td>
+                                <td class="col-1 text-end">@item.CommissionTaxAmount.ToString("n2")</td>
+                                <td class="col-1 text-end">@item.CommissionNetAmount.ToString("n2")</td>
+                                <td class="col-1 text-end">@item.Commission.ToString("n2")</td>
+                                <td class="d-none"></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

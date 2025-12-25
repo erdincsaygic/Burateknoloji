@@ -1,0 +1,13 @@
+﻿using StilPay.Entities.Concrete;
+using StilPay.Entities.Dto;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace StilPay.DAL.Abstract
+{
+    public interface ICallbackResponseLogDAL : IBaseDAL<CallbackResponseLog>
+    {
+        List<AutoCallbackService> AutoCallbackService();
+    }
+}

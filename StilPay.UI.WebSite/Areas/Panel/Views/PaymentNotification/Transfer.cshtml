@@ -1,0 +1,307 @@
+﻿@model PaymentNotificationViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>StilPay | Ödeme Bildirimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css?v.2.1" rel="stylesheet" />
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify.css" />
+    <link rel="stylesheet" href="~/areas/panel/css/alertifyjs/alertify-default.css" />
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Ödeme<br> Yöntemi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Ödeme <br>Bilgileri</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ödeme <br>Özeti</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Sms<br>Doğrulama</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-5"></i></div>
+                    <div class="baba">Üye<br>Profil</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-6"></i></div>
+                    <div class="baba">İşlem <br>Bilgileri</div>
+                </div>
+            </div>
+
+            <div class="deneme">
+                <!---------------STEP 2 HAVALE START------------------>
+                <div class="slidercont" id="efts">
+                    <div class="topm">
+                        <div class="infor">
+                            <div class="st1">
+                                <div class="text1">İŞLEM NUMARASI:</div>
+                                <div class="text2">@Model.entity.TransactionID</div>
+                            </div>
+                            <div class="st1">
+                                <div class="text1">TARİH:</div>
+                                <div class="text2">@DateTime.Today.ToString("dd MMMM yyyy")</div>
+                            </div>
+                            <div class="st1">
+                                <div class="text1">TOPLAM:</div>
+                                <div class="text2">@(string.Concat(Model.entity.Amount.ToString("n2"), " ₺"))</div>
+                            </div>
+                            <div class="st1 none">
+                                <div class="text1">ÖDEME YÖNTEMİ:</div>
+                                <div class="text2">HAVALE / EFT</div>
+                            </div>
+                        </div>
+                        <div class="parrots">
+                            <p class="thins2" style="margin-top:1rem;margin-bottom:1rem;">@(string.Concat("İŞLEM NUMARANIZ #", Model.entity.TransactionID))</p>
+                        </div>
+                    </div>
+                    <div class="boxbank">
+                        <div class="menu2step" style="width:unset; margin-top:5rem;">
+                            <h3 class="" style="text-align:center !important;">BANKA HAVALE / EFT / FAST</h3>
+                        </div>
+                    </div>
+
+                    <div class="menu2step text-danger" style="width:unset; margin-top:2rem; ">
+                        <h2>
+                            <i class="fa fa-circle-exclamation fs-5" style="margin: 10px;"></i>Lütfen öncelikle ödemek istediğiniz tutarı banka hesaplarımıza yatırınız ardından bildirim yapınız. <br />
+                            <i class="fa fa-circle-exclamation fs-5" style="margin: 10px;"></i>Bankaya yatırılmayan tutarın bildirimini yapmayınız. <br />
+                            <i class="fa fa-circle-exclamation fs-5" style="margin: 10px;"></i>Lütfen Ad Soyad bilgisini bankada yazıldığı gibi, harf hatası yapmadan yazınız.
+                        </h2>
+                    </div>
+
+                    <div class="form">
+
+                        @if (Model.CompanyBanks.Count > 1)
+                        {
+                            @for (int j = 0; j < Model.CompanyBanks.Count / 4.0m; j++)
+                            {
+                                <div class="formtop" style="justify-content:normal;flex-direction: row;">
+                                    @for (int i = j * 4; i < (Model.CompanyBanks.Count < j * 4 + 4 ? Model.CompanyBanks.Count : j * 4 + 4); i++)
+                                    {                                                                          
+                                        var bank = Model.CompanyBanks[i];
+                                        <a href="javascript:void(0);" class="bankbuttons bank @(i == 0 ? "hoveractive":"")" data-bank-id="@bank.CompanyBankAccountID"><img src="@(string.Concat("/areas/panel/img/banks/",bank.Img))" alt="" height="80"></a>
+                                    }
+                                </div>
+                            }
+                        }
+
+                        <div class="boxbank">
+                            <div class="menu2step" style="width:unset; margin-top:2rem;">
+                                <h3 class="" style="text-align:center !important;">Tüm Bankalar İçin Ortak Ödeme</h3>
+                            </div>
+                        </div>
+
+                        <div class="menu2step text-danger" style="width:unset; margin-top:0.1rem;">
+                            <h2 >
+                                <span id="bankIframeWarnText"></span>
+                            </h2>
+                        </div>
+
+                        <form id="frmTransfer" autocomplete="off" method="post" asp-area="panel" asp-antiforgery="true" class="forml"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess">
+
+                            <input type="hidden" id="jsonCompanyBanks" value="@JsonConvert.SerializeObject(Model.CompanyBanks)" />
+                            <div class="formmain">
+                                <div class="formleft">
+                                    <div class="formleftop">
+                                        <span class="maintext" id="spanBank">Ziraat Bankası</span>
+                                        @*<span class="maintext">Ziraat Bankası</span>*@
+                                    </div>
+                                    <div class="formelements">
+                                        <i class="fa-solid fa-circle-user"></i>
+                                        <div class="formtexts">
+                                            <span class="text1">Hesap Adı:</span>
+                                            <span class="text2" id="spanAlici"></span>
+                                            @*<span class="text2" id="spanAlici">STILPAY ELEKTRONİK TİCARET A.Ş</span>*@
+                                        </div>
+                                        <span class="text2" id="spanAlici"><i class="fa-solid fa-copy" onclick="copyAlici()" style="color: #050505;margin-top: 15px;"></i></span>
+                                    </div>
+                                    <div class="formelements">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                        <div class="formtexts">
+                                            <span class="text1">IBAN :</span>
+                                            <span class="text2" id="spanIban"></span>
+                                            @*<span class="text2" id="spanIban">TR91 0001 0007 7197 5838 1050 01</span>*@
+                                        </div>
+                                        <span class="text2" id="spanIban"><i class="fa-solid fa-copy" onclick="copyIban()" style="color: #050505;margin-top: 15px;"></i></span>
+                                    </div>
+                                    <div class="formelements">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                        <div class="formtexts">
+                                            <span class="text1">Hesap No :</span>
+                                            <span class="text2" id="spanAccountNo" style="cursor:pointer;"></span>
+                                        </div>
+                                        <span class="text2" id="spanAccountNo" style="cursor:pointer;"><i class="fa-solid fa-copy" onclick="copyAccountNo()" style="color: #050505;margin-top: 15px;"></i></span>
+                                    </div>
+                                    <div class="formelements">
+                                        <i class="fa-solid fa-coins"></i>
+                                        <div class="formtexts">
+                                            <span class="text1">Hesap Para Birimi:</span>
+                                            <span class="text2">TRY</span>
+                                        </div>
+                                    </div>
+                                    <div class="mybanners">
+                                        <div class="hol">
+                                            <img src="~/areas/panel/img/paymentnotification/Stilpay1.png" alt="">
+                                        </div>
+                                        <div class="hol">
+                                            <img src="~/areas/panel/img/paymentnotification/366-3669285_secure-ssl-encryption-logo-png-transparent-png.png" alt="">
+                                        </div>
+
+                                        <div class="hol none">
+                                            <img src="~/areas/panel/img/paymentnotification/3D.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="formright" id="divForm">
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="column">
+                                                <label class="text1">Ülke Kodu</label>
+                                                <select>
+                                                    <option value="0">Türkiye (+90)</option>
+                                                </select>
+                                            </div>
+                                            <div class="column">
+                                                <label for="phone" class="text1">Telefon Numarası</label>
+                                                <input id ="phone" type="text" placeholder="Telefon Numarası Giriniz" asp-for="entity.Phone" maxlength="11">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" asp-for="entity.IDBank">
+                                    <input type="hidden" asp-for="entity.CompanyBankAccountID">
+@*                                    <div class="item">
+                                        <div class="row">
+                                            <div class="column">
+                                                <label class="text1">Ödeme Yapılan Banka</label>
+                                                <select class="form-select text-black" id="selectBank" asp-for="entity.IDBank" asp-items="@(new SelectList(Model.CompanyBanks,"IDBank","Bank"))" style="color:black !important;">
+                                                    <option value="">Banka Seçiniz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="column">
+                                                <label class="text1">Gönderici Ad-Soyad</label>
+                                                <input type="text" placeholder="Ad Soyad Giriniz" asp-for="entity.SenderName" maxlength="50">
+                                            </div>
+@*                                            <div class="column">
+                                                <label class="text1">Gönderici TC Kimlik No:</label>
+                                                <input type="text" placeholder="TC Kimlik No Giriniz" asp-for="entity.SenderIdentityNr" maxlength="11">
+                                            </div>*@
+                                            <div class="column">
+                                                <label class="text1">Gönderim Tarihi</label>
+                                                <input type="date" style="text-transform: uppercase;" asp-for="entity.ActionDate">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="row">
+ 
+                                            <div class="column">
+                                                <label class="text1">Gönderim Saati</label>
+                                                <input type="time" id="time-input" style="font-weight: bold;" asp-for="entity.ActionTime" asp-format="{0:HH:mm}" maxlength="5">
+                                            </div>
+                                            <div class="column">
+                                                <label class="text1">Tutar</label>
+                                                <input type="text" style="font-weight: bold;" asp-for="entity.Amount" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="formend">
+                                <div class="confirm">
+                                    <input id="box3" type="checkbox" />
+                                    <label for="box3">Onaylıyorum <a href="https://stilpay.com/sozlesmeler" target="_blank" class="disg">(Ön Bilgilendirme</a> & <a href="https://stilpay.com/sozlesmeler" target="_blank" class="disg">Mesafeli Satış Sözleşmesini)</a></label>
+                                </div>
+                                <div class="confirm">
+                                    <button type="submit" id="btnSubmit" disabled="disabled">
+                                        <i class="fa-solid fa-paper-plane"></i> HEMEN ÖDEME BİLDİR
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+                <!---------------STEP 2 HAVALE END------------------>
+            </div>
+
+            <div class="boxfooter">
+                <div class="boxlast">
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/4.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/13.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/8.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/10.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/9.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/7.png" alt="">
+                    </div>
+
+
+                    
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/14.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js?v.2.1"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js?v=2"></script>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-timepicker.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/transfer.js?v2"></script>
+    <script type="text/javascript" src="~/areas/panel/js/alertifyjs/alertify.js"></script>
+</body>
+
+</html>

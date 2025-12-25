@@ -1,0 +1,48 @@
+﻿using StilPay.DAL.Abstract;
+using StilPay.Entities.Concrete;
+using StilPay.Entities.Dto;
+using StilPay.Utility.Helper;
+using StilPay.Utility.Worker;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+
+namespace StilPay.DAL.Concrete
+{
+    public class WithdrawalPoolDAL : BaseDAL<WithdrawalPool>, IWithdrawalPoolDAL
+    {
+        public override string TableName
+        {
+            get { return "WithdrawalPools"; }
+        }
+
+        public string SetStatus(WithdrawalPool entity)
+        {
+            try
+            {
+                var parameters = new List<FieldParameter> {
+                    new FieldParameter("ID", Enums.FieldType.NVarChar, entity.ID),
+                    new FieldParameter("MDate", Enums.FieldType.DateTime, entity.MDate),
+                    new FieldParameter("Status", Enums.FieldType.Tinyint, entity.Status),
+                    new FieldParameter("RequestNr", Enums.FieldType.NVarChar, entity.RequestNr),
+                    new FieldParameter("ResponseTransactionNr", Enums.FieldType.NVarChar, entity.ResponseTransactionNr),
+                    new FieldParameter("IDCompany", Enums.FieldType.NVarChar, entity.IDCompany)
+                };
+
+                _connector = new tSQLConnector();
+                _connector.BeginTransaction();
+                var IDMaster = _connector.RunSqlCommand(TableName + "_SetStatus", parameters);
+                _connector.CommitOrRollBackTransaction(Enums.TransactionType.Commit);
+
+                return IDMaster;
+            }
+            catch (Exception ex)
+            {
+                if (_connector.SqlConn != null)
+                    _connector.CommitOrRollBackTransaction(Enums.TransactionType.RollBack);
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+}

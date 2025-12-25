@@ -1,0 +1,97 @@
+﻿@model EditViewModel<CompanyCommission>
+
+@{
+    ViewData["Title"] = "Komisyon Oranları";
+}
+
+<div class="row mt-2">
+
+    <div class="col-lg-4 offset-lg-2">
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-12 mb-2 text-center">
+                        <i class="fa fa-credit-card text-info fs-3"></i>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center fw-bold">
+                        <span>Kredi Kartı, Banka Kartı</span>
+                        <br />
+                        <span>ve Ön Ödeme Kartları</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center" style="font-size:0.7rem;">
+                        <span>Türkiye Bankalarına ait</span>
+                        <br />
+                        <span>tüm kartlar ile ödeme alın.</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 py-1 text-center bg-primary text-white">
+                        <span style="font-size:0.7rem;">Komisyon</span>
+                        <br />
+                        <span>% @Model.entity.CreditCardRate</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center border border-2 border-primary text-primary">
+                        <span>Bloke Süresi</span>
+                        <br />
+                        <span class="fw-bold">@(string.Concat(Model.entity.CreditCardBlocked, " Gün"))</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 py-1 text-center text-white small @(Model.entity.TransferStatus ? "bg-info" : "bg-danger")">
+                        <span>Durumu</span>
+                        <span class="fw-bold">@(Model.entity.CreditCardStatus ? "Açık" : "Kapalı")</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mt-lg-0 mt-2">
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-12 mb-2 text-center">
+                        <i class="fa fa-money-bill-transfer text-info fs-3"></i>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center fw-bold">
+                        <span>Banka Transferi</span>
+                        <br />
+                        <span>EFT</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center" style="font-size:0.7rem;">
+                        <span>Dünya Bankaları ile</span>
+                        <br />
+                        <span>para transferi alın.</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 py-1 text-center bg-primary text-white">
+                        <span style="font-size:0.7rem;">Komisyon</span>
+                        <br />
+                        <span>% @Model.entity.TransferRate</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 text-center border border-2 border-primary text-primary">
+                        <span>Bloke Süresi</span>
+                        <br />
+                        <span class="fw-bold">@(string.Concat(Model.entity.TransferBlocked, " Gün"))</span>
+                    </div>
+
+                    <div class="col-lg-12 mb-2 py-1 text-center text-white small @(Model.entity.TransferStatus ? "bg-info" : "bg-danger")">
+                        <span>Durumu</span>
+                        <span class="fw-bold">@(Model.entity.TransferStatus ? "Açık" : "Kapalı")</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,10 @@
+﻿body {
+    background-color: #f8f9fa !important;
+}
+
+#ui-datepicker-div {
+    z-index: 9999 !important;
+}
+.select2-results__options {
+    overflow-y: auto !important;
+}

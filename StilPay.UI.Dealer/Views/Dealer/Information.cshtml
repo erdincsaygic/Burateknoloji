@@ -1,0 +1,205 @@
+﻿@model Company
+
+@{
+    ViewData["Title"] = "İşyeri Bilgilerim";
+}
+
+@*<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="row d-flex flex-row flex-nowrap align-items-center">
+                            <div class="col-1">
+                                <i class="fa fa-money-bill fs-3"></i>
+                            </div>
+                            <div class="col-11">
+                                <span class="fs-6">Toplam Ciro</span>
+                                <br />
+                                <span class="fw-bold fs-5">113,00 ₺</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row d-flex flex-row flex-nowrap align-items-center">
+                            <div class="col-1">
+                                <i class="fa fa-basket-shopping fs-3"></i>
+                            </div>
+                            <div class="col-11">
+                                <span class="fs-6">Toplam Sipariş</span>
+                                <br />
+                                <span class="fw-bold fs-5">6 Adet</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row d-flex flex-row flex-nowrap align-items-center">
+                            <div class="col-1">
+                                <i class="fa fa-wallet fs-3"></i>
+                            </div>
+                            <div class="col-11">
+                                <span class="fs-6">Toplam Para Çekim</span>
+                                <br />
+                                <span class="fw-bold fs-5">106,03 ₺</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row d-flex flex-row flex-nowrap align-items-center">
+                            <div class="col-1">
+                                <i class="fa fa-arrow-rotate-left fs-3"></i>
+                            </div>
+                            <div class="col-11">
+                                <span class="fs-6">Toplam İade</span>
+                                <br />
+                                <span class="fw-bold fs-5">0,00 ₺</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>*@
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border border-danger text-danger">
+            <div class="card-body text-center">
+                <i class="fa fa-circle-info fs-5"></i>
+                <span>Bilgilerinizi güncellemek için lütfen bize ulaşınız.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-lg-6">
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                İşyeri Bilgileriniz
+            </div>
+            <div class="card-body">
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Hesap Türü :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select class="form-select" disabled="disabled">
+                            <option value="1">Bireysel</option>
+                            <option value="2" selected>Kurumsal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Yetkili Ad-Soyad :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Name" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Yetkili Telefon :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Phone" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Yetkili Email :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Email" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Ortalama Aylık Ciro :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="MonthlyGiro" readonly="readonly">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mt-lg-0 mt-2">
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Fatura Bilgileriniz
+            </div>
+            <div class="card-body">
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Şirket Ünvanı :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Title" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Yetkili Ad-Soyad :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Name" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Şirket Vergi No :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="TaxNr" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Şirket Vergi Dairesi :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="TaxOffice" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Şirket Adresi :</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" asp-for="Address" readonly="readonly">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section js{
+}

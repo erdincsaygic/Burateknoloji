@@ -1,0 +1,241 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+}
+@model List<StilPay.Entities.Concrete.Blog>
+
+<!-- banner-section start -->
+<section class="banner-section inner-pages blog">
+    <div class="overlay">
+        <div class="banner-content pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        <div class="main-content">
+                            <h1>Blog</h1>
+                            <div class="breadcrumb-area">
+                                <nav aria-label="breadcrumb">
+                                    <ul class="breadcrumb d-flex align-items-center">
+                                        <li class="breadcrumb-item">
+                                            <a asp-controller="AnaSayfa" asp-action="Index">Anasayfa</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            Blog
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="banner-bottom-area">
+        <div class="container">
+            <div class="top-area">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 cus-z text-start">
+                        <div class="profile-area d-flex justify-content-between align-items-center">
+                            <div class="profile-left d-flex align-items-center">
+                                <div class="profile">
+                                    <img src="~/ui/assets/img/Stilpay.jpg" alt="image" />
+                                </div>
+                                <h5>STILPAY</h5>
+                            </div>
+                            <div class="profile-right">
+                                <p class="mdr">@Model.Last().BlogDate.ToShortDateString()</p>
+                            </div>
+                        </div>
+                        <a href="blog-single.html">
+                            <h3>
+                                @Model.Last().Title
+                            </h3>
+                        </a>
+                        <p>
+                            @Model.Last().Body.Substring(0,100)
+                        </p>
+                        <a asp-controller="Blog" asp-action="Detay" asp-route-id="@Model.Last().ID">
+                            Detay Göster <img src="~/ui/assets/img/right-icon-5.png" alt="image" />
+                        </a>
+                    </div>
+                    <div class="col-lg-5 cus-z">
+                        <img src="data:image/jpeg;base64,@Model.Last().Image" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*   @await Component.InvokeAsync("BlogDetay")*@
+<!-- banner-section end -->
+<!-- Latest Articles In start -->
+<section class="latest-articles">
+    <div class="overlay pt-120 pb-120">
+        <div class="container">
+            <div class="section-header">
+                <div class="row justify-content-between">
+                    <div class="col-xl-4">
+                        <h2 class="title">Son haberler</h2>
+                    </div>
+                    <div class="col-xl-8 d-flex justify-content-xl-end justify-content-start">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active"
+                                        id="all-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#all"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="all"
+                                        aria-selected="true">
+                                    Hepsi
+                                </button>
+                            </li>
+                            @foreach (var item in ViewBag.Category as List<StilPay.Entities.Concrete.BlogCategory>)
+                            {
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link"
+                                            id="@item.Name-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#@item.Name"
+                                            type="button"
+                                            role="tab"
+                                            aria-controls="@item.Name"
+                                            aria-selected="false">
+                                        @item.Name
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active"
+                             id="all"
+                             role="tabpanel"
+                             aria-labelledby="all-tab">
+                            <div class="row cus-mar">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-lg-6">
+                                        <div class="single-area">
+                                            <div class="top-item">
+                                                <img src="data:image/jpeg;base64,@item.Image" alt="Image">
+                                            </div>
+                                            <div class="bottom-item">
+                                                <a href="blog-single.html">
+                                                    <h5>
+                                                        @item.Title
+                                                    </h5>
+                                                </a>
+                                                <p>
+                                                    @item.Body.Substring(0,100)
+                                                </p>
+                                                <div class="date-area d-flex justify-content-between">
+                                                    <a asp-controller="Blog" asp-action="Detay" asp-route-id="@item.ID">
+                                                        Detay Göster
+                                                        <img src="~/ui/assets/img/right-icon-5.png"
+                                                             alt="image" />
+                                                    </a>
+                                                    <p class="mdr">@item.BlogDate.ToLongDateString()</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @foreach (var item in ViewBag.Category as List<StilPay.Entities.Concrete.BlogCategory>)
+                        {
+                            <div class="tab-pane fade"
+                                 id="@item.Name"
+                                 role="tabpanel"
+                                 aria-labelledby="@item.Name-tab">
+                                <div class="row cus-mar">
+                                    @foreach (var blog in Model)
+                                    {
+                                        @if (item.Name == blog.BlogCategoryName)
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="single-area">
+                                                    <div class="top-item">
+                                                        <img src="data:image/jpeg;base64,@blog.Image" alt="Image">
+                                                    </div>
+                                                    <div class="bottom-item">
+                                                        <a href="blog-single.html">
+                                                            <h5>
+                                                                @blog.Title
+                                                            </h5>
+                                                        </a>
+                                                        <p>
+                                                            @blog.Body.Substring(0,100)
+                                                        </p>
+                                                        <div class="date-area d-flex justify-content-between">
+                                                            <a asp-controller="Blog" asp-action="Detay" asp-route-id="@blog.ID">
+                                                                Detay Göster
+                                                                <img src="~/ui/assets/img/right-icon-5.png"
+                                                                     alt="image" />
+                                                            </a>
+                                                            <p class="mdr">@blog.BlogDate.ToShortDateString()</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @*<div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="javascript:void(0)"
+                                               aria-label="Previous">
+                                                <img src="~/ui/assets/img/icon-left.png" alt="icon" />
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link active"
+                                               href="javascript:void(0)"><h5>1</h5></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)"><h5>2</h5></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)"><h5>3</h5></a>
+                                        </li>
+                                        <li class="page-dots">...</li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)"><h5>7</h5></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)"><h5>8</h5></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0)"><h5>9</h5></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="javascript:void(0)"
+                                               aria-label="Next">
+                                                <img src="~/ui/assets/img/icon-right.png" alt="icon" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Articles In end -->

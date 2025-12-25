@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>StilPay | Admin - Log-in</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css" />
+</head>
+<body class="bg-light">
+
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+
+                    <div class="card border-0 rounded-3 shadow">
+                        <div class="row g-0">
+
+                            <div class="col-md-6 col-lg-6 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black border-end border-1 border-muted">
+
+                                    <form id="frmLogin" method="post" asp-antiforgery="true"
+                                          data-ajax="true" data-ajax-method="POST"
+                                          data-ajax-begin="OnBeginLogin" data-ajax-failure="OnFailureLogin"
+                                          data-ajax-success="OnSuccessLogin">
+
+                                        <div class="form-outline mb-3">
+                                            <label for="username" class="fw-bold text-dark">TELEFON NO</label>
+                                            <input type="text" class="form-control form-control-lg fs-5" id="txtPhone" name="phone" autocomplete="off" maxlength="11">
+                                        </div>
+
+                                        <div class="form-outline mb-3">
+                                            <label for="password" class="fw-bold text-dark">ŞİFRE</label>
+                                            <input type="password" class="form-control form-control-lg fs-5" id="txtPassword" name="password" autocomplete="off" maxlength="25">
+                                        </div>
+
+                                        <div class="form-outline mb-3">
+                                            <label for="captchacode" class="fw-bold text-dark">DOĞRULAMA KODU</label>
+                                            <div class="input-group">
+                                                <img id="img-captcha" class="captcha" src="~/get-captcha-image" style="cursor: pointer;" />
+                                                <input type="text" class="form-control form-control-lg fs-5" id="txtcaptchacode" name="captchacode" maxlength="4" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-outline mb-3">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-dark btn-lg btn-block" id="btnSubmitLogin">LOG-IN</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-outline mb-3">
+                                            <div class="float-start">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="rememberme" name="rememberme">
+                                                    <label class="form-check-label text-muted" for="rememberme">Beni Hatırla</label>
+                                                </div>
+                                            </div>
+                                            <div class="float-end">
+                                                <a class="small text-muted" href="#!">Şifremi Unuttum</a>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form id="frmValidate" asp-action="validate" method="post" asp-antiforgery="true"
+                                          data-ajax="true" data-ajax-method="POST" class="d-none"
+                                          data-ajax-begin="OnBeginValidate" data-ajax-failure="OnFailureValidate"
+                                          data-ajax-success="OnSuccessValidate">
+
+
+                                        <div class="card w-100 border-1 border-custom p-2">
+                                            <p class="text-custom text-center fs-1 fw-bold p-0 m-0 ">
+                                                <span id="idMinute">02</span>&nbsp;:&nbsp;<span id="idSecond">00</span>
+                                                <span id="idTime" class="d-none">120</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="form-outline mt-3">
+                                            <label for="confirmcode" class="fw-bold text-dark">DOĞRULAMA KODU</label>
+                                            <input type="text" class="form-control form-control-lg fs-5" id="txtConfirmCode" name="confirmcode" autocomplete="off" maxlength="6">
+
+                                        </div>
+                                        <div class="form-outline mt-3">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-dark btn-lg btn-block" id="btnSubmitValidate">DOĞRULA</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="row mt-5">
+                                        <div class="col-lg-12">
+                                            <div class="toast-container position-relative bottom-0 start-50 translate-middle-x">
+                                                <div class="toast align-items-center text-custom bg-transparent border-0 w-auto shadow-none" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+                                                    <div class="toast-body p-0" id="toastBody"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-6 d-none d-md-flex p-1">
+                                <img src="~/img/logo/logo-login.png" alt="login form" class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/js/jquery/jquery.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-validate-additional-methods"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/bootstrap/bootstrap-bundle.js"></script>
+    <script src="~/js/views/login/index.js"></script>
+</body>
+</html>

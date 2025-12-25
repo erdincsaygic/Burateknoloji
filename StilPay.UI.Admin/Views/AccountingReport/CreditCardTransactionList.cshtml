@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Kredi Kartı Cari Hareketleri";
+}
+
+@model PaymentInstitution
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" value="@Model.ID" id="getID" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white"> @Model.Name Cari Hareketleri</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">Ödeme Kuruluşu</th>
+                            <th class="col-1 text-center">Gönderici Adı</th>
+                            <th class="col-2 text-center">Açıklama</th>
+                            <th class="col-1 text-center">Tutar</th>
+                            <th class="col-1 text-center">Bakiye</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/accountingreport/creditcardtransactionlist.js"></script>
+}

@@ -1,0 +1,205 @@
+﻿@model EditViewModel<CompanyPaymentRequest>
+
+@{
+    ViewData["Title"] = "Üye İşyeri Ödeme Bildirimi Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="DealerPaymentRequest" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Ödeme Bildirimi Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye İşyeri :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Company" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye İşyeri Telefon :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Banka :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Bank" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderici Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.SenderName" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Saati :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ActionTime" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tutarı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#mdlCancel">İptal Et</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-6 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mdlConfirm">Onayla</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Onaylamak İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerPaymentRequest" asp-action="SetStatus" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.Status" value="2" />
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal İptal-->
+<div class="modal fade" id="mdlCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">İptal Etmek İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="DealerPaymentRequest" asp-action="SetStatus" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.Status" value="3" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <select class="form-select">
+                                    <option value="not1">Hazır Not-1</option>
+                                    <option value="not2">Hazır Not-2</option>
+                                    <option value="not3">Hazır Not-3</option>
+                                </select>
+                                <span class="input-group-text bg-light text-dark">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <textarea class="form-control" asp-for="entity.Description" rows="5" placeholder="Not Giriniz-Zorunlu"></textarea>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <button type="button" class="btn btn-sm btn-dark" data-bs-dismiss="modal">Notu Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-danger">Evet</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/dealerpaymentrequest/edit.js"></script>
+    }

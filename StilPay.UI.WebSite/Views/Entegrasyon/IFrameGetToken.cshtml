@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "iFrame Token Alma";
+}
+
+
+<div id="iframe-kullanimi">
+    <h2 class="text-center">iFrame - Token Alma</h2>
+    <p>StilPay Nakit Ödeme ve Banka Transfer hizmeti ile StilPay platformuna kabul edilen ödemelerin üye işyerine bildirimini sağlayan temel web hizmetleridir . Üye işyeri kendisine ait ödemeler ile ilgili tüm bilgilendirmeleri bu hizmetler üzerinden alır. Hizmetlerin bildirim yapacağı söz konusu URL entegrasyon sürecinde üye iş yeri tarafından StilPay'e bildirilir. </p>
+    <p>Üye İşyeri ayarlar menüsünden kendisine özel Servis-ID ve Gizli-Anahtar ile işlemleri gerçekleştirir. iFrame çağrımına gerekmekte olan <strong>frame_id</strong> değerini, Api-Url'e Servis-ID, MD5 ile şifrelenmiş Gizli Anahtarı ve Data <small>(İşlem-ID, Ödeme-Tutarı)</small> değerlerini parametre geçerek post eder ve response olarak alır. Mevcut transaction değeri ile 50sn içinde frame çağrımını yapılmalıdır.</p>
+    <div class="alert alert-secondary">
+
+        <h5>Canlı Ortam URL Bilgileri</h5>
+        <div class="url-content">
+            <h6>&gt; Api URL (POST)</h6>
+            &nbsp;&nbsp;&nbsp;&nbsp;https://servis.stilpay.com/api/Transfer/frame
+        </div>
+
+        <br />
+
+        <h5>Test Ortam URL Bilgileri</h5>
+        <div class="url-content">
+            <h6>&gt; Api URL (POST)</h6>
+            &nbsp;&nbsp;&nbsp;&nbsp;http://stilpaytest.stilpay.com/api/Transfer/frame
+        </div>
+
+    </div>
+    <div class="alert alert-secondary">
+        <img src="/integration/img/postman-iframe-get-token.png" />
+    </div>
+    <pre><code>
+    <b>REQUEST:</b>
+        {
+            "service_id": "3748", // Size Bildirilen Sevice ID
+            "ciphered": "8989cf60419cf692190e5a814fb6c6f4", // Size Bildirilen MD5 ile Şifrelenmiş Ciphered(Gizli Anahtar)
+            "data" : {
+                "transaction_id": "123456782", // Unique Transaction ID
+                "amount": 1 // Tutar
+            }
+        }
+
+    <b>RESPONSE - OK(200):</b>
+        0mUZMWKczMZWIfYH7IlCcUU%2fZ%2bOzJkI7WYi2pWbHsO5CnXwljhP3mlioL8g6y6auLt1V7Jh5wK65rQ4MaTbDU1IMPjoIciCrfccYyQZmvh3%2bGDwRe59qRzE1pvlDpHfs2CUCtAegcPyxnGmR8Y6j9H1Ozcuvv7JtYsNPZSij0CSq%2fVgrBYWsvw%3d%3d
+    </code></pre>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-secondary text-white">
+                <th>Parametre</th>
+                <th>Tip</th>
+                <th>Açıklama</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>service_id</td>
+                <td>String - Zorunlu - Uzunluk(4)</td>
+                <td>Üye İşyeri Servis ID</td>
+            </tr>
+            <tr>
+                <td>ciphered</td>
+                <td>String - Zorunlu</td>
+                <td>MD5(Gizli Anahtar)</td>
+            </tr>
+            <tr>
+                <td>transaction_id</td>
+                <td>String - Zorunlu - Uzunluk(8)</td>
+                <td>İşlem ID</td>
+            </tr>
+            <tr>
+                <td>amount</td>
+                <td>Decimal - Zorunlu</td>
+                <td>Ödeme Tutarı</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

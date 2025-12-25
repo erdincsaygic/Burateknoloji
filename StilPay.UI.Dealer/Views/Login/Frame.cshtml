@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .inner-addon {
+        position: relative;
+    }
+
+        .inner-addon .faIcon {
+            position: absolute;
+            pointer-events: none;
+        }
+
+    .left-addon .faIcon {
+        z-index: 9999;
+        top: 20px;
+        left: 20px;
+    }
+
+    .right-addon .faIcon {
+        z-index: 9999;
+        top: 20px;
+        right: 20px;
+    }
+
+    .formtema {
+        padding: 15px 15px 15px 20px;
+        background: #f9f9f9;
+        box-shadow: 0px 1px 0px #d0d3e8;
+        margin-bottom: 20px;
+        border-bottom: 1px solid transparent;
+    }
+
+    .buttontema {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 5px;
+    }
+
+    .cmtbutton {
+        border: none;
+        color: #fff;
+        text-align: center;
+        padding: 15px 15px;
+        background-color: #2a92ff;
+        box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 22px;
+        overflow: hidden;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        z-index: 3;
+        transition: 0.5s;
+    }
+
+</style>
+
+<link rel="stylesheet" href="~/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="~/css/fontawesome/font-awesome.all.min.css" />
+
+<div class="p-4 mt-3 border border-1">
+    <div>
+        <form id="frmLogin" method="post" asp-controller="login" asp-action="frame"
+              data-ajax="true" data-ajax-method="POST"
+              data-ajax-begin="OnBeginLogin" data-ajax-failure="OnFailureLogin"
+              data-ajax-success="OnSuccessLogin">
+
+
+            <div class="inner-addon right-addon">
+                <i class="faIcon fa fa-user text-primary"></i>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control formtema" name="phone" placeholder="05*********" maxlength="11" />
+                    <label for="phone">Telefon</label>
+                </div>
+            </div>
+
+            <div class="inner-addon right-addon">
+                <i class="faIcon fa fa-lock text-primary"></i>
+                <div class="form-floating mt-3 mb-3">
+                    <input type="password" class="form-control formtema" name="password" placeholder="****" maxlength="25" />
+                    <label for="password">Şifre</label>
+                </div>
+            </div>
+
+    @*        <div class="input-group">
+                <img id="img-captcha" class="captcha" src="~/get-captcha-image" style="cursor: pointer;" />
+                <input type="text" class="form-control fs-5" name="captchacode" placeholder=" " maxlength="4" />
+            </div>*@
+
+            <div class="form-outline mt-2">
+                <button type="submit" class="cmtbutton buttontema" id="btnSubmitLogin">Giriş</button>
+            </div>
+        </form>
+
+        <form id="frmValidate" method="post" asp-controller="login" asp-action="validate"
+              data-ajax="true" data-ajax-method="POST" class="d-none"
+              data-ajax-begin="OnBeginValidate" data-ajax-failure="OnFailureValidate"
+              data-ajax-success="OnSuccessValidate">
+
+
+            <div class="card w-100 border-1 border-custom p-2">
+                <p class="text-custom text-center fs-1 fw-bold p-0 m-0 ">
+                    <span id="idMinute">02</span>&nbsp;:&nbsp;<span id="idSecond">00</span>
+                    <span id="idTime" class="d-none">120</span>
+                </p>
+            </div>
+
+            <div class="inner-addon right-addon">
+                <i class="faIcon fa fa-message text-primary"></i>
+                <div class="form-floating mt-3">
+                    <input type="text" class="form-control" name="confirmcode" placeholder="******" maxlength="6" />
+                    <label for="confirmcode">Doğrulama Kodu</label>
+                </div>
+            </div>
+
+            <div class="form-outline mt-3">
+                <button type="submit" class="btn btn-primary px-5 float-end" id="btnSubmitValidate">Doğrula</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="toast-container position-relative bottom-0 start-50 mt-5 translate-middle-x">
+        <div class="toast align-items-center text-info bg-transparent border-0" style="width:auto; box-shadow:none !important;" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+            <div class="toast-body mt-2" id="toastBody"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+<script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="~/js/bootstrap/bootstrap-bundle.js"></script>
+<script type="text/javascript" src="~/js/fontawesome/font-awesome.all.min.js"></script>
+<script type="text/javascript" src="~/js/views/login/frame.js"></script>

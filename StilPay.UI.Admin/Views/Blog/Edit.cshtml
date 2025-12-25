@@ -1,0 +1,133 @@
+﻿@model EditViewModel<Blog>
+
+@{
+    ViewData["Title"] = "Blog";
+}
+
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Blog" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Blog
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="Blog" asp-action="Save" asp-antiforgery="true" id="frmDef" enctype="multipart/form-data"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Durum :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.StatusFlag">
+                                <option value="true">Aktif</option>
+                                <option value="false">Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Yayınlama Tarihi :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="date" asp-format="{0:yyyy-MM-dd}" asp-for="entity.BlogDate" class="form-control bg-white datepicker">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Sıra :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="number" class="form-control" asp-for="entity.OrderNr" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Başlık :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Title" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>İçerik :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <textarea type="text" class="form-control" asp-for="entity.Body"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Görsel :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="file" name="file" class="form-control" asp-for="entity.Image">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label">Alıntı Url :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="url" class="form-control" asp-for="entity.CitationUrl" maxlength="1000">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label">Blog Kategori :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IDBlogCategory">
+                                @for (int i = 0; i < Model.entity.BlogCategories.Count; i++)
+                                {
+                                    <option value="@Model.entity.BlogCategories[i].ID">@Model.entity.BlogCategories[i].Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/blog/edit.js"></script>
+    }

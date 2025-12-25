@@ -1,0 +1,227 @@
+﻿@model MainModel
+
+@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/timeline/timeline.css" rel="stylesheet" />
+}
+
+<div class="row mt-2">
+
+    <div class="col-lg-5">
+        <div class="card border bg-white">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="alert alert-primary text-center py-5">
+                            <h5><b>@Model.Dealer.Substring(0,1)</b></h5>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <small><b>@Model.Dealer</b></small>
+                        <br />
+                        <small><b>Son Giriş :&nbsp;&nbsp;</b>@Model.LoginDate</small>
+                        <br />
+                        <small><b>IP Adresi :&nbsp;&nbsp;</b>@Model.LoginIP</small>
+                        <br />
+                        <small>Hoşgeldiniz..</small>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mt-3 mb-0">
+                    <div class="col-4">          
+                        <small class="text-custom"><b>Toplam TRY</b></small>
+                        <br />
+                        <small class="text-custom"><b>@(string.Concat(Model.TotalBalance.ToString("n2"), " TRY"))</b></small>                      
+                    </div>
+                    <div class="col-4">
+
+                        <small class="text-success"><b>Kullanılabilir TRY</b></small>
+                        <br />
+                        <small class="text-success"><b>@(string.Concat(Model.UsingBalance.ToString("n2"), " TRY"))</b></small>
+
+                    </div>
+                    <div class="col-4">
+                        <small class="text-dark"><b>Blokeli TRY</b></small>
+                        <br />
+                        <small class="text-black"><b>@(string.Concat(Model.BlockedBalance.ToString("n2"), " TRY"))</b></small>
+                    </div>
+
+                    @foreach (var item in Model.CompanyCurrencies)
+                    {
+                        <hr />
+
+                        <div class="col-4">
+                            <small class="text-custom"><b>@string.Concat("Toplam ", item.CurrencyName)</b></small>
+                            <br />
+                            @{
+                                var total = item.Balance + item.BlockedBalance;
+                            }
+                            <small class="text-custom"><b>@(string.Concat(total.ToString("n2"), " ", item.CurrencyCode))</b></small>
+
+                        </div>
+                        <div class="col-4">
+                            <small class="text-success"><b>@string.Concat("Kullanılabilir ", item.CurrencyName)</b></small>
+                            <br />
+                            <small class="text-success"><b>@(string.Concat(item.Balance.ToString("n2"), " ", item.CurrencyCode))</b></small>
+
+                        </div>
+                        <div class="col-4">
+                            <small class="text-dark"><b>@string.Concat("Blokeli ", item.CurrencyName) </b></small>
+                            <br />
+                            <small class="text-black"><b>@(string.Concat(item.BlockedBalance.ToString("n2"), " ", item.CurrencyCode))</b></small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-dark fw-bold p-3">
+                <i class="fa fa-star"></i>&nbsp;&nbsp;<small>Sık Kullanılanlar</small>
+            </div>
+            <div class="card-body p-3">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a class="text-decoration-none" asp-controller="WithdrawalRequest" asp-action="Edit"><i class="fa fa-star"></i>&nbsp;&nbsp;<small>Nakit Çekim Talebi</small></a>
+                    </div>
+                    <hr />
+                    <div class="col-lg-12">
+                        <a class="text-decoration-none" asp-controller="Block" asp-action="Index"><i class="fa fa-star"></i>&nbsp;&nbsp;<small>Blokeler</small></a>
+                    </div>
+                    <hr />
+                    <div class="col-lg-12">
+                        <a class="text-decoration-none" asp-controller="AccountTransaction" asp-action="Index"><i class="fa fa-star"></i>&nbsp;&nbsp;<small>Hesap Hareketlerim</small></a>
+                    </div>
+                    <hr />
+                    <div class="col-lg-12">
+                        <a class="text-decoration-none" asp-controller="PaymentRequest" asp-action="Edit"><i class="fa fa-star"></i>&nbsp;&nbsp;<small>Bakiye Yükleme</small></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-dark fw-bold">
+                <i class="fa fa-credit-card"></i>&nbsp;&nbsp;<small>Bekleyen Ödemeler</small>
+            </div>
+            <div class="card-body table-responsive p-2">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-white text-custom">
+                            <th class="col-2 text-center">Tarih</th>
+                            <th class="col-6 text-center">Üye Adı</th>
+                            <th class="col-2 text-center">Üye Telefon</th>
+                            <th class="col-2 text-end">Tutar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pn in Model.PaymentNotifications)
+                        {
+                            <tr>
+                                <td class="col-2 text-center">@pn.ActionDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                <td class="col-6 text-center">@pn.Member</td>
+                                <td class="col-2 text-center">@pn.Phone</td>
+                                <td class="col-2 text-end">@pn.Amount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-lg-6">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-dark fw-bold">
+                <i class="fa fa-question"></i>&nbsp;&nbsp;<small>Hızlı Destek Talebi</small>
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="Support" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="entity.Name"><span style="color:red">* </span>İşyeriniz :</label>
+                            <input type="text" class="form-control" asp-for="entity.Name" readonly="readonly" />
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" asp-for="entity.Phone"><span style="color:red">* </span>Telefonunuz :</label>
+                            <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="text" class="form-label" asp-for="entity.Question"><span style="color:red">* </span>Mesajınız :</label>
+                            <textarea type="text" class="form-control" asp-for="entity.Question" rows="3" maxlength="250"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-dark fw-bold">
+                <i class="fa fa-bullhorn"></i>&nbsp;&nbsp;<small>Duyurular</small>
+            </div>
+            <div class="card-body">
+                <!-- Section: Timeline -->
+                <section class="p-2" style="height:500px; overflow-y:auto;">
+                    <ul class="timeline">
+                        @foreach (var item in Model.Announcements)
+                        {
+                            <li class="timeline-item mb-2">
+                                <h6 class="fw-bold text-custom">@item.Title</h6>
+                                <p class="text-muted small">
+                                    @item.Body
+                                </p>
+                            </li>
+                        }
+                    </ul>
+                </section>
+                <!-- Section: Timeline -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section js {
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/select2/select2.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-jquery.js"></script>
+    <script type="text/javascript" src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script type="text/javascript" src="~/js/views/main/index.js"></script>
+    }

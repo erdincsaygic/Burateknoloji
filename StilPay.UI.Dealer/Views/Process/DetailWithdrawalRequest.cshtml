@@ -1,0 +1,109 @@
+﻿@model CompanyWithdrawalRequest
+
+@{
+    ViewData["Title"] = "Çekim Talebi Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Çekim Talebi Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Banka :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Bank" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">IBAN :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="IBAN" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Hesap Sahibi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Title" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Talep Edilen Tutar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Ücreti :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="CostTotal" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tipi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="IsEFT" value="@(Model.IsEFT ? "HAVALE/EFT" : "FAST")" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Durumu :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control fw-bold @(Model.Status == 2 ? "text-success" : Model.Status == 1 ? "text-info" : "text-danger")" asp-for="Status" value=@(Model.Status == 2 ? "ONAYLANDI" : Model.Status == 1 ? "BEKLİYOR" : "İPTAL EDİLDİ") readonly="readonly" />
+                    </div>
+                </div>
+                @if (Model.Status == 3)
+                {
+                    <div class="row border-bottom">
+                        <div class="col-lg-3">
+                            <label class="form-label">İptal Nedeni :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control fw-bold text-danger" value="@Model.Description" readonly="readonly" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

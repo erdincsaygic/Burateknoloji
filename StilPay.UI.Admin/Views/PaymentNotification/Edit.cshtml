@@ -1,0 +1,358 @@
+﻿@model PaymentNotificationEditViewModel
+
+@{
+    ViewData["Title"] = "Ödeme Bildirimi Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="PaymentNotification" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Ödeme Bildirimi Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye İşyeri :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Company" readonly="readonly" />
+                    </div>
+                </div>
+
+@*                 <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye İşyeri Telefon :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CompanyPhone" readonly="readonly" />
+                    </div>
+                </div> *@
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Member" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye IP Adresi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.MemberIPAddress" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Port :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.MemberPort" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Telefon :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Banka :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Bank" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderici Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.SenderName" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Müşteri Adı Soyadı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CustomerName" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Müşteri Email Adresi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CustomerEmail" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Müşteri Telefon Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CustomerPhone" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Iban :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Iban" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ActionDate" asp-format="{0:dd.MM.yyyy}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Saati :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ActionTime" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Gönderim Tutarı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Tipi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.MemberType" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Fraud Kontrolüne Düştü Mü ? :</span> </label>
+                    </div>
+                    <div class="col-lg-9">
+                        @if (Model.entity.IsCaughtInFraudControl)
+                        {
+                            <input type="text" class="form-control" value="EVET" readonly="readonly" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" value="HAYIR" readonly="readonly" />
+                        }
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label"><span class="text-danger fw-bold">Fraud Kontrol :</span> </label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.FraudControlDescription" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row mt-4" style="justify-content: space-between;">
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#mdlCancel">İptal Et</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            @*<button type="button" class="btn btn-warning">Eşleştir</button>*@
+                            <a class="btn btn-success" href="@Url.Action("PairingProcess", "DealerTransferPayPool", new { pyID = Model.entity.ID })" target="_blank">Eşleştir</a>
+
+                        </div>
+                    </div>                        
+@*                    
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mdlConfirm">Onayla</button>
+                        </div>
+                    </div>*@
+                </div>
+
+            </div>
+
+            <div class="card-footer">
+
+                <form asp-controller="Member" asp-action="SetMemberType" asp-antiforgery="true" id="frmMemberType"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccessMemberType" data-ajax-complete="onComplete">
+
+                    <input type="hidden" name="ID" value="@Model.entity.IDMember" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Üye Tipi :</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-select" name="IDMemberType" asp-items="@(new SelectList(Model.MemberTypes,"ID","Name"))">
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal Onay -->
+@*<div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">Onaylamak İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="PaymentNotification" asp-action="SetStatus" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.Status" value="2" />
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-success">Evet</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+*@
+
+<!-- Modal İptal-->
+<div class="modal fade" id="mdlCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100">İptal Etmek İstiyor Musunuz?</h5>
+                <br />
+                <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+            </div>
+
+            <form asp-controller="PaymentNotification" asp-action="SetStatus" asp-antiforgery="true" id="frmDef"
+                  data-ajax="true" data-ajax-method="POST"
+                  data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                  data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                <input type="hidden" asp-for="entity.ID" />
+                <input type="hidden" asp-for="entity.Status" value="3" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <select class="form-select">
+                                    <option value="not1">Hazır Not-1</option>
+                                    <option value="not2">Hazır Not-2</option>
+                                    <option value="not3">Hazır Not-3</option>
+                                </select>
+                                <span class="input-group-text bg-light text-dark">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <textarea class="form-control" asp-for="entity.Description" rows="5" placeholder="Not Giriniz-Zorunlu"></textarea>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <button type="button" class="btn btn-sm btn-dark" data-bs-dismiss="modal">Notu Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="submit" class="btn btn-danger">Evet</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    @if (Model.entity.Status != 5)
+    {
+        <script src="~/js/views/paymentnotification/edit.js"></script>
+    }
+    else
+    {
+        <script src="~/js/views/dealertransferpaypool/edit.js"></script>
+    }
+    }

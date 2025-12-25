@@ -1,0 +1,128 @@
+﻿@model EditViewModel<MemberMoneyTransferRequest>
+
+@{
+    ViewData["Title"] = "Bireysel Üye Para Transfer Detayı";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">Bireysel Üye Para Transfer Detayı</div>
+            <div class="card-body">
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Tarihi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CDate" asp-format="{0:dd.MM.yyyy HH:mm:ss}" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Numarası :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.TransactionNr" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Member" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Üye Telefon :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Talep Edilen Tutar :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Amount" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Ücreti :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.CostTotal" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Alıcı Telefon :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ReceiverPhone" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Alıcı Üye Adı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.ReceiverName" value="@(Model.entity.ReceiverName??">>Alıcı Üye Sistemde Kayıtlı Değil<<")" readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">İşlem Durumu :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        @if (Model.entity.Status == 2)
+                        {
+                            <input type="text" class="form-control fw-bold text-success" asp-for="entity.Status" value="ONAYLANDI" readonly="readonly" />
+                        }
+                        else if (Model.entity.Status == 3)
+                        {
+                            <input type="text" class="form-control fw-bold text-danger" asp-for="entity.Status" value="İPTAL EDİLDİ" readonly="readonly" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control fw-bold text-info" asp-for="entity.Status" value="BEKLİYOR" readonly="readonly" />
+                        }
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Açıklama :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" asp-for="entity.Description" rows="3" readonly="readonly"></textarea>
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    <div class="col-lg-3">
+                        <label class="form-label">Yetkili :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Modifier" readonly="readonly" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

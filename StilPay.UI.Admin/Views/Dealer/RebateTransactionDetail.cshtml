@@ -1,0 +1,175 @@
+﻿@{
+}
+
+@section css{
+}
+
+    <div class="card mt-2 border-1 border-custom">
+        <div class="card-header bg-custom text-white">Üye İşyeri İade Talep Detayı | Üye İşyeri Bilgileri</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Üye İşyeri Adı</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">Vatan Game</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Toplam Ödeme Tutarı</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">752 TL</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Sipariş Tarihi</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">04.09.2021 23:12</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Onay Tarihi</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">04.09.2021 23:12</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Sipariş Numarası</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">VATAN2133SDFSED24234</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Ürün/Hizmet Bilgisi</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">-</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Ödeme Şekli</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">HAVALE/EFT</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Ödeme Durumu</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">BAŞARILI</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap">
+                    <div style="width:10rem;">Bildirim Durumu</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold"><span class="text-danger">İPTAL EDİLDİ</span> - (İŞLEM NOTU GELECEK)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-2 border-1 border-custom">
+        <div class="card-header bg-custom text-white">Üye İşyeri İade Talep Detayı | Müşteri Bilgileri</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Müşteri Ad – Soyad</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">ALTAN AKDEMİR</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Müşteri Telefonu</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">0535555555</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Müşteri Email</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">altan@gmail.com</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">IBAN</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">212121212121212</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Müşteri Adres</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">-</div>
+                </div>
+                <hr />
+                <div class="col-lg-12 d-flex flex-row flex-nowrap mb-1">
+                    <div style="width:10rem;">Müşteri İşlem IP</div>
+                    <div style="width:1rem;">:</div>
+                    <div class="fw-bold">12.192.168.1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Onay -->
+    <div class="modal fade" id="mdlConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">Onaylamak İstiyor Musunuz?</h5>
+                    <br />
+                    <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="button" class="btn btn-custom">Evet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal İptal-->
+    <div class="modal fade" id="mdlCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                    <h5 class="modal-title text-center w-100">İptal Etmek İstiyor Musunuz?</h5>
+                    <br />
+                    <span class="modal-title text-center w-100">Dikkat İşlem Geri Alınamaz.</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <select class="form-select">
+                                    <option value="not1">Hazır Not-1</option>
+                                    <option value="not2">Hazır Not-2</option>
+                                    <option value="not3">Hazır Not-3</option>
+                                </select>
+                                <span class="input-group-text bg-light text-dark">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <textarea class="form-control" rows="5" placeholder="Not Giriniz-Zorunlu"></textarea>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <button type="button" class="btn btn-sm btn-dark" data-bs-dismiss="modal">Notu Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hayır</button>
+                    <button type="button" class="btn btn-custom">Evet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section js{
+
+    <script>
+        $(document).ready(function() {
+        });
+
+
+    </script>
+}

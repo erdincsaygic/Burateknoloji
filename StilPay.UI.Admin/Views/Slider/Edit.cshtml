@@ -1,0 +1,147 @@
+﻿@model EditViewModel<Slider>
+
+@{
+    ViewData["Title"] = "Slider";
+}
+
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Slider" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Slider
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="Slider" asp-action="Save" asp-antiforgery="true" id="frmDef" enctype="multipart/form-data"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+                    <input type="hidden" asp-for="entity.ImageUrl" />
+
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Adı :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Name">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Durum :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IsActive">
+                                <option value="true">Aktif</option>
+                                <option value="false">Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Sıra :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="number" class="form-control" asp-for="entity.OrderNr">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Başlık :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" asp-for="entity.Header">
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>İçerik :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <textarea type="text" class="form-control" asp-for="entity.Content"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label" ><span style="color:red">* </span>İçerik Altında Buton Olsun Mu ? :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.ShowButton" id="showButtonSelect">
+                                <option value="false">Hayır</option>
+                                <option value="true">Evet</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="buttonDetails" style="display:none;">
+                        <div class="row border-bottom mt-2">
+                            <div class="col-lg-3">
+                                <label class="form-label"><span style="color:red">* </span>Buton İsmi :</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <textarea type="text" class="form-control" asp-for="entity.ButtonName"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom mt-2">
+                            <div class="col-lg-3">
+                                <label class="form-label"><span style="color:red">* </span>Butona Tıklandığında Yönlendirilecek Url :</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <textarea type="text" class="form-control" asp-for="entity.ButtonRedirectUrl"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Görsel :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input type="file" id="imageInput" name="file" class="form-control" asp-for="entity.ImageUrl">
+                            <input type="hidden" id="existingImageUrl" value="@Model.entity.ImageUrl" />
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display:none; margin-top: 50px; max-width: 100%; height: auto;" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js {
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/views/slider/edit.js"></script>
+}

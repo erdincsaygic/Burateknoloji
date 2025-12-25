@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "_LayoutIntegration";
+    ViewData["Title"] = "Callback Response Bilgileri";
+}
+
+
+<div id="iframe-kullanimi">
+    <h2 class="text-center">Dönen Callback Response Bilgileri </h2>
+    <p>Bayi panelinde 'Api' menüsünde yer alan 'Entegrasyon Bilgilerim Sayfasından' response bilgilerinin hangi url adresinlerine post edileceğini görebilirsiniz.</p>
+
+    <pre><code>
+    <b>Havale/EFT Ödeme Bildirimi Response:</b>
+    {
+        transaction:{          
+            "status_code":"OK" >= İşlem Başarılı || "ERROR" => İşlem Başarısız,
+            "status_type":0 // Callback BilgisininHAVALE/EFT Ödeme Bildirimine Ait Olduğunu Belirten Status,
+            "service_id":"Üye İşyeri Servis ID",
+            "ciphered":"Size Bildirilen MD5 ile Şifrelenmiş Ciphered(Gizli Anahtar)",
+            "data":{
+                "transaction_id":"İşlemin Sizdeki ID si",
+                "amount": Tutar (Decimal Formatında),
+                "sp_id":"İşlemin STILPAY sistemindeki ID si",
+            },
+            "user_entered_data" (Ödeme Bildirimi Yapan Kullanıcının IFrame Üzerinden Girdiği Bilgiler):{
+                "member":"STILPAY Tarafındaki Üye Kaydı",
+                "sender_name":"Gönderici Ad Soyad",
+                "action_date":"2023-09-01T00:00:00", // İşlem Tarihi
+                "action_time":"14:24", // İşlem Saati
+                "amount":Tutar (Decimal Formatında),
+                "user_ip":"Ödeme Bildirimi Yapan Kullanıcının IP Adresi",
+                "user_port":"Ödeme Bildirimi Yapan Kullanıcının Port Bilgisi"
+            }
+        }
+    }
+    </code></pre>
+
+    <pre><code>
+    <b>Yurt Dışı Kredi Kartı ve Yurtiçi Kredi Kartı Ödeme Bildirimi Response:</b>
+    {
+        transaction:{
+           "status_code":"OK" >= İşlem Başarılı || "ERROR" => İşlem Başarısız,
+           "status_type":1 // Callback Bilgisinin Kredi Kartı Ödeme Bildirimine Ait Olduğunu Belirten Status
+           "service_id":"Üye İşyeri Servis ID",
+           "ciphered":"Size Bildirilen MD5 ile Şifrelenmiş Ciphered(Gizli Anahtar)",
+           "data":{
+              "transaction_id":"İşlemin Sizdeki ID si",
+              "amount": Tutar (Decimal Formatında),
+              "sp_id":"İşlemin STILPAY sistemindeki ID si",
+              "message": İşlem Başarılı Mesajı || Hata Mesajı
+           },
+           "user_entered_data" (Ödeme Bildirimi Yapan Kullanıcının IFrame Üzerinden Girdiği Bilgiler) :{ 
+              "member":"STILPAY Tarafındaki Üye Kaydı",
+              "sender_name":"Kredi Kartı Üzerindeki Ad Soyad",
+              "action_date":"2023-09-01T00:00:00", // İşlem Tarihi
+              "action_time":"14:24", // İşlem Saati
+              "creditCard":"000********0000", // Kredi Kartı İlk 4 ve Son 4 Hanesi
+              "amount":Tutar (Decimal Formatında),
+              "user_ip":"Ödeme Bildirimi Yapan Kullanıcının IP Adresi",
+              "user_port":"Ödeme Bildirimi Yapan Kullanıcının Port Bilgisi"
+           }
+        }
+    }
+    </code></pre>
+
+    <pre><code>
+    <b>Nakit Çekim Talebi Response:</b>
+    {
+        withdrawal:{
+            "status_code":"OK" >= İşlem Başarılı || "ERROR" => İşlem Başarısız,
+            "status_type":2, // Callback Bilgisinin Nakit Çekim Talebine Ait Olduğunu Belirten Status,
+            "service_id":"Üye İşyeri Servis ID",
+            "ciphered":"Size Bildirilen MD5 ile Şifrelenmiş Ciphered(Gizli Anahtar)",
+            "data":{
+            "transaction_id":"İşlemin Sizdeki ID si",
+            "amount":Tutar (Decimal Formatında),
+            "message": İşlem Başarılı Mesajı || Hata Mesajı
+            }
+        }
+    }
+    </code></pre>
+</div>

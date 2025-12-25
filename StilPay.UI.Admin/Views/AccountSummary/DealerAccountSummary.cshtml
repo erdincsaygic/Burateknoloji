@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Üye Bazlı İşyeri Hesap Özeti";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <select class="form-select select2" id="slcCompanies"></select>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">
+                                    Başlangıç Saati
+                                </label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" id="dtStartDateTime" value="00:00:00" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">
+                                    Bitiş Saati
+                                </label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" id="dtEndDateTime" value="23:59:59" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <div class="col-lg-1 mt-lg-0 mt-2">
+                            <div class="d-grid" style="margin-right: 10px;">
+                                <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 mt-lg-0 mt-2">
+                            <div class="d-grid">
+                                <button class="btn btn-custom" id="btnInvoice"><i class="fa fa-file-invoice"></i>&nbsp;&nbsp;&nbsp;Faturalandır</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="partialViewContainer">
+    @Html.Partial("DealerAccountSummaryPartialView")
+</div>
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/accountsummary/dealeraccountsummary.js"></script> 
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+}

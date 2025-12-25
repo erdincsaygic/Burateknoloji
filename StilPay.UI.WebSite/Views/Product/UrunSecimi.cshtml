@@ -1,0 +1,211 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>StilPay | Ödeme Bildirimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/areas/panel/css/views/paymentnotification/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/ui/assets/img/fav.png" type="image/x-icon">
+</head>
+<style>
+    .hovers {
+        cursor: pointer;
+    }
+
+</style>
+<body>
+
+    <div class="parrot">
+        <div class="mainbox">
+            <div class="allows">
+                <div class="progress" id="progress"></div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-1"></i></div>
+                    <div class="baba">Giriş Yap</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-2"></i></div>
+                    <div class="baba">Mağaza</div>
+                </div>
+                <div class="ana">
+                    <div class="circle active"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ürün Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-3"></i></div>
+                    <div class="baba">Ödeme Yönetimi Seçimi</div>
+                </div>
+                <div class="ana">
+                    <div class="circle"><i class="fa-regular fa-4"></i></div>
+                    <div class="baba">Ödeme</div>
+                </div>
+            </div>
+
+            <div class="deneme">
+                <!---------------STEP 1 START------------------>
+                <div class="slidercont" id="step1">
+                    <div class="arrive">
+                        <p class="bold">Ürün Seçin</p>
+                    </div>
+
+
+                    <div class="boxbank">
+                        <div class="menu2step" style="width:unset; margin-top:2rem; margin-bottom:2rem;">
+                            <h3 class="" style="text-align:center !important;">Seçmek İstediğiniz Ürüne Tıklayarak Sonraki Adıma Geçebilirsiniz</h3>
+                        </div>
+                    </div>
+
+                    <div class="boxbank" style="flex-flow: wrap; row-gap:20px;">
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="220,79">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923364869570620/2ff11c6b6e00712d65c19f2efdfe9551.png?ex=66a43d08&is=66a2eb88&hm=af7640ff3c7d23f41ddd924852ace2db7e8df383cfa81ce709b28d778d0ef6be&=&format=webp&quality=lossless" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    PUBG MOBILE ELITE PASS - Satın Almak İçin Tıkla <br />
+
+                                </div>
+                                <div class="amount">
+                                    220,79 TL
+                                </div>
+                            </div>
+                        </a>
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="132,00">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923365192540180/P_ROYALE_PLUS.png?ex=66a43d08&is=66a2eb88&hm=fdfaa13a084f0943b43e6c99d12687d551bc97eb49ce0b99f908f21dd62a87c2&=&format=webp&quality=lossless" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    PUBG MOBILE ROYAL PASS - Satın Almak İçin Tıkla
+                                </div>
+                                <div class="amount">
+                                    132,00 TL
+                                </div>
+                            </div>
+                        </a>
+
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="147,19">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923364529844304/fb3c14a09ec73d699f1fa796e73e7de8.png?ex=66a43d08&is=66a2eb88&hm=ebd58798f535daf6bbabb05d2a1cc7de50d4103d6b589731a95ef4991997b63f&=&format=webp&quality=lossless" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    660 PUBG MOBILE UNKNOW CASH - Satın Almak İçin Tıkla
+                                </div>
+                                <div class="amount">
+                                    147,19 TL
+                                </div>
+                            </div>
+                        </a>
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="574,00">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923430946652160/4bee6aed5927410773b1acc575376ddd.png?ex=66a43d18&is=66a2eb98&hm=0112d479e9f8c5180ccd7cf2bd7d7d68c59c6fa8b134955309b12d95eb90b79c&=&format=webp&quality=lossless&width=515&height=676" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    VALORANT 5500 VP - Satın Almak İçin Tıkla
+                                </div>
+                                <div class="amount">
+                                    574,00 TL
+                                </div>
+                            </div>
+                        </a>
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="205,00">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923431596761219/960c6a02910bcaeb205fd36866c39345.png?ex=66a43d18&is=66a2eb98&hm=6cad470956afbfdb5eeba053e41c17023e78c3862d571691d573a973e69e5eb9&=&format=webp&quality=lossless&width=515&height=676" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    VALORANT 1850 VP - Satın Almak İçin Tıkla
+                                </div>
+                                <div class="amount">
+                                    205,00 TL
+                                </div>
+                            </div>
+                        </a>
+
+                        <a asp-controller="Product" asp-action="ChoosingPaymentMethod" asp-route-amount="13,94">
+                            <div class="boxes hovers">
+                                <div class="text2">
+                                    <img src="https://media.discordapp.net/attachments/1088931955980124224/1131923432024571934/e65728692db064028062f581fd194f80.png?ex=66a43d18&is=66a2eb98&hm=3c72274c0fe320a9ba4e8bf84a9f15835e0e28b07e19081386602fde82f442bb&=&format=webp&quality=lossless&width=515&height=676" alt="bank" style="width:10.5rem;height:7.5rem">
+                                </div>
+                                <div class="text2">
+                                    VALORANT 115 VP - Satın Almak İçin Tıkla
+                                </div>
+                                <div class="amount">
+                                    13,94 TL
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="box">
+                        <img src="~/areas/panel/img/paymentnotification/3D.png" alt="">
+                        <div class="line-2"></div>
+                        <hr>
+                        <img src="~/areas/panel/img/paymentnotification/366-3669285_secure-ssl-encryption-logo-png-transparent-png.png" alt="">
+                        <div class="line-2"></div>
+                        <img src="~/areas/panel/img/paymentnotification/Stilpay1.png" alt="">
+                    </div>
+                </div>
+                <!---------------STEP 1 END------------------>
+            </div>
+
+            <div class="boxfooter">
+                <div class="boxlast">
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/4.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/13.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/8.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/10.png" alt="">
+                    </div>
+
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/9.png" alt="">
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/7.png" alt="">
+                    </div>
+                    <div class="trademark">
+
+                    </div>
+                    <div class="trademark">
+                        <img src="~/areas/panel/img/paymentnotification/14.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/animation.js"></script>
+    <script src="~/areas/panel/js/views/paymentnotification/app.js"></script>
+
+    <script>
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+﻿@model EditViewModel<MemberMoneyTransferRequest>
+
+@{
+    ViewData["Title"] = "Para Transferi";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-3 offset-lg-3">
+        <div class="card border border-success text-success">
+            <div class="card-header bg-white text-center fw-bold">
+                Çekilebilir Türk Lira(₺) Bakiyesi
+            </div>
+            <div class="card-body fs-5 text-center">
+                <i class="fa fa-circle-check"></i><span> 111,03 TRY</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 mt-lg-0 mt-2">
+        <div class="card border-1 border-custom text-custom">
+            <div class="card-header bg-white text-center fw-bold">
+                Toplam Türk Lira(₺) Bakiyesi
+            </div>
+            <div class="card-body fs-5 text-center">
+                <i class="fa fa-circle-info"></i><span> 111,03 TRY</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+        <div class="card border bg-white">
+            <div class="card-body">
+
+                <form asp-controller="MoneyTransferRequest" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label" asp-for="entity.ReceiverPhone"><span style="color:red">* </span>Alıcı Telefon :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-text">+90</span>
+                                <input type="text" class="form-control" asp-for="entity.ReceiverPhone" maxlength="11">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label for="text" class="form-label" asp-for="entity.Amount"><span style="color:red">* </span>Talep Edilen Tutar :</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-end" asp-for="entity.Amount" maxlength="10">
+                                <span class="input-group-text"><i class="fa fa-plus"></i></span>
+                                <span class="input-group-text">TRY</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-center" value="6,00 TRY" readonly>
+                                <span class="input-group-text">&nbsp;İşlem Ücreti&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-custom" id="btnSubmit"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Onay -->
+<div class="modal fade" id="mdlDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body bg-light p-0 m-0">
+
+                <div class="card border-0 bg-light">
+                    <div class="card-header text-white bg-secondary mt-3 mx-4 text-center fw-bold">
+                        Para Transfer Formu
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Alıcı Telefon :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailReceiverPhone" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="form-label">Talep Edilen Tutar :</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="txtDetailAmount" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <h6 class="text-center text-secondary fw-bold">Bilgileri Onaylıyor Musunuz ?</h6>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-4 offset-lg-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-dark btn-block" id="btnOK">Tamam</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mt-lg-0 mt-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-secondary btn-block" data-bs-dismiss="modal">Vazgeç</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/mask/imask.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/custom/numeric-format.js"></script>
+    <script type="text/javascript" src="~/areas/panel/js/views/moneytransferrequest/edit.js"></script>
+}

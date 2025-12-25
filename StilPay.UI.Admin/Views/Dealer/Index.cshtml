@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Üye İşyeri Başvuruları";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-11">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Dealer" asp-action="NewDealer"><i class="fa fa-plus"></i>&nbsp;&nbsp;Yeni</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Üye İşyerleri</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">Başvuru Tarihi</th>
+                            <th class="col-2 text-center">Adı Soyadı</th>
+                            <th class="col-2 text-center">Şirket Ünvanı</th>
+                            <th class="text-center">Telefon</th>
+                            <th class="col-2">Email</th>
+                            <th class="text-center">Vergi No</th>
+                            <th class="col-2">Vergi Dairesi</th>
+                            <th class="text-end">Aylık Ciro</th>
+                            <th class="text-center">Detay</th>
+                            <th class="d-none">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/dealer/index.js"></script>
+}

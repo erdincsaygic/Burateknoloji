@@ -1,0 +1,148 @@
+﻿@model EditViewModel<CompanyUser>
+
+@{
+    ViewData["Title"] = "Güvenlik Ayarları";
+}
+
+@*<div class="row mt-2">
+    <div class="col-lg-4 offset-lg-4">
+
+        <div class="card border border-light bg-white">
+            <div class="card-header bg-white text-center fw-bold">
+                Güvenlik Ayarları
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+
+                        <div class="card border border-light border-4">
+                            <div class="card-header text-center border-2">
+                                Google Authenticator
+                            </div>
+
+                            <div class="card-body mb-2">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Etkinleştir:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Etkin" data-off="Devre Dışı" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 mt-lg-0 mt-2">
+
+                        <div class="card border border-light border-4">
+                            <div class="card-header text-center border-2">
+                                Email Onay
+                            </div>
+
+                            <div class="card-body mb-2">
+                                <div class="d-flex flex-column align-items-center bg-white">
+                                    <label>Etkinleştir:</label>
+                                    <input type="checkbox" data-toggle="toggle" data-on="Etkin" data-off="Devre Dışı" data-onstyle="success" data-offstyle="secondary" data-height="25" data-width="100%" checked>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>*@
+
+<div class="row mt-2">
+    <div class="col-lg-4 offset-lg-4">
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Şifrenizi Güncelleyin
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="User" asp-action="ResetPassword" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccessReset" data-ajax-complete="onComplete">
+
+                    <div class="row" id="divConfirm">
+                        <div class="col-lg-12">
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-5">
+                                    <label class="form-label"><span style="color:red">* </span>Mevcut Şifreniz :</label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="password" class="form-control" id="Password" name="Password" maxlength="25">
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-5">
+                                    <label class="form-label"><span style="color:red">* </span>Yeni Şifre :</label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="password" class="form-control" id="NewPassword" name="NewPassword" maxlength="25">
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-5">
+                                    <label class="form-label"><span style="color:red">* </span>Yeni Şifre Tekrar :</label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" maxlength="25">
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-lg-4 offset-lg-8">
+                                    <div class="d-grid">
+                                        <button type="button" class="btn btn-custom" id="btnSendCode">Güncelle</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row d-none" id="divSubmit">
+                        <div class="col-lg-12">
+
+                            <div class="row border-bottom mt-2">
+                                <div class="col-lg-5">
+                                    <label class="form-label"><span style="color:red">* </span>Doğrulama Kodu :</label>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="text" class="form-control" id="ConfirmCode" name="ConfirmCode" maxlength="6">
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-lg-4 offset-lg-8">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom" id="btnSubmit">Doğrula</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/views/user/security.js"></script>
+    }

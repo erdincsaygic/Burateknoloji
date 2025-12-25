@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Yeni Sistem İyileştirmesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model EditViewModel<Todo>
+<div class="row mt-2">
+    <div class="col-lg-1 offset-lg-3">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Todo" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class=" col-lg-6 offset-lg-3">
+
+        <div class="card border-custom bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Sistem İyileştirme Bildirimi
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="Todo" asp-action="Save" asp-antiforgery="true" id="frmDef"
+                      data-ajax="true" data-ajax-method="POST"
+                      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+                      data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+                    <input type="hidden" asp-for="entity.ID" />
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Konu :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <textarea type="text" class="form-control" asp-for="entity.Title" >
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Bildirim İçeriği :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <textarea type="text" class="form-control" asp-for="entity.Body">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Öncelik Durumu :</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.PriorityType">
+                                <option value="1">Düşük Öncelik</option>
+                                <option value="2">Orta Öncelik</option>
+                                <option value="3">Yüksek Öncelik</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Tamamlandı Mı ?</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IsCompleted">
+                                <option value="true">Evet</option>
+                                <option value="false">Hayır</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mt-2">
+                        <div class="col-lg-3">
+                            <label class="form-label"><span style="color:red">* </span>Bildirim Cevabı:</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <textarea type="text" class="form-control" asp-for="entity.ResponseMessage">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-3 offset-lg-9">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom" id="btnSubmit"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp;Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js {
+    <script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/js/jquery/jquery-datepicker-tr.js"></script>
+    <script src="~/js/views/todo/edit.js"></script>
+}
+

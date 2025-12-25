@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Üye İşyeri Yurt Dışı Kredi Kartı Ödeme Hareketleri";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+    <link rel="stylesheet" href="~/css/jquery/jquery-ui.css" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-custom">
+            <div class="card-body table-responsive">
+                <div class="row">
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <select class="form-select" id="slcStatus">
+                            <option value="4">Tümü</option>
+                            <option value="2">Onaylandı</option>
+                            <option value="3">İptal Edildi</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <select class="form-select select2" id="slcCompanies"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center datepicker" readonly="readonly" id="dtStartDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 mt-lg-0 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white text-center bg-white datepicker" readonly="readonly" id="dtEndDate" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar-days"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-lg-1 offset-lg-8">
+                        <div class="d-grid">
+                            <button class="btn btn-dark" id="btnExcel"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;İndir</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 mt-lg-0 mt-2">
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-12">
+
+        <div class="card border-1 border-custom">
+            <div class="card-header bg-custom text-white">Üye İşyeri Yurt Dışı Kredi Kartı Ödeme Hareketleri</div>
+            <div class="card-body table-responsive">
+                <table id="Table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="bg-custom text-white">
+                            <th class="col-1 text-center">İşlem Tarihi</th>
+                            <th class="col-1 text-center">İşlem Numarası</th>
+                            <th class="col-1 text-center">Otomatik Mi ?</th>
+                            <th class="col-3 text-center">Üye İşyeri</th>
+                            <th class="col-1 text-center">Üye Adı</th>
+                            <th class="col-1 text-center">Kredi Kartı Numarası</th>
+                            <th class="col-1 text-center">Kart Tipi</th>
+                            <th class="col-1 text-center">Ödeme Kuruluşu</th>
+                            <th class="col-1 text-center">Para Birimi</th>
+                            <th class="col-1 text-center">Telefon</th>
+                            <th class="col-1 text-end">İşlem Tutarı</th>
+                            <th class="col-1 text-end">Komisyon Oranı</th>
+                            <th class="col-1 text-end">İşlem Ücreti</th>
+                            <th class="col-1 text-end">Net Toplam</th>
+                            <th class="col-1 text-end">StilPay Hakediş</th>
+                            <th class="col-1 text-end">Ö.K Oranı</th>
+                            <th class="col-1 text-center">Durum</th>
+                            <th class="col-1 text-center">Yetkili</th>
+                            <th class="col-1 text-center">Detay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section js {
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/jquery/jquery-ui.js"></script>
+    <script src="~/js/xlsx/xlsx.full.min.js"></script>
+    <script src="~/js/views/dealerforeigncreditcardtransaction/index.js"></script>
+}

@@ -1,0 +1,65 @@
+﻿@model EditViewModel<Member>
+
+@{
+    ViewData["Title"] = "Hesap Bilgilerim";
+}
+
+<div class="row mt-2">
+    <div class="col-lg-4 offset-lg-4">
+
+        <div class="card border bg-white">
+            <div class="card-header bg-white text-custom text-center fw-bold">
+                Hesap Bilgilerim
+            </div>
+            <div class="card-body">
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3">
+                        <label class="form-label">Telefon No :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Phone" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3">
+                        <label class="form-label">T.C. Kimlik :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.IdentityNr" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3">
+                        <label class="form-label">Ad Soyad :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Name" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3">
+                        <label class="form-label">Email Adresi :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.Email" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="row border-bottom mt-2">
+                    <div class="col-lg-3">
+                        <label class="form-label">Doğum Yılı :</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" asp-for="entity.BirthYear" readonly="readonly">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

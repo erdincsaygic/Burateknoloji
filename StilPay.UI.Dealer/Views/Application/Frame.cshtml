@@ -1,0 +1,179 @@
+﻿@model CompanyApplication
+
+@{
+    Layout = null;
+}
+<style>
+    .formtema {
+        padding: 15px 15px 15px 20px;
+        background: #f9f9f9;
+        box-shadow: 0px 1px 0px #d0d3e8;
+        margin-bottom: 20px;
+        border-bottom: 1px solid transparent;
+    }
+
+    .cmtbutton {
+        border: none;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+        padding: 15px 15px;
+        background-color: #2a92ff;
+        box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 22px;
+        overflow: hidden;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        z-index: 3;
+        transition: 0.5s;
+    }
+
+    .buttontema {
+        border-radius: 10px;
+        margin-top: 25px;
+    }
+</style>
+<link rel="stylesheet" href="~/ui/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/ui/assets/css/fontawesome.min.css">
+<link rel="stylesheet" href="~/ui/assets/css/style.css">
+<link rel="stylesheet" href="~/css/sweetalert/sweetalert2.min.css" />
+<link rel="stylesheet" href="~/css/alertifyjs/alertify.css" />
+<link rel="stylesheet" href="~/css/alertifyjs/alertify-default.css" />
+
+<form id="frmDef" method="post" asp-antiforgery="true" asp-controller="application" asp-action="save"
+      data-ajax="true" data-ajax-method="POST"
+      data-ajax-begin="onBegin" data-ajax-failure="onFailure"
+      data-ajax-success="onSuccessForm" data-ajax-complete="onComplete">
+@*     <div class="row">
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="Name" maxlength="50" placeholder="Ad Soyad">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="single-input country-code telnumb d-flex align-items-center">
+                <input class="formtema" type="number" autocomplate="false" asp-for="Phone" maxlength="11" placeholder="Telefon">
+            </div>
+        </div>
+    </div> *@
+    <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="Name" maxlength="50" placeholder="Ad Soyad">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="number" autocomplate="false" asp-for="Phone" maxlength="11" placeholder="Telefon">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="email" autocomplate="false" asp-for="Email" maxlength="50" placeholder="E-Mail">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="Website" maxlength="100" placeholder="Website Adresi">
+            </div>
+        </div>
+    </div>
+@*     <div class="row">
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="TaxNr" maxlength="11" placeholder="Şirket Vergi Numarası">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="TaxOffice" maxlength="50" placeholder="Şirket Vergi Dairesi">
+            </div>
+        </div>
+    </div> *@
+@*     <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="text" autocomplate="false" asp-for="Address" maxlength="100" placeholder="Şirket Adresi">
+            </div>
+        </div>
+    </div> *@
+@*     <div class="row">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <select asp-for="MonthlyGiro">
+                    <option data-display="Ortalama Aylık Ciro">Ortalama Aylık Ciro</option>
+                    <option value="1">1000 - 9999</option>
+                    <option value="2">10000 - 49999</option>
+                    <option value="3">50000 - 99999</option>
+                    <option value="4">100000+</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="email" autocomplate="false" asp-for="Email" maxlength="50" placeholder="E-Mail">
+            </div>
+        </div>
+    </div>*@
+     <div class="row">
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="password" autocomplate="false" asp-for="Password" id="password" maxlength="25" placeholder="Şifre">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="single-input d-flex align-items-center">
+                <input class="formtema" type="password" autocomplate="false" name="Confirm" maxlength="25" placeholder="Şifre Tekrar">
+            </div>
+        </div>
+    </div> 
+
+
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-12">
+            <div class="single-input d-flex align-items-center">
+                <select asp-for="MonthlyGiro">
+                    <option value="0" data-display="Ortalama Aylık Ciro">Ortalama Aylık Ciro</option>
+                    <option value="1000 - 9999">1000 - 9999</option>
+                    <option value="10000 - 49999">10000 - 49999</option>
+                    <option value="50000 - 99999">50000 - 99999</option>
+                    <option value="100000+">100000+</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="single-input d-flex align-items-center">
+                <p>Kayıt olarak onaylıyorum (<a href="https://stilpay.com/sozlesmeler" target="_blank" style="color:#5732c6; text-align:center">Sözleşmeler ve Gizlilik Politikaları</a>)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-area">
+        <button type="submit" class="cmtbutton buttontema">Başvuru Yap</button>
+    </div>
+</form>
+<script type="text/javascript" src="~/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="~/js/jquery/jquery-validate.js"></script>
+<script type="text/javascript" src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="~/js/bootstrap/bootstrap-bundle.js"></script>
+<script type="text/javascript" src="~/js/fontawesome/font-awesome.all.min.js"></script>
+<script type="text/javascript" src="~/js/sweetalert/sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="~/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="~/js/views/application/frame.js"></script>
+<script type="text/javascript" src="~/js/views/core.js"></script>

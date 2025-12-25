@@ -1,0 +1,374 @@
+﻿@using StilPay.Entities.Dto
+@model NewDealerDto
+
+@{
+    ViewData["Title"] = "Yeni Üye İşyeri";
+}
+
+@section css {
+    <link href="~/css/bootstrap/bootstrap-toggle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/select2/select2.css" />
+    <link rel="stylesheet" href="~/css/datatables/dataTables-bootstrap5.css" />
+}
+
+<div class="row mt-2">
+    <div class="col-lg-1">
+        <div class="d-grid">
+            <a class="btn btn-dark btn-block" asp-controller="Dealer" asp-action="Index"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="d-grid">
+        <div class="card-header text-custom text-center fw-bold">Yeni Üye İşyeri Kaydı</div>
+    </div>
+</div>
+
+<div class="tab-content">
+        <form asp-controller="Dealer" asp-action="SaveNewDealer" asp-antiforgery="true" id="frmDef"
+              data-ajax="true" data-ajax-method="POST"
+              data-ajax-begin="onBegin" data-ajax-failure="onFailure" data-ajax-success="onSuccess" data-ajax-complete="onComplete">
+
+            <div class="row">
+
+                <div class="col-lg-12 mb-1">
+                    <div class="card border-custom bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Bilgileri</div>
+                        <div class="card-body">
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Adı Soyadı :</label></div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="Name" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Şirket Ünvanı :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="Title" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Telefon No :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="Phone" maxlength="11" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Bayi Paneli Şifresi :</label></div>
+
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="newDealerPassword" asp-for="Password" maxlength="25" />
+                                </div>
+
+                                <div class="col-lg-1 p-0">
+                                    <button type="button" class="btn btn-success" onclick="generateRandomPassword('newDealerPassword')">Şifre Oluştur</button>
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Email :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="Email" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Vergi Dairesi :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="TaxOffice" maxlength="50" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Vergi No :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="TaxNr" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Adres :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="Address" maxlength="100" />
+                                </div>
+                            </div>
+                            @*
+                            <div class="row border-bottom">
+                            <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Yurt Dışı Döviz Paneli Mi ? :</label></div>
+
+                            <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.IsExchangeCreditCardPanel" onchange="isExchangeCreditCardPanelChange(this)">
+                            <option value="false">Hayır</option>
+                            <option value="true">Evet</option>
+                            </select>
+                            </div>
+                            </div>
+
+                            <div class="row border-bottom" id="visibleCurrencyCode" hidden>
+                            <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Para Birimi :</label></div>
+
+                            <div class="col-lg-9">
+                            <select class="form-select" asp-for="entity.CurrencyCode">
+                            <option value="">Seçiniz</option>
+                            <option value="USD">USD</option>
+                            </select>
+                            </div>
+                            </div> *@
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Ortalama Aylık Ciro :</label></div>
+
+                                <div class="col-lg-9">
+                                    <select class="form-select" asp-for="MonthlyGiro">
+                                        <option value="">Seçiniz</option>
+                                        <option value="1000 - 9999">1000 - 9999</option>
+                                        <option value="10000 - 49999">10000 - 49999</option>
+                                        <option value="50000 - 99999">50000 - 99999</option>
+                                        <option value="100000+">100000+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card border-custom bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Entegrasyon Bilgileri</div>
+                        <div class="card-body">
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Site Adresi :</label></div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="SiteUrl" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Yönlendirilecek Url :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="RedirectUrl" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Callback Url :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="CallbackUrl" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>Çekim Talebi Callback Url :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="WithdrawalRequestCallBack" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom">
+                                <div class="col-lg-3"><label class="form-label"><span style="color:red">* </span>IP Adresleri :</label></div>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="IPAddress" maxlength="500" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="card border-custom bg-white">
+                            <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Otomatik İşlem Limitleri</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-4">
+                                                <label class="form-label"><span style="color:red">* </span>Havale - EFT :</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="AutoTransferLimit" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-4">
+                                                <label class="form-label"><span style="color:red">* </span>Çekim Talebi :</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="AutoWithdrawalLimit" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-4">
+                                                <label class="form-label"><span style="color:red">* </span>Kredi Kartı :</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="AutoCreditCardLimit" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom mb-4">
+                                            <div class="col-lg-4">
+                                                <label class="form-label"><span style="color:red">* </span>Yurt Dışı Kredi Kartı :</label>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="AutoForeignCreditCardLimit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="card border-custom bg-white">
+                            <div class="card-header bg-white text-custom text-center fw-bold">Üye İşyeri Komisyon Oranları</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Kredi Kartı :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="CreditCardRate" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Yurt Dışı Kredi Kartı :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="ForeignCreditCardRate" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Havale/EFT :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="TransferRate" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Mobil Ödeme :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="MobilePayRate" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Çekim Talebi Havale / EFT :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="WithdrawalTransferAmount" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-lg-6">
+                                                <label class="form-label"><span style="color:red">* </span>Çekim Talebi FAST :</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control bg-light text-end" asp-for="WithdrawalEftAmount" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card border-custom bg-white">
+                        <div class="card-header bg-white text-custom text-center fw-bold">iFrame Havale-EFT / Kredi Kartı Aktiflik Durumları</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Havale-EFT</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="TransferBeUsed">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Kredi Kartı</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="creditCardToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="CreditCardBeUsed">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Yurt Dışı Kredi Kartı</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="foreignCreditCardToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="ForeignCreditCardBeUsed">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mb-2">
+                                    <div class="card border border-light border-4 bg-white">
+                                        <div class="card-body">
+                                            <label class="w-100 text-center">Çekim Talebi API Erişimi</label>
+                                            <input type="checkbox" class="chkBank" data-toggle="toggle" id="withdrawalApiToggle" data-on="Aktif" data-off="Pasif" data-onstyle="success" data-offstyle="danger" data-width="100%" asp-for="WithdrawalApiBeUsed">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 d-grid mt-4 mb-4">
+                    <button type="submit" class="btn btn-success">Kaydet</button>
+                </div>
+
+            </div>
+
+        </form>
+</div>
+
+
+@section js {
+    <script src="~/js/bootstrap/bootstrap-toggle.js"></script>
+    <script src="~/js/mask/imask.js"></script>
+    <script src="~/js/jquery/jquery-validate.js"></script>
+    <script src="~/js/jquery/jquery-additional-methods.js"></script>
+    <script src="~/js/jquery/jquery-unobtrusive-ajax.js"></script>
+    <script src="~/js/custom/numeric-format.js"></script>
+    <script src="~/js/select2/select2.js"></script>
+    <script src="~/js/datatables/dataTables-jquery.js"></script>
+    <script src="~/js/datatables/dataTables-bootstrap5.js"></script>
+    <script src="~/js/views/core.js"></script>
+    <script src="~/js/views/dealer/newDealer.js"></script>
+}
