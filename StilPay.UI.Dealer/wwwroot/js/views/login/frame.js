@@ -1,4 +1,4 @@
-﻿var urlRedirect = 'https://bayi.stilpay.com/'; 
+﻿var urlRedirect = 'https://bayi.burateknoloji.com/'; 
 //var urlRedirect = 'http://localhost:26653/'; 
 
 var interval = null;

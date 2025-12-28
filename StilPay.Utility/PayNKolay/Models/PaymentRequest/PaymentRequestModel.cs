@@ -22,8 +22,8 @@ namespace StilPay.Utility.PayNKolay.Models.PaymentRequest
         public string Rnd { get; set; }
         public string ClientRefCode { get; set; }
 
-        public string SuccessUrl = "https://stilpay.com/panel/paymentnotification/paynkolaythreedsecureresult";
-        public string FailUrl = "https://stilpay.com/panel/paymentnotification/paynkolaythreedsecureresult";
+        public string SuccessUrl = "https://burateknoloji.com/panel/paymentnotification/paynkolaythreedsecureresult";
+        public string FailUrl = "https://burateknoloji.com/panel/paymentnotification/paynkolaythreedsecureresult";
 
         //public string SuccessUrl = "http://localhost:63352/panel/paymentnotification/paynkolaythreedsecureresult";
         //public string FailUrl = "http://localhost:63352/panel/paymentnotification/paynkolaythreedsecureresult";

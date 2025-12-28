@@ -22,9 +22,9 @@ namespace StilPay.Utility.IsBankSanalPos.IsBankPaymentModel
 
         //public string failUrl = "http://localhost:63352/panel/paymentnotification/IsBankThreeDSecureResult";
 
-        public string okUrl = "https://stilpay.com/panel/paymentnotification/IsBankThreeDSecureResult";
+        public string okUrl = "https://burateknoloji.com/panel/paymentnotification/IsBankThreeDSecureResult";
 
-        public string failUrl = "https://stilpay.com/panel/paymentnotification/IsBankThreeDSecureResult";
+        public string failUrl = "https://burateknoloji.com/panel/paymentnotification/IsBankThreeDSecureResult";
 
         public string lang = "tr";
         public string pan { get; set; }

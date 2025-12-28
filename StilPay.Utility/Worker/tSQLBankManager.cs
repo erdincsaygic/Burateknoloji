@@ -954,7 +954,7 @@ namespace StilPay.Utility.Worker
                         Branch = dt.Rows[0]["Branch"].ToString(),
                         AccountNr = dt.Rows[0]["AccountNr"].ToString(),
                         IBAN = dt.Rows[0]["IBAN"].ToString(),
-                        Img = string.Concat("https://stilpay.com/img/banks/", dt.Rows[0]["Img"])
+                        Img = string.Concat("https://burateknoloji.com/img/banks/", dt.Rows[0]["Img"])
                     };
                 }
             }

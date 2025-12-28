@@ -10,7 +10,7 @@
 
 </head>
 
-
+@* 
 <section class="banner-section index-11">
     <div class="overlay">
         <div class="main-content" style="text-align:center; font-size: 36px;">
@@ -19,314 +19,25 @@
         <div class="banner-wrap container">
             <div class="banner-slider">
 
-                @if (ViewBag.Sliders != null && ViewBag.Sliders.Count > 0)
-                {
-                    @foreach (var item in ViewBag.Sliders as List<StilPay.Entities.Concrete.Slider>)
-                    {
-                        <div class="banner-slide">
-                            <div class="row">
-                            <div class="col-xl-5 col-lg-6">
-                                <div class="container" style="margin-left:40px">
-                                    <div class="hero-content">
-                                        <h4 class="color">
-                                            @item.Header
-                                        </h4>
-                                        <p class="xxlr" style="color:white;padding: 20px 0 40px;">
-                                            @item.Content
-                                        </p>
-
-                                        @if (item.ShowButton && item.ButtonRedirectUrl != null && !string.IsNullOrEmpty(item.ButtonRedirectUrl))
-                                        {
-                                            <a href="@item.ButtonRedirectUrl" class="cmn-btn">@item.ButtonName</a>    
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-
-                            @if (!string.IsNullOrEmpty(item.ImageUrl))
-                            {
-                                <div class="col-xl-7 col-lg-6">
-                                    <div class="container">
-                                        <div class="hero-content">
-                                            <img src="@item.ImageUrl" alt="image"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                            }
-                        </div>
-                    </div>
-                        
-                    }
-                }
-                else
-                {
+               
                     <div class="banner-slide">
                         <div class="row">
-                            <div class="col-xl-5 col-lg-6">
+                            <div class="col-xl-12 col-lg-12">
                                 <div class="container" style="margin-left:40px">
                                     <div class="hero-content">
-                                        <h4 class="color">
-                                            TÜRKİYE’NİN YENİ NESİL DİJİTAL PAZARYERİ PLATFORMU
-                                        </h4>
-                                        <p class="xxlr" style="color:white;padding: 20px 0 40px;">
-                                            Ürünlerinizi Stilpay ile Satın ve Karlı Çıkın
-                                            Müşterilerinize En Hızlı Satış Çözümleri Ertesi Gün Ödeme ve
-                                            Düşük İşlem Ücretleri Hemen Sizde Aramıza Katılın!
-                                        </p>
-                                        <a asp-controller="KurumsalBasvuru" asp-action="Index" class="cmn-btn">BAŞVURU YAP!</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-7 col-lg-6">
-                                <div class="container">
-                                    <div class="hero-content">
-                                        <img src="~/ui/assets/img/index11-illu.png" alt="image" />
+                                        <h1 class="color">
+                                            BURATEKNOLOJI YAKINDA HİZMETİNİZDE
+                                        </h1>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="banner-slide">
-                        <div class="row">
-                            <div class="col-xl-5 col-lg-6">
-                                <div class="container" style="margin-left:40px">
-                                    <div class="hero-content">
-                                        <h4 class="color">
-                                            TÜRKİYE’NİN YENİ NESİL DİJİTAL PAZARYERİ PLATFORMU
-                                        </h4>
-                                        <p class="xxlr" style="color:white;padding: 20px 0 40px;">
-                                            Ürünlerinizi Stilpay ile Satın ve Karlı Çıkın
-                                            Müşterilerinize En Hızlı Satış Çözümleri Ertesi Gün Ödeme ve
-                                            Düşük İşlem Ücretleri Hemen Sizde Aramıza Katılın!
-                                        </p>
-                                        <a asp-controller="KurumsalBasvuru" asp-action="Index" class="cmn-btn">BAŞVURU YAP!</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-7 col-lg-6">
-                                <div class="container">
-                                    <div class="hero-content">
-                                        <img src="~/ui/assets/img/about-us-banner-2.png" alt="image" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
-                }
             </div>
         </div>
     </div>
 
 </section>
-<!-- banner-section end -->
-<!-- Features In start -->
-<section class="features-inner index11">
-    <div class="overlay pt-120 pb-120">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-header">
-                        <h3>STILPAY - Ayrıcalıkları</h3>
-                        <p>
-                         Stilpay olarak şirketinize özel olarak sunduğumuz e-pazaryeri hizmetleri ile geniş müşteri kitlesine ulaşma, 
-                         güvenli ödeme altyapısı, müşteri deneyimi ve pazarlama avantajları gibi ayrıcalıklardan faydalanabilirsiniz.
-                        </p>
-                    </div>
-                    <div class="right-area">
-                        <ul>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/support.png" alt="image" />
-                                    </div>
-                                    Canlı Destek
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/phone.png" alt="image" />
-                                    </div>
-                                    Cep Telefonu
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/low.png" alt="image" />
-                                    </div>
-                                    Düşük Komisyon
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/integration.png" alt="image" />
-                                    </div>
-                                    Gelişmiş Entegrasyon
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/security.png" alt="image" />
-                                    </div>
-                                    Güvenli Kullanım
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/partners.png" alt="image" />
-                                    </div>
-                                    İş Ortakları
-                                </a>
-                            </li>
-                            <li>
-                                <a class="xlr" href="javascript:void(0)">
-                                    <div class="img-area">
-                                        <img src="~/ui/assets/img/icon-index/new.png" alt="image" />
-                                    </div>
-                                    Yeni Nesil Sistem
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex justify-content-center">
-                    <div class="section-illu">
-                        <img src="~/ui/assets/img/feature-Illu-index11.png" alt="image" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Features In end -->
-<!-- Get Started In start -->
-<section class="get-started-section index11">
-    <div class="overlay pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="section-header text-center">
-                        <h2 class="title">
-                            Türkiye'nin En Güvenilir Yeni Nesil Pazar Yeri
-                        </h2>
-                        <p>
-                            İşletmenizin dijital dünyada başarılı olmasını destekleyen birçok avantaj sunuyoruz. 
-                            Geniş müşteri kitlesine ulaşma, güvenli ödeme altyapısı, müşteri deneyimi, pazarlama fırsatları gibi ayrıcalıklarla dolu olan e-pazaryeri hizmetimiz, işletmenizin büyümesine ve rekabetçi bir avantaj elde etmenize yardımcı olacaktır.
-                        </p>
-                        <a asp-controller="KurumsalBasvuru" asp-action="Index" class="cmn-btn">Mağaza Başvurusu Yap</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Get Started In end -->
-<!-- Features In start -->
-<section class="features-section">
-    <div class="overlay pt-120 pb-120">
-        <div class="container wow fadeInUp">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8">
-                    <div class="section-header">
-                        <h2 class="title">Neden Bizi Tercih Etmelisiniz ?</h2>
-                        <p>
-                            Güvenilir, Hızlı ve Başarılı: Şirketinizi Dijital Dünyada Büyütmek İçin Yeni Nesil E-Pazaryeri Hizmetimiz!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row wrapper">
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q1.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">Kolay Kullanım</h5>
-                        <p class="sizemy">
-                            Kolay Mağaza paneli ile dilediğiniz şekilde satışlarınızı
-                            yapabilir ve ödemelerinizi anlık olarak takip edebilirsiniz.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q2.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">
-                            Gelişmiş Yazılım<menu type="toolbar"></menu>
-                        </h5>
-                        <p class="sizemy">
-                            Yüksek Güvenlik yazılımı ile 3D Secure Ortak Ödeme sayfası ile
-                            müşterilerinize güvenilir ve kurumsal bir ortak ödeme
-                            platformu sunuyoruz.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q3.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">Anında Tahsilat</h5>
-                        <p class="sizemy">
-                            Tüm ödemeler anlık olarak gözlem altında tutulur. Tüm
-                            ödemelerinizi anlık olarak gelişmiş mağaza paneliniz üzerinden
-                            takip edebilirsiniz.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q4.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">Ertesi Günü Teslim</h5>
-                        <p class="sizemy">
-                            Başvurunuzun değerlendirme sonrasında ertesi gün ödeme
-                            seçeneği ile artık ödemelerinizi almak için beklemek zorunda
-                            kalmazsınız.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q5.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">Sektörel Kolaylık</h5>
-                        <p class="sizemy">
-                            Oyun, Dijital, Fiziksel ürünlerinizi kolaylıkla satışa
-                            sunabilirsiniz. Kesintisiz ürün satmak için ihtiyacınız olan
-                            tek şey Stilpay.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single-item text-center">
-                        <div class="icon">
-                            <img src="~/ui/assets/img/iconq/q6.png" alt="icon" />
-                        </div>
-                        <h5 class="sizesa">Türkiyenin E-Pazaryeri</h5>
-                        <p class="sizemy">
-                            Stilpay kullanan ticaretine emin adımlar ile başlar.
-                            Türkiye’nin yeni nesil özelleştirilmiş E-Pazaryeri alt yapısı
-                            ile artık müşterilerinize güvenli ödeme ortamı sunabilirsiniz.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Features In end -->
+
 <script type="text/javascript" src="~/areas/panel/js/jquery/jquery.js"></script>
 <script src="~/ui/assets/js/plugin/slick.js"></script>

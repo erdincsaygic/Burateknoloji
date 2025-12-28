@@ -20,7 +20,7 @@ namespace StilPay.Utility.EsnekPos.Models.EsnekPosPaymentRequest
         public string MERCHANT_KEY { get; set; }
 
         //public string BACK_URL = "http://localhost:63352/panel/paymentnotification/EsnekPosThreeDSecureResult";
-        public string BACK_URL = "https://stilpay.com/panel/paymentnotification/EsnekPosThreeDSecureResult";
+        public string BACK_URL = "https://burateknoloji.com/panel/paymentnotification/EsnekPosThreeDSecureResult";
         public string PRICES_CURRENCY = "TRY";
         public string ORDER_REF_NUMBER { get; set; }
         public string ORDER_AMOUNT { get; set; }
