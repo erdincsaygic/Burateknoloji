@@ -84,7 +84,7 @@ namespace StilPay.Job.IsBankasi
                             {
                                 foreach (var hareketDetay in hesap.Hareketler.Hareket.OrderByDescending(o => Convert.ToDateTime(o.Tarih)))
                                 {
-                                    if (!tSQLBankManager.HasPaymentTransferPool(hareketDetay.HareketSirano) && !tSQLBankManager.HasNotificationTransaction(hareketDetay.HareketSirano))
+                                    if (!tSQLBankManager.HasPaymentTransferPool(hareketDetay.HareketSirano) && !tSQLBankManager.HasNotificationTransaction(hareketDetay.HareketSirano) && hareketDetay.Miktar > 0)
                                     {
                                         DateTime dt3 = new DateTime(int.Parse(hareketDetay.TimeStamp.Substring(0, 4)), int.Parse(hareketDetay.TimeStamp.Substring(05, 2)), int.Parse(hareketDetay.TimeStamp.Substring(8, 2)), int.Parse(hareketDetay.TimeStamp.Substring(11, 2)), int.Parse(hareketDetay.TimeStamp.Substring(14, 2)), int.Parse(hareketDetay.TimeStamp.Substring(17, 2)), int.Parse(hareketDetay.TimeStamp.Substring(20, 2)));
 
