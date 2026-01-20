@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.Mamedify.Kuveyt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stilpay.Job.TangoKuveytturk", "Stilpay.Job.TangoKuveytturk\Stilpay.Job.TangoKuveytturk.csproj", "{580F51B2-BACF-4FD4-B844-AE9542F4F594}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StilPay.Job.Vakifbank", "StilPay.Job.Vakifbank\StilPay.Job.Vakifbank.csproj", "{3B94D8D2-851D-428F-B57D-00DE2C9E0F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,92 +166,15 @@ Global
 		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{580F51B2-BACF-4FD4-B844-AE9542F4F594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B94D8D2-851D-428F-B57D-00DE2C9E0F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B94D8D2-851D-428F-B57D-00DE2C9E0F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B94D8D2-851D-428F-B57D-00DE2C9E0F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B94D8D2-851D-428F-B57D-00DE2C9E0F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0739E04A-F65C-4143-B25D-6C2E17006A93}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 26
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://dev.azure.com/kartalc4n
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = StilPay.ApiService\\StilPay.ApiService.csproj
-		SccProjectName1 = StilPay.ApiService
-		SccLocalPath1 = StilPay.ApiService
-		SccProjectUniqueName2 = StilPay.BLL\\StilPay.BLL.csproj
-		SccProjectName2 = StilPay.BLL
-		SccLocalPath2 = StilPay.BLL
-		SccProjectUniqueName3 = StilPay.DAL\\StilPay.DAL.csproj
-		SccProjectName3 = StilPay.DAL
-		SccLocalPath3 = StilPay.DAL
-		SccProjectUniqueName4 = StilPay.Entities\\StilPay.Entities.csproj
-		SccProjectName4 = StilPay.Entities
-		SccLocalPath4 = StilPay.Entities
-		SccProjectUniqueName5 = StilPay.Job.GarantiBankasi\\StilPay.Job.GarantiBankasi.csproj
-		SccProjectName5 = StilPay.Job.GarantiBankasi
-		SccLocalPath5 = StilPay.Job.GarantiBankasi
-		SccProjectUniqueName6 = StilPay.Job.GeneralBank\\StilPay.Job.GeneralBank.csproj
-		SccProjectName6 = StilPay.Job.GeneralBank
-		SccLocalPath6 = StilPay.Job.GeneralBank
-		SccProjectUniqueName7 = StilPay.Job.Halkbank\\StilPay.Job.Halkbank.csproj
-		SccProjectName7 = StilPay.Job.Halkbank
-		SccLocalPath7 = StilPay.Job.Halkbank
-		SccProjectUniqueName8 = StilPay.Job.IsBankasi\\StilPay.Job.IsBankasi.csproj
-		SccProjectName8 = StilPay.Job.IsBankasi
-		SccLocalPath8 = StilPay.Job.IsBankasi
-		SccProjectUniqueName9 = StilPay.Job.KuveytTurk\\StilPay.Job.KuveytTurk.csproj
-		SccProjectName9 = StilPay.Job.KuveytTurk
-		SccLocalPath9 = StilPay.Job.KuveytTurk
-		SccProjectUniqueName10 = StilPay.Job.ZiraatBankasi\\StilPay.Job.ZiraatBankasi.csproj
-		SccProjectName10 = StilPay.Job.ZiraatBankasi
-		SccLocalPath10 = StilPay.Job.ZiraatBankasi
-		SccProjectUniqueName11 = StilPay.UI.Admin\\StilPay.UI.Admin.csproj
-		SccProjectName11 = StilPay.UI.Admin
-		SccLocalPath11 = StilPay.UI.Admin
-		SccProjectUniqueName12 = StilPay.UI.Dealer\\StilPay.UI.Dealer.csproj
-		SccProjectName12 = StilPay.UI.Dealer
-		SccLocalPath12 = StilPay.UI.Dealer
-		SccProjectUniqueName13 = StilPay.UI.WebSite\\StilPay.UI.WebSite.csproj
-		SccProjectName13 = StilPay.UI.WebSite
-		SccLocalPath13 = StilPay.UI.WebSite
-		SccProjectUniqueName14 = StilPay.Utility\\StilPay.Utility.csproj
-		SccProjectName14 = StilPay.Utility
-		SccLocalPath14 = StilPay.Utility
-		SccProjectUniqueName15 = StilPay.Job.IsBankasi2\\StilPay.Job.IsBankasi2.csproj
-		SccProjectName15 = StilPay.Job.IsBankasi2
-		SccLocalPath15 = StilPay.Job.IsBankasi2
-		SccProjectUniqueName16 = StilPay.Job.KuveytTurkExitAccount\\StilPay.Job.KuveytTurkExitAccount.csproj
-		SccProjectName16 = StilPay.Job.KuveytTurkExitAccount
-		SccLocalPath16 = StilPay.Job.KuveytTurkExitAccount
-		SccProjectUniqueName17 = StilPay.Job.Papara\\StilPay.Job.Papara.csproj
-		SccProjectName17 = StilPay.Job.Papara
-		SccLocalPath17 = StilPay.Job.Papara
-		SccProjectUniqueName18 = StilPay.Job.KuveytTurkOVG\\StilPay.Job.KuveytTurkOVG.csproj
-		SccProjectName18 = StilPay.Job.KuveytTurkOVG
-		SccLocalPath18 = StilPay.Job.KuveytTurkOVG
-		SccProjectUniqueName19 = StilPay.Job.Emlakkatilim\\StilPay.Job.Emlakkatilim.csproj
-		SccProjectName19 = StilPay.Job.Emlakkatilim
-		SccLocalPath19 = StilPay.Job.Emlakkatilim
-		SccProjectUniqueName20 = StilPay.Job.Vakifkatilim\\StilPay.Job.Vakifkatilim.csproj
-		SccProjectName20 = StilPay.Job.Vakifkatilim
-		SccLocalPath20 = StilPay.Job.Vakifkatilim
-		SccProjectUniqueName21 = StilPay.Job.TangoEmlakkatilim\\StilPay.Job.TangoEmlakkatilim.csproj
-		SccProjectName21 = StilPay.Job.TangoEmlakkatilim
-		SccLocalPath21 = StilPay.Job.TangoEmlakkatilim
-		SccProjectUniqueName22 = StilPay.Job.EmreBey.Emlakkatilim\\StilPay.Job.EmreBey.Emlakkatilim.csproj
-		SccProjectName22 = StilPay.Job.EmreBey.Emlakkatilim
-		SccLocalPath22 = StilPay.Job.EmreBey.Emlakkatilim
-		SccProjectUniqueName23 = StilPay.Job.MamedifyEmlakkatilim\\StilPay.Job.MamedifyEmlakkatilim.csproj
-		SccProjectName23 = StilPay.Job.MamedifyEmlakkatilim
-		SccLocalPath23 = StilPay.Job.MamedifyEmlakkatilim
-		SccProjectUniqueName24 = StilPay.Job.Mamedify.KuveytTurk\\StilPay.Job.Mamedify.KuveytTurk.csproj
-		SccProjectName24 = StilPay.Job.Mamedify.KuveytTurk
-		SccLocalPath24 = StilPay.Job.Mamedify.KuveytTurk
-		SccProjectUniqueName25 = Stilpay.Job.TangoKuveytturk\\Stilpay.Job.TangoKuveytturk.csproj
-		SccProjectName25 = Stilpay.Job.TangoKuveytturk
-		SccLocalPath25 = Stilpay.Job.TangoKuveytturk
 	EndGlobalSection
 EndGlobal
