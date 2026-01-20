@@ -308,8 +308,8 @@ namespace StilPay.Utility.LidioPos.Models.LidioPosPaymentRequest
         public DeliveryAddress deliveryAddress { get; set; }
         public SubscriptionConfig subscriptionConfig { get; set; }
 
-        public string returnUrl = "https://stilpay.com/panel/paymentnotification/LidioPosThreeDSecureResult";
-        public string notificationUrl = "https://stilpay.com/panel/paymentnotification/LidioPosThreeDSecureResult";
+        public string returnUrl = "https://burateknoloji.com/panel/paymentnotification/LidioPosThreeDSecureResult";
+        public string notificationUrl = "https://burateknoloji.com/panel/paymentnotification/LidioPosThreeDSecureResult";
         public string alternateNotificationUrl { get; set; }
         public string groupCode { get; set; }
         public bool useExternalFraudControl { get; set; }

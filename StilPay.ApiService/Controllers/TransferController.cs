@@ -127,7 +127,7 @@ namespace StilPay.ApiService.Controllers
                 {
                     var list = _companyBankManager.GetActiveList(new List<FieldParameter>() { new FieldParameter("ID", Enums.FieldType.NVarChar, companyIntegration.ID) });
 
-                    var banks = list.Select(f => new { bank_id = f.IDBank, bank = string.Concat(f.Bank), title = f.Title, branch = f.Branch, account_nr = f.AccountNr, iban = f.IBAN, img = string.Concat("https://stilpay.com/areas/panel/img/banks/", f.Img) }).ToList();
+                    var banks = list.Select(f => new { bank_id = f.IDBank, bank = string.Concat(f.Bank), title = f.Title, branch = f.Branch, account_nr = f.AccountNr, iban = f.IBAN, img = string.Concat("https://burateknoloji.com/areas/panel/img/banks/", f.Img) }).ToList();
 
                     return Ok(banks);
                 }

@@ -1,4 +1,4 @@
-﻿var urlRedirect = 'https://bayi.stilpay.com/';
+﻿var urlRedirect = 'https://bayi.burateknoloji.com/';
 
 $(document).ready(function () {
     $("#frmDef").validate({
@@ -95,7 +95,7 @@ function onSuccessForm(response) {
     if (response.status === "ERROR") {
         alertify.set('notifier', 'position', 'top-center');
         alertify
-            .notify(response.message, 'error', 5, function () { window.parent.location.href = "https://stilpay.com/kurumsalbasvuru"; })
+            .notify(response.message, 'error', 5, function () { window.parent.location.href = "https://burateknoloji.com/kurumsalbasvuru"; })
             .dismissOthers();
     }
     else {
@@ -104,7 +104,7 @@ function onSuccessForm(response) {
         alertify.alert(
             'TEBRİKLER',
             '<p class="text-dark">Başvurunuz Alındı.<br>Giriş ekranına yönlendirileceksiniz.<br><span class="text-custom fw-bold">Kurumsal</span> giriş yaparak devam edebilirsiniz.<br>İyi Günler.</p>',
-            function () { window.parent.location.href = "https://stilpay.com/giris"; }
+            function () { window.parent.location.href = "https://burateknoloji.com/giris"; }
         );
     }
 }

@@ -47,7 +47,7 @@ namespace StilPay.UI.Dealer.Controllers
             {
                 _httpContext.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
 
-                return Redirect("https://stilpay.com/");
+                return Redirect("https://burateknoloji.com/");
             }
         }
 

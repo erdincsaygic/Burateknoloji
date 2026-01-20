@@ -12,13 +12,13 @@ namespace StilPay.Utility.EfixPos.Models.EfixPosCheckout
         public string Language { get; set; } = "TR";
 
         [JsonProperty("successUrl")]
-        public string SuccessUrl { get; set; } = "https://stilpay.com/panel/paymentnotification/EfixPosThreeDSecureResult";
+        public string SuccessUrl { get; set; } = "https://burateknoloji.com/panel/paymentnotification/EfixPosThreeDSecureResult";
 
         [JsonProperty("cancelUrl")]
-        public string CancelUrl { get; set; } = "https://stilpay.com/panel/paymentnotification/EfixPosThreeDSecureResult";
+        public string CancelUrl { get; set; } = "https://burateknoloji.com/panel/paymentnotification/EfixPosThreeDSecureResult";
 
         [JsonProperty("declineUrl")]
-        public string DeclineUrl { get; set; } = "https://stilpay.com/panel/paymentnotification/EfixPosThreeDSecureResult";
+        public string DeclineUrl { get; set; } = "https://burateknoloji.com/panel/paymentnotification/EfixPosThreeDSecureResult";
 
 
         //[JsonProperty("successUrl")]

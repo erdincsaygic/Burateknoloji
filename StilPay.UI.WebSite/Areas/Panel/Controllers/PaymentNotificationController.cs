@@ -1077,9 +1077,9 @@ namespace StilPay.UI.WebSite.Areas.Panel.Controllers
                 var expDateYear = DateTime.Now.Year.ToString()[..2] + expDateSub;
 
                 var hash_ = "";
-                var odemeUrl = "https://stilpay.com/panel/paymentnotification/creditcard";
-                var hataUrl = "https://stilpay.com/panel/paymentnotification/threedsecureresult";
-                var basariliUrl = "https://stilpay.com/panel/paymentnotification/threedsecureresult";
+                var odemeUrl = "https://burateknoloji.com/panel/paymentnotification/creditcard";
+                var hataUrl = "https://burateknoloji.com/panel/paymentnotification/threedsecureresult";
+                var basariliUrl = "https://burateknoloji.com/panel/paymentnotification/threedsecureresult";
                 //var odemeUrl = "http://localhost:63352/Panel/paymentnotification/creditCard";
                 //var hataUrl = "http://localhost:63352/Panel/paymentnotification/threedsecure";
                 //var basariliUrl = "http://localhost:63352/Panel/paymentnotification/threedsecure";

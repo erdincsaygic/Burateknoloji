@@ -13,7 +13,7 @@ namespace StilPay.Utility.AKODESanalPOS.Models.AKODEGetSession
         public string Hash { get; set; }
 
         //public string callbackUrl = "http://localhost:63352/panel/paymentnotification/AKODEThreeDSecureResult";
-        public string callbackUrl = "https://stilpay.com/panel/paymentnotification/AKODEThreeDSecureResult";
+        public string callbackUrl = "https://burateknoloji.com/panel/paymentnotification/AKODEThreeDSecureResult";
 
         public string orderId { get; set; }
         public long amount { get; set; }

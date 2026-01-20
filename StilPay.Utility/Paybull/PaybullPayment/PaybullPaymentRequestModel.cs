@@ -25,9 +25,9 @@ namespace StilPay.Utility.Paybull.PaybullPayment
 
         //public string cancel_url = "http://localhost:63352/panel/paymentnotification/PaybullThreeDSecureResult";
 
-        public string return_url = "https://stilpay.com/panel/paymentnotification/PaybullThreeDSecureResult";
+        public string return_url = "https://burateknoloji.com/panel/paymentnotification/PaybullThreeDSecureResult";
 
-        public string cancel_url = "https://stilpay.com/panel/paymentnotification/PaybullThreeDSecureResult";
+        public string cancel_url = "https://burateknoloji.com/panel/paymentnotification/PaybullThreeDSecureResult";
         public string hash_key { get; set; }
     }
 }
