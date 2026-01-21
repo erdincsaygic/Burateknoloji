@@ -11,13 +11,6 @@ namespace StilPay.Job.Vakifbank
 {
     internal class Program
     {
-        // Vakıfbank SOAP Namespace'leri
-        private const string NS_SOAP = "http://www.w3.org/2003/05/soap-envelope";
-        private const string NS_PEAK = "Peak.Integration.ExternalInbound.Ekstre";
-        private const string NS_DTO = "http://schemas.datacontract.org/2004/07/Peak.Integration.ExternalInbound.Ekstre.DataTransferObjects";
-        private const string NS_WSA = "http://www.w3.org/2005/08/addressing";
-
-        // SOAPAction değerleri
         private const string SOAP_ACTION_GETIR_HAREKET = "Peak.Integration.ExternalInbound.Ekstre/ISOnlineEkstreServis/GetirHareket";
 
         static void Main(string[] args)
@@ -407,7 +400,6 @@ namespace StilPay.Job.Vakifbank
 
             var parsed = new VakifbankParsed();
 
-            // GetirHareketResult node'unu bul
             var resultNode = doc.Descendants(peak + "GetirHareketResult").FirstOrDefault()
                           ?? doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "GetirHareketResult");
 
@@ -418,13 +410,11 @@ namespace StilPay.Job.Vakifbank
                 return parsed;
             }
 
-            // Temel bilgiler
             parsed.BankaKodu = GetElementValue(resultNode, dto, "BankaKodu");
             parsed.BankaAdi = GetElementValue(resultNode, dto, "BankaAdi");
             parsed.IslemKodu = GetElementValue(resultNode, dto, "IslemKodu");
             parsed.IslemAciklamasi = GetElementValue(resultNode, dto, "IslemAciklamasi");
 
-            // Hesaplar
             var hesaplarNode = resultNode.Element(dto + "Hesaplar");
             if (hesaplarNode != null)
             {
@@ -512,7 +502,6 @@ namespace StilPay.Job.Vakifbank
             if (string.IsNullOrEmpty(s)) return null;
             if (DateTime.TryParse(s, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out var dt))
                 return dt;
-            // Vakıfbank formatı: yyyy-MM-dd HH:mm:ss
             if (DateTime.TryParseExact(s, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out dt))
                 return dt;
             if (DateTime.TryParseExact(s, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out dt))
@@ -555,7 +544,6 @@ namespace StilPay.Job.Vakifbank
                 refCode = matchStartRef.Groups[1].Value;
             }
 
-            // Gönderen adı arama
             var matchSender = Regex.Match(description,
                 @"(?i)(?:amir|g[öo]nderen)\s*[:=]?\s*(?<name>.+?)(?=\s*(?:al[ıi]c[ıi]|sorgu|aciklama|açıklama|g[öo]nd|bank|hesap|$))",
                 RegexOptions.CultureInvariant);
