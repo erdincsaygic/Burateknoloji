@@ -117,7 +117,7 @@ namespace StilPay.Job.Vakifbank
                                 continue;
 
                             var (parsedSender, parsedRef) = ParseRefAndSender(hareket.Aciklama);
-
+                            Console.WriteLine("120");
                             string senderName = parsedSender;
                             string senderIban = null;
 
@@ -128,11 +128,11 @@ namespace StilPay.Job.Vakifbank
 
                                 hareket.Detaylar.TryGetValue("GonderenIbanKumarasi", out senderIban);
                             }
-
+                            Console.WriteLine("131");
                             bool isCaughtInFraudControl = false;
                             bool isTrusted = false;
                             string fraudDescription = "Fraud kontrolleri başarıyla tamamlandı.";
-
+                            Console.WriteLine("135");
                             var (Result, ReferenceNr, ServiceId, CallbackUrl, AutoTransferLimit) =
                                 tSQLBankManager.CheckReferenceNr(parsedRef ?? "");
 
@@ -146,7 +146,7 @@ namespace StilPay.Job.Vakifbank
                                 !string.IsNullOrEmpty(x.Name) &&
                                 normalizedDescription.Contains(x.Name.Replace(" ", "").ToLower(trCulture))
                             );
-
+                            Console.WriteLine("149");
                             if (!string.IsNullOrEmpty(Result) && !string.IsNullOrEmpty(ReferenceNr) && !string.IsNullOrEmpty(ServiceId))
                             {
                                 var (IsTrusted, FraudResult, FraudDescription) =
@@ -176,6 +176,8 @@ namespace StilPay.Job.Vakifbank
                             {
                                 string transactionId = DateTime.Now.Ticks.ToString("D16");
 
+                                Console.WriteLine("178");
+
                                 var transactionNr = tSQLBankManager.AddNotificationTransaction(
                                     DateTime.Now,
                                     tranDate, tranDate,
@@ -184,6 +186,8 @@ namespace StilPay.Job.Vakifbank
                                     hareket.Aciklama, Guid.Empty.ToString(),
                                     senderName, "11111111111",
                                     false, true);
+
+                                Console.WriteLine("189");
 
                                 if (!string.IsNullOrEmpty(transactionNr))
                                 {
@@ -221,7 +225,7 @@ namespace StilPay.Job.Vakifbank
                                         amountDec, businessKey, hareket.Aciklama,
                                         true, companyBankAccountID, pyTransactionNr,
                                         transactionId, isCaughtInFraudControl, fraudDescription);
-
+                                    Console.WriteLine("228");
                                     if (pyID != null && IDOutAuto != null)
                                     {
                                         tSQLBankManager.SetPaymentTransactionStatus(pyID, (int)StatusType.Confirmed,
@@ -244,7 +248,7 @@ namespace StilPay.Job.Vakifbank
                                                 _ => 0
                                             };
                                         }
-
+                                        Console.WriteLine("251");
                                         tSQLBankManager.AddCallbackResponseLog(
                                             transactionId, "STILPAY",
                                             System.Text.Json.JsonSerializer.Serialize(dataCallback, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }),
