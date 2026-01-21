@@ -178,6 +178,31 @@ namespace StilPay.Job.Vakifbank
                             {
                                 string transactionId = DateTime.Now.Ticks.ToString("D16");
 
+                                var addNotificationPayload = new
+                                {
+                                    CreateDate = DateTime.Now,
+                                    TransactionDate1 = tranDate,
+                                    TransactionDate2 = tranDate,
+                                    BankId = bankId,
+                                    ServiceId = ServiceId,
+                                    TransactionId = transactionId,
+                                    BusinessKey = businessKey,
+                                    Amount = amountDec,
+                                    Description = hareket.Aciklama,
+                                    EmptyGuid = Guid.Empty.ToString(),
+                                    SenderName = senderName,
+                                    SenderTcNo = "11111111111",
+                                    IsManual = false,
+                                    IsAuto = true
+                                };
+
+                                var jsonOptions = new JsonSerializerOptions
+                                {
+                                    WriteIndented = true
+                                };
+
+                                Console.WriteLine(JsonSerializer.Serialize(addNotificationPayload, jsonOptions));
+
                                 var transactionNr = tSQLBankManager.AddNotificationTransaction(
                                     DateTime.Now,
                                     tranDate, tranDate,
@@ -186,16 +211,6 @@ namespace StilPay.Job.Vakifbank
                                     hareket.Aciklama, Guid.Empty.ToString(),
                                     senderName, "11111111111",
                                     false, true);
-
-
-                                var jsonOptions = new JsonSerializerOptions
-                                {
-                                    WriteIndented = true,
-                                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-                                };
-
-                                var parsedJson = JsonSerializer.Serialize(parsed, jsonOptions);
-                                Console.WriteLine(parsedJson);
 
                                 if (!string.IsNullOrEmpty(transactionNr))
                                 {
