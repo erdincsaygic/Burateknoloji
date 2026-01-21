@@ -56,6 +56,27 @@ namespace StilPay.Job.Vakifbank
                 #region Vakifbank Api
                 try
                 {
+
+                    var transactionNr2 = tSQLBankManager.AddNotificationTransaction(
+    notificationDate: new DateTime(2026, 1, 21, 17, 34, 56, DateTimeKind.Local),
+    transactionDate: new DateTime(2026, 1, 21, 17, 2, 21, DateTimeKind.Local),
+    transferDate: new DateTime(2026, 1, 21, 17, 2, 21, DateTimeKind.Local),
+    bankId: "21",
+    serviceId: "5113",
+    transactionId: "639046136960416618",
+    transactionKey: "2026001077495054",
+    amount: 1m,
+    description: "222243140167 (21.01.2026 tarihli 4255767552 sorgu no'lu Enpara Bank A.Ş. Arda Güray hesabından Bura Teknoloji Limited Şirketi hesabına gelen FAST ödemesi)",
+    idMember: "00000000-0000-0000-0000-000000000000",
+    senderName: "Arda Güray",
+    senderIdentityNr: "11111111111",
+    IsAutomatic: true,
+    isOK: true
+);
+
+                    Console.WriteLine("transactionNr=" + transactionNr2);
+
+
                     int responseStatus = 0;
 
                     DateTime dateNow = DateTime.Now;
