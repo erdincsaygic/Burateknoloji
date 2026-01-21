@@ -176,8 +176,6 @@ namespace StilPay.Job.Vakifbank
                             {
                                 string transactionId = DateTime.Now.Ticks.ToString("D16");
 
-                                Console.WriteLine("178");
-
                                 var transactionNr = tSQLBankManager.AddNotificationTransaction(
                                     DateTime.Now,
                                     tranDate, tranDate,
@@ -186,8 +184,6 @@ namespace StilPay.Job.Vakifbank
                                     hareket.Aciklama, Guid.Empty.ToString(),
                                     senderName, "11111111111",
                                     false, true);
-
-                                Console.WriteLine("189");
 
                                 if (!string.IsNullOrEmpty(transactionNr))
                                 {
