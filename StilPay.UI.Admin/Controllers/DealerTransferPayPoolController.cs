@@ -1,30 +1,31 @@
+using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Vml.Office;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using StilPay.BLL.Abstract;
-using StilPay.BLL;
-using StilPay.Entities.Concrete;
-using StilPay.Utility.Helper;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using DocumentFormat.OpenXml.EMMA;
-using StilPay.Entities;
-using DocumentFormat.OpenXml.Vml.Office;
-using StilPay.BLL.Concrete;
-using StilPay.Utility.Worker;
-using System.Text.Json;
-using System.Globalization;
-using static StilPay.Utility.Helper.Enums;
-using RestSharp;
-using StilPay.Utility.Models;
-using StilPay.UI.Admin.Models;
-using static StilPay.UI.Admin.Models.GarantiAccountInfoModel;
-using StilPay.DAL.Concrete;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
-using DocumentFormat.OpenXml.Spreadsheet;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using StilPay.BLL;
+using StilPay.BLL.Abstract;
+using StilPay.BLL.Concrete;
+using StilPay.DAL.Concrete;
+using StilPay.Entities;
+using StilPay.Entities.Concrete;
+using StilPay.UI.Admin.Models;
+using StilPay.Utility.Helper;
+using StilPay.Utility.Models;
+using StilPay.Utility.Worker;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+using static StilPay.UI.Admin.Models.GarantiAccountInfoModel;
+using static StilPay.Utility.Helper.Enums;
 
 namespace StilPay.UI.Admin.Controllers
 {
@@ -474,6 +475,33 @@ namespace StilPay.UI.Admin.Controllers
             return Json(new GenericResponse { Status = "ERROR", Message = "Bilinmeyen işlem hatası." });
         }
 
-       
+        [HttpPost]
+        public async Task<IActionResult> SetSenderNameByPin([FromBody] SetSenderNameByPinRequest req)
+        {
+            if (string.IsNullOrWhiteSpace(req?.TpId) ||
+                string.IsNullOrWhiteSpace(req.Pin) ||
+                string.IsNullOrWhiteSpace(req.SenderName))
+            {
+                return Json(new { status = "ERROR", message = "tpId, pin ve gönderici adı zorunlu" });
+            }
+            if (req.Pin != "112233")
+                return Json(new { status = "ERROR", message = "PIN hatalı" });
+            var updatedName = tSQLBankManager.SetPaymentTransferPoolSenderNameById(req.TpId, req.SenderName);
+            if (string.IsNullOrWhiteSpace(updatedName))
+                return Json(new { status = "ERROR", message = "Kayıt bulunamadı / güncellenmedi" });
+            return Json(new
+            {
+                status = "OK",
+                message = "Gönderici adı güncellendi",
+                senderName = req.SenderName,
+            });
+        }
+        public class SetSenderNameByPinRequest
+        {
+            public string TpId { get; set; }
+            public string Pin { get; set; }
+            public string SenderName { get; set; }
+        }
+
     }
 }

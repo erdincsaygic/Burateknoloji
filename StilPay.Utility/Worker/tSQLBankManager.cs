@@ -616,7 +616,14 @@ namespace StilPay.Utility.Worker
                     return transactionNr;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("=================================");
+
+                return null;
+            }
 
             return null;
         }
@@ -655,7 +662,14 @@ namespace StilPay.Utility.Worker
                     return IDOut;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine(ex.ToString()); 
+                Console.WriteLine("=================================");
+
+                return null;
+            }
 
             return null;
         }
@@ -1520,6 +1534,51 @@ namespace StilPay.Utility.Worker
             }
 
             return result;
+        }
+
+        public static string SetPaymentTransferPoolSenderNameById(string tpId, string senderName)
+        {
+            if (string.IsNullOrWhiteSpace(tpId)) return null;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_defaultConecction))
+                {
+                    connection.Open();
+
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        cmd.CommandText = @"
+                            UPDATE PaymentTransferPools
+                            SET
+                                SenderName = @SenderName,
+                                MDate = GETDATE()
+                            OUTPUT INSERTED.SenderName
+                            WHERE ID = @ID;
+                            ";
+
+                        cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = tpId;
+                        cmd.Parameters.Add("@SenderName", SqlDbType.NVarChar, 100).Value =
+                            string.IsNullOrWhiteSpace(senderName) ? (object)DBNull.Value : senderName.Trim();
+
+                        var updated = cmd.ExecuteScalar();
+
+                        connection.Close();
+
+                        if (updated == null || updated == DBNull.Value)
+                            return null;
+
+                        return updated.ToString();
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
         }
     }
 }

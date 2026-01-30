@@ -630,7 +630,7 @@ namespace StilPay.UI.Admin.Controllers
                     var balances = _manager.GetBalance(idCompany);
                     if (balances != null)
                     {
-                        usingBalance = balances.UsingBalance;
+                        usingBalance = balances.UsingBalance + balances.NegativeBalanceLimit;
                     }
                 }
                 else

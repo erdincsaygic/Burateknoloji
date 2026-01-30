@@ -57,15 +57,15 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-1 mt-lg-0 mt-2">
+                    <div class="col-lg-2 mt-lg-0 mt-2">
                         <div class="d-grid">
                             <button class="btn btn-custom" id="btnList"><i class="fa fa-bars"></i>&nbsp;&nbsp;&nbsp;Listele</button>
                         </div>
 
                     </div>
-                    <div class="col-lg-3 mt-lg-0 mt-2">
+@*                     <div class="col-lg-3 mt-lg-0 mt-2">
                         <button class="btn btn-custom" id="btnList" data-bs-toggle="modal" data-bs-target="#mdlSearchInBank"><i class="fa fa-bars"></i>&nbsp;&nbsp;Garanti Bankası İşlem Sorgula</button>
-                    </div>
+                    </div> *@
                 </div>  
 
 
@@ -315,6 +315,47 @@
                 </div>
 
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Pin -->
+<div class="modal fade" id="mdlPin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-wrap bg-dark text-white">
+                <h5 class="modal-title text-center w-100"> Gönderici Adı Güncelle </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="pin_tpId" />
+
+                <div class="mb-2">
+                    <label class="form-label">PIN</label>
+                    <input type="password"
+                           id="pin_value"
+                           class="form-control"
+                           maxlength="20"
+                           autocomplete="off"
+                           inputmode="numeric" />
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Gönderici Adı</label>
+                    <input type="text"
+                           id="pin_senderName"
+                           class="form-control"
+                           maxlength="100"
+                           autocomplete="off" />
+                    <small class="text-muted">PIN doğrulanınca sadece “Gönderici Adı” güncellenecek.</small>
+                </div>
+            </div>
+
+            <div class="modal-footer d-flex flex-nowrap justify-content-between">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="button" class="btn btn-success" id="btnSavePin">Kaydet</button>
+            </div>
         </div>
     </div>
 </div>

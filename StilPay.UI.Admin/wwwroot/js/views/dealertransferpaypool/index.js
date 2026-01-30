@@ -2,6 +2,12 @@ var urlEDIT = '';
 var urlDELETE = '';
 var urlLIST = '/DealerTransferPayPool';
 
+var _pinCtx = {
+    dt: null,
+    tr: null,
+    rowData: null
+};
+
 $(document).ready(function () {
 
     initDatePicker();
@@ -13,6 +19,20 @@ $(document).ready(function () {
     $("#btnSearchInBank").click(function () {
         //searchInBank();
         Table.init();
+    });
+
+    $('#mdlPin').on('shown.bs.modal', function () {
+        $('#pin_value').trigger('focus');
+    });
+
+    $(document).off('keydown.pin').on('keydown.pin', '#pin_value', function (e) {
+        if (e.key === 'Enter') {
+            $('#btnSavePin').trigger('click');
+        }
+    });
+
+    $('#btnSavePin').off('click').on('click', function () {
+        savePinAndUpdateSenderNameOnly();
     });
 
     getData();
@@ -120,6 +140,23 @@ function getData() {
                 $("#divDate").text($("#dtStartDate").val() + ' - ' + $("#dtEndDate").val());
                 $("#divNotMatches").text(0 + ' TL' + ' / ' + 0 + ' Ad');
             }
+
+            var dt = $('#Table').DataTable();
+
+            $('#Table tbody').off('dblclick', 'td');
+
+            $('#Table tbody').on('dblclick', 'td', function () {
+                var idx = dt.cell(this).index();
+                if (!idx) return;
+
+                if (idx.column !== 3) return;
+
+                var tr = $(this).closest('tr');
+                var rowData = dt.row(tr).data();
+                if (!rowData) return;
+
+                openPinModal(rowData, dt, tr[0]);
+            });
 
         },
         "columns": [
@@ -499,95 +536,81 @@ function sendDataToApi(data, rowElement) {
     });
 }
 
-//function searchInBank() {
-//    $('#TableNotInThePool').DataTable({
-//        destroy: true,
-//        serverSide: true,
-//        processing: true,
-//        "language": {
-//            "emptyTable": "Gösterilecek Veri Yok",
-//            "info": "Toplam _TOTAL_ veriden _START_ ile _END_ arasındaki veriler gösteriliyor",
-//            "infoEmpty": "",
-//            "infoFiltered": "",
-//            "lengthMenu": "_MENU_ Veri Göster",
-//            "search": "Ara:",
-//            "zeroRecords": "Eşleşen Veri Yok",
-//            "paginate": {
-//                "previous": "Geri",
-//                "next": "İleri"
-//            }
-//        },
-//        "ajax": {
-//            "url": "/DealerTransferPayPool/SearchInBank",
-//            "type": "POST",
+function openPinModal(rowData, dt, trEl) {
+    _pinCtx.dt = dt;
+    _pinCtx.tr = trEl;
+    _pinCtx.rowData = rowData;
 
-//            "data": function (d) {
-//                d.StartDate = $("#dtStartDateSearchInBank").val()
-//                d.EndDate = $("#dtEndDateSearchInBank").val()
-//                d.StartDateTime = $("#dtStartDateTimeSearchInBank").val();
-//                d.EndDateTime = $("#dtEndDateTimeSearchInBank").val();
-//            },
-//        },
-//        "columns": [
-//            { "data": "transactionDate", "orderable": false },
-//            { "data": "bank", "orderable": false },
-//            { "data": "senderName", "orderable": false },
-//            { "data": "amount", "orderable": false },
-//            { "data": "description", "orderable": false },
-//            { "data": "transactionKey", "orderable": false }
-//        ],
+    $('#pin_tpId').val(rowData.id);
+    $('#pin_value').val('');
 
-//        "columnDefs": [
-//            {
-//                "aTargets": [0],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-center');
-//                    $(nTd).html(sData = formatDateTime(sData));
-//                }
-//            },
-//            {
-//                "aTargets": [1],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-center');
-//                }
-//            },
-//            {
-//                "aTargets": [2],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-center');
-//                }
-//            },
-//            {
-//                "aTargets": [3],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-end');
-//                    $(nTd).html(sData.toFixed(2));
-//                }
-//            },
-//            {
-//                "aTargets": [4],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-center');
+    $('#pin_senderName').val(rowData.senderName || '');
 
-//                }
-//            },
-//            {
-//                "aTargets": [5],
-//                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-//                    $(nTd).attr('class', 'text-center');
+    $('#mdlPin').modal('show');
+}
 
-//                }
-//            }
-//        ],
+function savePinAndUpdateSenderNameOnly() {
+    var tpId = ($('#pin_tpId').val() || '').trim();
+    var pin = ($('#pin_value').val() || '').trim();
+    var senderName = ($('#pin_senderName').val() || '').trim();
 
-//        "order": [],
+    if (!tpId) {
+        alertify.notify('Kayıt bulunamadı (tpId boş)', 'error', 5).dismissOthers();
+        return;
+    }
+    if (!pin) {
+        alertify.notify('PIN zorunlu', 'error', 5).dismissOthers();
+        return;
+    }
+    if (!senderName) {
+        alertify.notify('Gönderici adı zorunlu', 'error', 5).dismissOthers();
+        return;
+    }
 
-//        "lengthMenu": [
-//            [15, 25, 50, 100, -1],
-//            [15, 25, 50, 100, "Tümü"]
-//        ],
-//    });
-//}
+    $.ajax({
+        type: 'POST',
+        url: '/DealerTransferPayPool/SetSenderNameByPin',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({ tpId: tpId, pin: pin, senderName: senderName }),
+        beforeSend: function () {
+            showLoading();
+        },
+        success: function (res) {
+            if (res && res.status === "ERROR") {
+                alertify.notify(res.message || 'Hata oluştu', 'error', 5).dismissOthers();
+                return;
+            }
+
+            if (!res || !res.senderName) {
+                alertify.notify('SenderName dönmedi', 'error', 5).dismissOthers();
+                return;
+            }
+
+            var currentRowData = _pinCtx.dt.row(_pinCtx.tr).data();
+            if (currentRowData) {
+                currentRowData.senderName = res.senderName;
+            }
+
+            _pinCtx.dt.cell(_pinCtx.tr, 3).data(res.senderName);
+
+            _pinCtx.dt.row(_pinCtx.tr).invalidate();
+            _pinCtx.dt.draw(false);
+
+            $('#mdlPin').modal('hide');
+            alertify.notify(res.message || 'Gönderici adı güncellendi', 'success', 5).dismissOthers();
+        },
+        error: function () {
+            alertify.notify('İşlem sırasında hata oluştu', 'error', 5).dismissOthers();
+        },
+        complete: function () {
+            hideLoading();
+        }
+    });
+}
+
+function HideShow() {
+    $("#idFilter").slideToggle(500);
+}
 
 function StatusToText(status) {
     if (status === 1)
